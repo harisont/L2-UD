@@ -1,19 +1,30 @@
-# sent_id = 0100_2000_12-doc2638.xml-6
-# text = There is a great opportunity to go there because the students need not pay anyting .
-# error_annotation = There is a great opportunity to go there because <ns type="UD"><i>the</i></ns> students need not pay <ns type="S"><i>anyting</i><c>anything</c></ns>.
-1	There	_	PRON	EX	_	2	expl	_	_
-2	is	_	VERB	VBZ	_	0	root	_	_
-3	a	_	DET	DT	_	5	det	_	_
-4	great	_	ADJ	JJ	_	5	amod	_	_
-5	opportunity	_	NOUN	NN	_	2	nsubj	_	_
-6	to	_	PART	TO	_	7	mark	_	_
-7	go	_	VERB	VB	_	5	acl	_	_
-8	there	_	ADV	RB	_	7	advmod	_	_
-9	because	_	SCONJ	IN	_	12	mark	_	_
-10	the	_	DET	DT	_	11	det	_	_
-11	students	_	NOUN	NNS	_	12	nsubj	_	_
-12	need	_	VERB	VBP	_	2	advcl	_	_
-13	not	_	PART	RB	Polarity=Neg	12	advmod	_	_
-14	pay	_	VERB	VB	_	12	xcomp	_	_
-15	anyting	_	PRON	NN	_	14	obj	_	_
-16	.	_	PUNCT	.	_	2	punct	_	_
+# sent_id = 4-04_fr-2
+# text = Un altra uomo, si trova li, seduto sul un panchino del parco, leggendo un giornale con i suoi occhiali.
+# err = Un <IDG><i>altra</i><c>altro</c></IDG> uomo<SPU><i>,</i><c>_</c></SPU> si <IVT><i>trova</i><c>trovava</c></IVT> <SIM><i>li</i><c>lì</c></SIM>, seduto <UD><IDG><i>sul</i><c>sulla</c></IDG><i>sulla</i><c>su</c></UD> <IDG><i>un</i><c>una</c></IDG> <IDG><i>panchino</i><c>panchina</c></IDG> del parco, leggendo un giornale con i suoi occhiali.
+1	Un	un	DET	RI	Definite=Ind|Gender=Masc|Number=Sing|PronType=Art	3	det	_	_
+2	altra	altro	DET	DI	Gender=Fem|Number=Sing|PronType=Ind	3	det	_	_
+3	uomo	uomo	NOUN	S	Gender=Masc|Number=Sing	6	nsubj	_	SpaceAfter=No
+4	,	,	PUNCT	FF	_	3	punct	_	_
+5	si	si	PRON	PC	Clitic=Yes|Person=3|PronType=Prs	6	expl	_	_
+6	trova	trovare	VERB	V	Mood=Ind|Number=Sing|Person=3|Tense=Pres|VerbForm=Fin	0	root	_	_
+7	li	li	ADV	B	_	6	advmod	_	SpaceAfter=No
+8	,	,	PUNCT	FF	_	6	punct	_	_
+9	seduto	sedere	VERB	V	Gender=Masc|Number=Sing|Tense=Past|VerbForm=Part	6	advcl	_	_
+10-11	sul	_	_	_	_	_	_	_	_
+10	su	su	ADP	E	_	13	case	_	_
+11	il	il	DET	RD	Definite=Def|Gender=Masc|Number=Sing|PronType=Art	13	det	_	_
+12	un	un	DET	RI	Definite=Ind|Gender=Masc|Number=Sing|PronType=Art	13	det	_	_
+13	panchino	panco	NOUN	S	Gender=Masc|Number=Sing	9	obl	_	EvalMorph=Dim
+14-15	del	_	_	_	_	_	_	_	_
+14	di	di	ADP	E	_	16	case	_	_
+15	il	il	DET	RD	Definite=Def|Gender=Masc|Number=Sing|PronType=Art	16	det	_	_
+16	parco	parco	NOUN	S	Gender=Masc|Number=Sing	13	nmod	_	SpaceAfter=No
+17	,	,	PUNCT	FF	_	6	punct	_	_
+18	leggendo	leggere	VERB	V	VerbForm=Ger	6	advcl	_	_
+19	un	un	DET	RI	Definite=Ind|Gender=Masc|Number=Sing|PronType=Art	20	det	_	_
+20	giornale	giornale	NOUN	S	Gender=Masc|Number=Sing	18	obj	_	_
+21	con	con	ADP	E	_	24	case	_	_
+22	i	i	DET	RD	Definite=Def|Gender=Masc|Number=Plur|PronType=Art	24	det	_	_
+23	suoi	suo	DET	AP	Gender=Masc|Number=Plur|Poss=Yes|PronType=Prs	24	det:poss	_	_
+24	occhiali	occhiale	NOUN	S	Gender=Masc|Number=Plur	18	obl	_	SpaceAfter=No
+25	.	.	PUNCT	FS	_	6	punct	_	SpacesAfter=\n
