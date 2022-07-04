@@ -1,4 +1,5 @@
 module L2UD where
+    import qualified Data.Set as S
     import RTree
     import UDConcepts
     import ConceptAlignment
@@ -8,8 +9,9 @@ module L2UD where
 
     -- ALIGNMENT CRITERIA FOR L1-L2 TREEBANKS
     
+    -- | Ordered list of criteria
     criteria :: [Criterion]
-    criteria = [
+    criteria = map mkCriterion [
         same,
         sameRoot,
         sameForm,
@@ -18,6 +20,10 @@ module L2UD where
         sameSimpleDeprel,
         samePOS 
         ]
+
+    -- | convert a comparison function into a full-blown Criterion
+    mkCriterion :: (UDTree -> UDTree -> Bool) -> Criterion
+    mkCriterion f = C f (S.singleton UNKNOWN) True True  
 
     -- | Same tree
     same :: UDTree -> UDTree -> Bool
