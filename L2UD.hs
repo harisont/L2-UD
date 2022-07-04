@@ -4,9 +4,6 @@ module L2UD where
     import UDConcepts
     import ConceptAlignment
 
-    test :: String
-    test = "test"
-
     -- ALIGNMENT CRITERIA FOR L1-L2 TREEBANKS
     
     -- | Ordered list of criteria
