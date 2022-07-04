@@ -18,7 +18,7 @@ module L2UD where
         sameLemma,
         sameDeprel,
         sameSimpleDeprel,
-        samePOS 
+        sameUPOS 
         ]
 
     -- | convert a comparison function into a full-blown Criterion
@@ -52,5 +52,5 @@ module L2UD where
 
     -- | Same root UPOS  
     -- (maybe use bag of contentTags for bag of subtree POSs?)
-    samePOS :: UDTree -> UDTree -> Bool
-    samePOS (RTree n _) (RTree m _) = udUPOS n == udUPOS n
+    sameUPOS :: UDTree -> UDTree -> Bool
+    sameUPOS (RTree n _) (RTree m _) = udUPOS n == udUPOS n
