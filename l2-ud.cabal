@@ -1,0 +1,28 @@
+name: l2-ud
+version: 0
+synopsis: tools for analyzing (L1-)L2 UD treebanks
+description: a set of tools for analyzing (parallel L1-)L2 UD treebanks
+-- license: BSD2
+-- license-file: LICENSE
+author: Arianna Masciolini
+maintainer: arianna.masciolini@gu.se
+category: Language
+build-type: Simple
+extra-source-files: README.md
+-- copied from concept-alignment, probably arbitrary
+cabal-version: >= 1.10 
+
+executable l2-ud
+    main-is: Main.hs
+    other-modules: L2UD
+    build-depends:
+        base,
+        concept-alignment
+    default-language: Haskell2010
+
+library
+    exposed-modules: L2UD
+    build-depends: 
+        base,
+        concept-alignment
+    default-language: Haskell2010
