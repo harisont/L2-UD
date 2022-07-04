@@ -51,3 +51,7 @@ module L2UD where
     -- (maybe use bag of contentTags for bag of subtree POSs?)
     sameUPOS :: UDTree -> UDTree -> Bool
     sameUPOS (RTree n _) (RTree m _) = udUPOS n == udUPOS n
+
+    -- ERROR EXTRACTION
+    isError :: Alignment -> Bool 
+    isError (AT (t,u), _) = linearize t /= linearize u

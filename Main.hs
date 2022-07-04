@@ -11,4 +11,5 @@ module Main where
         let l1l2Treebank = zip l1Treebank l2Treebank
         -- maybe use alignSent rather than align
         let as = align [] criteria Nothing False False (l1l2Treebank :: [(UDSentence,UDSentence)])
-        mapM_ (putStrLn . prLinearizedAlignment) as
+        let errs = filter isError as
+        mapM_ (putStrLn . prLinearizedAlignment) errs
