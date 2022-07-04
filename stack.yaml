@@ -15,4 +15,4 @@ extra-deps:
 - github: harisont/gf-ud # no idea why I still have to use my fork
   commit: f81ee3edd79b7994209a7b7181618050e24ca039
 - github: harisont/concept-alignment
-  commit: 4c20027aae686366ad07c63707dc4701ab12734f # last updated 4/7/'22
+  commit: 83fada72ac8394977b0456892d3da2b5e630b001 # last updated 4/7/'22
