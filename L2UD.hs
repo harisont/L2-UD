@@ -20,7 +20,7 @@ module L2UD where
 
     -- | convert a comparison function into a full-blown Criterion
     mkCriterion :: (UDTree -> UDTree -> Bool) -> Criterion
-    mkCriterion f = C f (S.singleton UNKNOWN) True True  
+    mkCriterion f = C f (S.singleton UNKNOWN) False False 
 
     -- | Same tree
     same :: UDTree -> UDTree -> Bool
