@@ -1,4 +1,5 @@
 module Main where
+    import qualified Data.Map as M
     import UDConcepts
     import ConceptAlignment
     import L2UD
@@ -9,7 +10,6 @@ module Main where
         l1Treebank <- parseUDFile l1File
         l2Treebank <- parseUDFile l2File
         let l1l2Treebank = zip l1Treebank l2Treebank
-        -- maybe use alignSent rather than align
-        let as = align [] criteria Nothing False False (l1l2Treebank :: [(UDSentence,UDSentence)])
-        let errs = filter isError as
-        mapM_ (putStrLn . prLinearizedAlignment) errs
+        let as = map (M.toList . alignSent M.empty criteria Nothing False False False) l1l2Treebank
+        let errs = map (filter isError) as
+        mapM_ (putStrLn . prLinearizedAlignment) (concat errs)
