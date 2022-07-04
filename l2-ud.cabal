@@ -17,6 +17,7 @@ executable l2-ud
     other-modules: L2UD
     build-depends:
         base,
+        containers,
         gf-ud,
         concept-alignment
     default-language: Haskell2010
@@ -25,6 +26,7 @@ library
     exposed-modules: L2UD
     build-depends: 
         base,
+        containers,
         gf-ud,
         concept-alignment
     default-language: Haskell2010
