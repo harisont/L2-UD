@@ -19,10 +19,6 @@ module L2UD where
     mkCriterion :: (UDTree -> UDTree -> Bool) -> Criterion
     mkCriterion f = C f (S.singleton UNKNOWN) False False 
 
-    -- | Same tree
-    same :: UDTree -> UDTree -> Bool
-    same t u = t == u
-
     -- | Exact same root token
     sameToken :: UDTree -> UDTree -> Bool
     sameToken (RTree n _) (RTree m _) = n == m
