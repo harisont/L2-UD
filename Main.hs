@@ -12,4 +12,4 @@ module Main where
         let l1l2Treebank = zip l1Treebank l2Treebank
         let as = map (M.toList . alignSent M.empty criteria Nothing False False False) l1l2Treebank
         let errs = map (filter isError) as
-        mapM_ (putStrLn . prLinearizedAlignment) (concat errs)
+        mapM_ (putStrLn . prettyPrintAlignment) (reverse $ concat errs)

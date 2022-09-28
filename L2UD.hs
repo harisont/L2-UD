@@ -52,3 +52,10 @@ module L2UD where
     -- ERROR EXTRACTION
     isError :: Alignment -> Bool 
     isError (AT (t,u), _) = linearize t /= linearize u
+
+    -- OUTPUT
+    prettyPrintAlignment :: Alignment -> String
+    prettyPrintAlignment a = "(\"" ++ lt ++ "\", \"" ++ lu ++ "\")"
+        where 
+            (AT (t,u)) = trees a
+            (lt,lu) = (linearize t, linearize u)
