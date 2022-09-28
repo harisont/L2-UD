@@ -1,0 +1,18 @@
+resolver: lts-12.26 # copied from concept-alignment, probably arbitrary
+
+packages: 
+- .
+
+# so that `stack build --copy-bins` puts bin here; 
+# also copied from concept-alignment
+local-bin-path: .
+
+extra-deps:
+- multiset-0.3.4.3
+- cgi-3001.3.0.3 # dependency of GF
+- github: GrammaticalFramework/gf-core
+  commit: b962bcd178a212f6b3cea6e2d74a2181005a4729 # do not update
+- github: harisont/gf-ud # no idea why I still have to use my fork
+  commit: f81ee3edd79b7994209a7b7181618050e24ca039
+- github: harisont/concept-alignment
+  commit: 83fada72ac8394977b0456892d3da2b5e630b001 # last updated 4/7/'22
