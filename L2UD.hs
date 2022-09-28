@@ -9,13 +9,10 @@ module L2UD where
     -- | Ordered list of criteria
     criteria :: [Criterion]
     criteria = map mkCriterion [
-        same,
-        sameRoot,
+        sameToken,
         sameForm,
         sameLemma,
-        sameDeprel,
-        sameSimpleDeprel,
-        sameUPOS 
+        sameDeprel
         ]
 
     -- | convert a comparison function into a full-blown Criterion
@@ -27,8 +24,8 @@ module L2UD where
     same t u = t == u
 
     -- | Exact same root token
-    sameRoot :: UDTree -> UDTree -> Bool
-    sameRoot (RTree n _) (RTree m _) = n == m
+    sameToken :: UDTree -> UDTree -> Bool
+    sameToken (RTree n _) (RTree m _) = n == m
 
     -- | Same word from
     sameForm :: UDTree -> UDTree -> Bool
