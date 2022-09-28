@@ -46,12 +46,37 @@ module L2UD where
     sameUPOS (RTree n _) (RTree m _) = udUPOS n == udUPOS n
 
     -- ERROR EXTRACTION
-    isError :: Alignment -> Bool 
-    isError (AT (t,u), _) = linearize t /= linearize u
+
+    -- | Check if an alignment contains an error, of any kind
+    hasError :: Alignment -> Bool 
+    hasError (AT (t,u), _) = linearize t /= linearize u
+
+    -- | Check if an alignment contains a grammatical error 
+    hasGrammError :: Alignment -> Bool
+    hasGrammError (AT (t,u), _) = map grammFields wt /= map grammFields wu
+        where
+            wt = udWordLines $ udTree2sentence t
+            wu = udWordLines $ udTree2sentence u
+            
+            -- get fields that signal grammar errors. Word order errors are
+            -- captured when comparing the full lists and I hope it's not too
+            -- bad that I am ignoring udHEAD
+            -- known issues: 
+            -- - some lexical errors are treated as grammatical due to POS
+            --   tag (AUX vs. VERB) and deprel (cop) differences 
+            grammFields :: UDWord -> (POS,String,[UDData],Label)
+            grammFields w = (udUPOS w, udXPOS w, udFEATS w, udDEPREL w)
+                where 
+                    -- merge verbs and aux not to confuse lexical with 
+                    -- grammatical errors. For example, "faceva un bel giorno"
+                    -- is lexically, not grammatically wrong ("faceva"->"era")
 
     -- OUTPUT
     prettyPrintAlignment :: Alignment -> String
-    prettyPrintAlignment a = "(\"" ++ lt ++ "\", \"" ++ lu ++ "\")"
+    prettyPrintAlignment a = mark ++ " (\"" ++ lt ++ "\", \"" ++ lu ++ "\")"
         where 
             (AT (t,u)) = trees a
             (lt,lu) = (linearize t, linearize u)
+            mark = if hasGrammError a 
+                    then "**" 
+                    else if hasError a then "* " else "  "
