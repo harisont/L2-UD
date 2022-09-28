@@ -10,6 +10,6 @@ module Main where
         l1Treebank <- parseUDFile l1File
         l2Treebank <- parseUDFile l2File
         let l1l2Treebank = zip l1Treebank l2Treebank
-        let as = map (M.toList . alignSent M.empty criteria Nothing False False False) l1l2Treebank
+        let as = map (M.toList . alignSent M.empty criteria Nothing False True False) l1l2Treebank
         let errs = map (filter isError) as
         mapM_ (putStrLn . prettyPrintAlignment) (reverse $ concat errs)
