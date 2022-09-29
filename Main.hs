@@ -20,7 +20,7 @@ module Main where
         -- obtain aligned subtrees
         let as = concatMap (M.toList . alignSent M.empty criteria Nothing False True False) l1l2ss
         -- query L1 treebank
-        let l1ms = concat $ map ((map udTree2sentence) . (matchesUDPattern l1p) . udSentence2tree) l1ss
+        let l1ms = concatMap ((map (adjustUDIds . udTree2sentence . createRoot)) . (matchesUDPattern l1p) . udSentence2tree) l1ss
         -- query L2 treebank (via alignments)
-        let l1l2ms = filter (\a-> (not . null) (matchesUDPattern l2p (tl a)) && (not . null) (matchesUDPattern l2p (tl a))) as
+        let l1l2ms = filter (\a-> linearize (sl a) `elem` map (linearize . udSentence2tree) l1ms && (not . null) (matchesUDPattern l2p (tl a))) as
         mapM_ (putStrLn . prettyPrintAlignment) l1l2ms
