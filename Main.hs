@@ -11,11 +11,16 @@ module Main where
     main = do
         let l1File = "data/Valico/L1/it_valico-ud-test.conllu"
         let l2File = "data/Valico/L2/it_valico-ud-test.conllu"
-        l1Treebank <- parseUDFile l1File
-        l2Treebank <- parseUDFile l2File
-        let l1l2Treebank = zip l1Treebank l2Treebank
-        let l1Pattern = read "TREE (POS \"NOUN\") [DEPREL \"det\", DEPREL \"det:poss\"]"
-        let l2Pattern = read "TREE (POS \"NOUN\") [DEPREL \"det:poss\"]"
-        let errPattern = (l1Pattern, l2Pattern) :: ErrorPattern
-        let l1Matches = concat $ map ((map udTree2sentence) . (matchesUDPattern l1Pattern ) . udSentence2tree) l1Treebank
-        mapM_ (putStrLn . prt) l1Matches
+        l1ss <- parseUDFile l1File
+        l2ss <- parseUDFile l2File
+        let l1l2ss = zip l1ss l2ss
+        let l1p = read "TREE (POS \"NOUN\") [DEPREL \"det\", DEPREL \"det:poss\"]"
+        let l2p = read "TREE (POS \"NOUN\") [DEPREL \"det:poss\"]"
+        let errp = (l1p, l2p) :: ErrorPattern
+        -- obtain aligned subtrees
+        let as = concatMap (M.toList . alignSent M.empty criteria Nothing False True False) l1l2ss
+        -- query L1 treebank
+        let l1ms = concat $ map ((map udTree2sentence) . (matchesUDPattern l1p) . udSentence2tree) l1ss
+        -- query L2 treebank (via alignments)
+        let l1l2ms = filter (\a-> (not . null) (matchesUDPattern l2p (tl a)) && (not . null) (matchesUDPattern l2p (tl a))) as
+        mapM_ (putStrLn . prettyPrintAlignment) l1l2ms
