@@ -1,7 +1,10 @@
 module L2UD where
     import qualified Data.Set as S
+    -- gf-ud
     import RTree
     import UDConcepts
+    import UDPatterns
+    -- concept-alignment
     import ConceptAlignment
 
     -- ALIGNMENT CRITERIA FOR L1-L2 TREEBANKS
@@ -80,3 +83,6 @@ module L2UD where
             mark = if hasGrammError a 
                     then "**" 
                     else if hasError a then "* " else "  "
+
+    -- ERROR PATTERNS
+    type ErrorPattern = (UDPattern, UDPattern)
