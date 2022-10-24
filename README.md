@@ -16,7 +16,7 @@ Note that:
 - missing determiner with possessives:
   - L1-PATTERN: `'TREE (POS "NOUN") [DEPREL "det", DEPREL "det:poss"]'`
   - L2-PATTERN: `'TREE (POS "NOUN") [DEPREL "det:poss"]'`
-  - single L1-L2 PATTERN: `'TREE (POS "NOUN") [{DEPREL "det", -> ,} DEPREL "det:poss"]'` (mind the comma, see [#1](i1))
+  - single L1-L2 PATTERN: `'TREE (POS "NOUN") [{DEPREL "det", -> ,} DEPREL "det:poss"]'` (mind the comma, see [#1](https://github.com/harisont/L2-UD/issues/1))
 - masculine noun with feminine determiner:
   - L1-PATTERN: `'TREE (AND [POS "NOUN", FEATS_ "Gender=Masc"]) [AND [DEPREL "det", FEATS_ "Gender=Masc"]]'`
   - L2-PATTERN: `'TREE (AND [POS "NOUN", FEATS_ "Gender=Masc"]) [AND [DEPREL "det", FEATS_ "Gender=Fem"]]'`
