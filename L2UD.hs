@@ -1,5 +1,7 @@
 module L2UD where
+    import Data.List.Split
     import qualified Data.Set as S
+    import qualified Text.Regex.Posix as R
     -- gf-ud
     import RTree
     import UDConcepts
@@ -86,3 +88,12 @@ module L2UD where
 
     -- ERROR PATTERNS
     type ErrorPattern = (UDPattern, UDPattern)
+
+    parseQuery :: String -> ErrorPattern
+    parseQuery q = (read (replace q head), read (replace q last))
+        where 
+            replace s f = case  s R.=~ "\\{([^}]*)\\}" :: (String,String,String) of
+                (before,"",after) -> s
+                -- head and tail remove {}
+                (before,match,after) -> before ++ f (splitOn "->" (tail $ init match)) ++ replace after f
+                
