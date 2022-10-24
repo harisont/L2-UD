@@ -6,7 +6,7 @@ Tools for working with UD treebanks of learner texts.
 stack run -- PATH-TO-L1-TREEBANK PATH-TO-L2-TREEBANK L1-PATTERN L2-PATTERN [--linearize]
 ```
 
-By default, output files are created in the `out` directory and called `L1.connlu` and `L2.conllu`
+Output files are created in the `out` directory and called `L1.connlu` and `L2.conllu`
 
 ### Example queries
 
