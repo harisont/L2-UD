@@ -2,6 +2,8 @@
 Tools for working with UD treebanks of learner texts.
 
 ## Usage
+
+### Querying parallel L1-L2 treebanks
 ```
 stack run -- PATH-TO-L1-TREEBANK PATH-TO-L2-TREEBANK PATTERN(S) [--linearize]
 ```
@@ -11,7 +13,7 @@ Note that:
 - `PATTERN(S)` can be a pair of an L1 and an L2 pattern or a single L1-L2 pattern (see [below](#example-queries))
 - output CoNNL-U files are created in the `out` directory and called `L1.connlu` and `L2.conllu`
 
-### Example queries
+#### Example queries
 
 - missing determiner with possessives:
   - L1-PATTERN: `'TREE (POS "NOUN") [DEPREL "det", DEPREL "det:poss"]'`
