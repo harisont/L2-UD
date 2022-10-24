@@ -2,6 +2,7 @@ module Main where
     import qualified Data.Map as M
     import System.Environment (getArgs)
     import System.Console.GetOpt
+    import System.Directory
     -- gf-ud
     import UDConcepts
     import UDPatterns
@@ -30,9 +31,10 @@ module Main where
                 if Linearize `elem` flags
                     then mapM_ (putStrLn . prettyPrintAlignment) l1l2ms
                     else do
+                        createDirectoryIfMissing True "out"
                         let (l1s, l2s) = unzip $ map alignment2sentencePair l1l2ms
-                        writeFile "L1.conllu" (unlines $ [prUDSentence n s | (n,s) <- ([1..] `zip` l1s)])
-                        writeFile "L2.conllu" (unlines $ [prUDSentence n s | (n,s) <- ([1..] `zip` l2s)])
+                        writeFile "out/L1.conllu" (unlines $ [prUDSentence n s | (n,s) <- ([1..] `zip` l1s)])
+                        writeFile "out/L2.conllu" (unlines $ [prUDSentence n s | (n,s) <- ([1..] `zip` l2s)])
 
     -- COMMAND LINE OPTIONS PARSING
     
