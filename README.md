@@ -10,7 +10,7 @@ stack run -- PATH-TO-L1-TREEBANK PATH-TO-L2-TREEBANK PATTERN(S) [--linearize]
 
 Note that:
 
-- `PATTERN(S)` can be a pair of an L1 and an L2 pattern or a single L1-L2 pattern (see [below](#example-queries))
+- `PATTERN(S)` can be a pair of an L1 and an L2 pattern or a single L1-L2 pattern (see [below](#example-queries)). The syntax of the pattern matching language is described extensively [here](https://github.com/GrammaticalFramework/gf-ud/blob/master/doc/patterns.md).
 - output CoNNL-U files are created in the `out` directory and called `L1.connlu` and `L2.conllu`
 
 #### Example queries
