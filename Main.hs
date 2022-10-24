@@ -14,13 +14,14 @@ module Main where
     main = do
         argv <- getArgs
         let (flags,args) = parseArgv argv usage opts
-        if Help `elem` flags || length args < 4 
+        if Help `elem` flags || length args < 3 
             then putStrLn $ usageInfo usage opts
             else do
                 l1ss <- parseUDFile (args !! 0)
                 l2ss <- parseUDFile (args !! 1)
-                let l1p = read (args !! 2)
-                let l2p = read (args !! 3)
+                let (l1p,l2p) = case length args of
+                                    4 -> (read (args !! 2), read (args !! 3))
+                                    3 -> parseQuery (args !! 2)
                 let l1l2ss = zip l1ss l2ss
                 -- obtain aligned subtrees
                 let as = concatMap (M.toList . alignSent M.empty criteria Nothing False True False) l1l2ss
@@ -48,7 +49,7 @@ module Main where
         ]
 
     usage :: String
-    usage = "stack run -- PATH-TO-L1-TREEBANK PATH-TO-L2-TREEBANK L1-PATTERN L2-PATTERN [--linearize]"
+    usage = "stack run -- PATH-TO-L1-TREEBANK PATH-TO-L2-TREEBANK PATTERN(S) [--linearize]"
 
     parseArgv :: [String] -> String -> [OptDescr Flag] -> ([Flag],[Arg])
     parseArgv argv usage opts = case getOpt Permute opts argv of
