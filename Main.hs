@@ -29,7 +29,12 @@ module Main where
                 let l1l2ms = filter (\a-> linearize (sl a) `elem` map (linearize . udSentence2tree) l1ms && (not . null) (matchesUDPattern l2p (tl a))) as
                 if Linearize `elem` flags
                     then mapM_ (putStrLn . prettyPrintAlignment) l1l2ms
-                    else putStrLn "TODO: write CoNNL-U files"
+                    else do
+                        let (l1s, l2s) = unzip $ map alignment2sentencePair l1l2ms
+                        writeFile "L1.conllu" (unlines $ [prUDSentence n s | (n,s) <- ([1..] `zip` l1s)])
+                        writeFile "L2.conllu" (unlines $ [prUDSentence n s | (n,s) <- ([1..] `zip` l2s)])
+
+    -- COMMAND LINE OPTIONS PARSING
     
     data Flag = Help | Linearize deriving Eq
     type Arg = String
