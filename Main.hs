@@ -22,13 +22,7 @@ module Main where
                 let (l1p,l2p) = case length args of
                                     4 -> (read (args !! 2), read (args !! 3))
                                     3 -> parseQuery (args !! 2)
-                let l1l2ss = zip l1ss l2ss
-                -- obtain aligned subtrees
-                let as = concatMap (M.toList . alignSent M.empty criteria Nothing False True False) l1l2ss
-                -- query L1 treebank
-                let l1ms = concatMap (map (adjustUDIds . udTree2sentence . createRoot) . matchesUDPattern l1p . udSentence2tree) l1ss
-                -- query L2 treebank (via alignments)
-                let l1l2ms = filter (\a-> linearize (sl a) `elem` map (linearize . udSentence2tree) l1ms && (not . null) (matchesUDPattern l2p (tl a))) as
+                let l1l2ms = queryL1L2treebank (defaultAlign l1ss l2ss) l1ss (l1p,l2p)
                 if Linearize `elem` flags
                     then mapM_ (putStrLn . prettyPrintAlignment) l1l2ms
                     else do
