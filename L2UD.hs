@@ -113,10 +113,10 @@ module L2UD where
       where normalize = adjustUDIds . udTree2sentence . createRoot
         
   -- | Given some L1-L2 alignments and an error pattern, filter the alignment
-  -- matching the pattern (TODO: change either description or code: now L1 
-  -- sentences are passed in their full form too)
-  queryL1L2treebank :: [Alignment] -> [UDSentence] -> ErrorPattern -> [Alignment]
-  queryL1L2treebank as l1ss (l1p,l2p) = 
+  -- matching the pattern
+  queryL1L2treebank :: [Alignment] -> ErrorPattern -> [Alignment]
+  queryL1L2treebank as (l1p,l2p) = 
     filter 
-      (\a -> linearize (sl a) `elem` map (linearize . udSentence2tree) (queryTreebank l1ss l1p) && (not . null) (matchesUDPattern l2p (tl a))) 
+      --(\a -> linearize (sl a) `elem` map (linearize . udSentence2tree) (queryTreebank l1ss l1p) && (not . null) (matchesUDPattern l2p (tl a)))
+      (\a -> ifMatchUDPattern l1p (sl a) && ifMatchUDPattern l2p (tl a)) 
       as

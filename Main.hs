@@ -22,7 +22,7 @@ module Main where
                 let (l1p,l2p) = case length args of
                                     4 -> (read (args !! 2), read (args !! 3))
                                     3 -> parseQuery (args !! 2)
-                let l1l2ms = queryL1L2treebank (defaultAlign l1ss l2ss) l1ss (l1p,l2p)
+                let l1l2ms = queryL1L2treebank (defaultAlign l1ss l2ss) (l1p,l2p)
                 if Linearize `elem` flags
                     then mapM_ (putStrLn . prettyPrintAlignment) l1l2ms
                     else do
