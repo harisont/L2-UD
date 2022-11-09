@@ -71,10 +71,6 @@ module L2UD where
             --   tag (AUX vs. VERB) and deprel (cop) differences 
             grammFields :: UDWord -> (POS,String,[UDData],Label)
             grammFields w = (udUPOS w, udXPOS w, udFEATS w, udDEPREL w)
-                where 
-                    -- merge verbs and aux not to confuse lexical with 
-                    -- grammatical errors. For example, "faceva un bel giorno"
-                    -- is lexically, not grammatically wrong ("faceva"->"era")
 
     -- OUTPUT
     prettyPrintAlignment :: Alignment -> String
