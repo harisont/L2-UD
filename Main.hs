@@ -26,7 +26,7 @@ module Main where
                 -- obtain aligned subtrees
                 let as = concatMap (M.toList . alignSent M.empty criteria Nothing False True False) l1l2ss
                 -- query L1 treebank
-                let l1ms = concatMap ((map (adjustUDIds . udTree2sentence . createRoot)) . (matchesUDPattern l1p) . udSentence2tree) l1ss
+                let l1ms = concatMap (map (adjustUDIds . udTree2sentence . createRoot) . matchesUDPattern l1p . udSentence2tree) l1ss
                 -- query L2 treebank (via alignments)
                 let l1l2ms = filter (\a-> linearize (sl a) `elem` map (linearize . udSentence2tree) l1ms && (not . null) (matchesUDPattern l2p (tl a))) as
                 if Linearize `elem` flags
@@ -34,8 +34,8 @@ module Main where
                     else do
                         createDirectoryIfMissing True "out"
                         let (l1s, l2s) = unzip $ map alignment2sentencePair l1l2ms
-                        writeFile "out/L1.conllu" (unlines $ [prUDSentence n s | (n,s) <- ([1..] `zip` l1s)])
-                        writeFile "out/L2.conllu" (unlines $ [prUDSentence n s | (n,s) <- ([1..] `zip` l2s)])
+                        writeFile "out/L1.conllu" (unlines $ [prUDSentence n s | (n, s) <- [1 .. ] `zip` l1s])
+                        writeFile "out/L2.conllu" (unlines $ [prUDSentence n s | (n, s) <- [1 .. ] `zip` l2s])
 
     -- COMMAND LINE OPTIONS PARSING
     
