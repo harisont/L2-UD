@@ -26,7 +26,6 @@ module Main where
                         content <- readFile $ args !! 2
                         return $ lines content
                     else return $ drop 2 args
-                print queries
                 let errorPatterns = map parseQuery queries
                 let matches = concatMap (queryL1L2treebank alignments) errorPatterns
                 if Linearize `elem` flags
