@@ -5,21 +5,40 @@ Tools for working with UD treebanks of learner texts.
 
 ### Querying parallel L1-L2 treebanks
 ```
-stack run -- PATH-TO-L1-TREEBANK PATH-TO-L2-TREEBANK PATTERN(S) [--linearize]
+stack run -- PATH-TO-L1-TREEBANK PATH-TO-L2-TREEBANK PATTERNS [--linearize]
 ```
 
 Note that:
 
-- `PATTERN(S)` can be a pair of an L1 and an L2 pattern or a single L1-L2 pattern (see [below](#example-queries)). The syntax of the pattern matching language is described extensively [here](https://github.com/GrammaticalFramework/gf-ud/blob/master/doc/patterns.md).
+- the L1 treebank contains corrections
+- the L2 treebank contains the original learner sentences
+- the two treebanks should be parallel, i.e. sentence-aligned
+- `PATTERNS` is a list of space-separated L1-L2 query patterns (see [below](#l1-l2-patterns)) or the path to a file containing an L1-L2 pattern per line (see the [saved queries folder](queries) for examples).
 - output CoNNL-U files are created in the `out` directory and called `L1.conllu` and `L2.conllu`
 
-#### Example queries
+#### L1-L2 patterns
+An L1-L2 pattern is a "parallel" [`gf-ud`](https://github.com/GrammaticalFramework/gf-ud) pattern[^1].
+This means that the pattern encodes, enclosed in curly braces, the differences to look for in a parallel UD treebank. For instance, the pattern
+
+```
+AND [POS "DET", FEATS_ "Gender={Masc->Fem}"]
+```
+
+reads as "feminine determiners corrected with their masculine form", or "feminine determiners that should have been masculine" and is expanded to two `gf-ud` patterns:
+
+- `AND [POS "DET", FEATS_ "Gender=Masc"]`, to be looked in the L1 corrections treebank
+- `AND [POS "DET", FEATS_ "Gender=Fem"]`, to be looked for in the L2 treebanks of original learner sentences.
+
+Some more example patterns:
 
 - missing determiner with possessives:
-  - L1-PATTERN: `'TREE (POS "NOUN") [DEPREL "det", DEPREL "det:poss"]'`
-  - L2-PATTERN: `'TREE (POS "NOUN") [DEPREL "det:poss"]'`
-  - __single L1-L2 PATTERN__: `'TREE (POS "NOUN") [{DEPREL "det", -> } DEPREL "det:poss"]'` (mind the comma, see [#1](https://github.com/harisont/L2-UD/issues/1))
+  ```
+  TREE (POS "NOUN") [{DEPREL "det", -> } DEPREL "det:poss"]
+  ``` 
+  (mind the comma, see [#1](https://github.com/harisont/L2-UD/issues/1)).
 - masculine noun with feminine determiner:
-  - L1-PATTERN: `'TREE (AND [POS "NOUN", FEATS_ "Gender=Masc"]) [AND [DEPREL "det", FEATS_ "Gender=Masc"]]'`
-  - L2-PATTERN: `'TREE (AND [POS "NOUN", FEATS_ "Gender=Masc"]) [AND [DEPREL "det", FEATS_ "Gender=Fem"]]'`
-  - __single L1-L2 PATTERN__: `'TREE (AND [POS "NOUN", FEATS_ "Gender=Masc"]) [AND [DEPREL "det", FEATS_ "Gender={Masc->Fem}"]]'`
+  ```
+  TREE (AND [POS "NOUN", FEATS_ "Gender=Masc"]) [AND [DEPREL "det", FEATS_ "Gender={Masc->Fem}"]]
+  ```
+
+[^1]: The syntax of `gf-ud`'s pattern matching language is described extensively [here](https://github.com/GrammaticalFramework/gf-ud/blob/master/doc/patterns.md).
