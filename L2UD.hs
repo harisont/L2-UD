@@ -1,5 +1,6 @@
 module L2UD where
   import Data.List.Split
+  import Data.Maybe
   import qualified Data.Set as S
   import qualified Data.Map as M
   import qualified Text.Regex.Posix as R
@@ -109,8 +110,11 @@ module L2UD where
     FORM (udFORM n), 
     LEMMA (udLEMMA n), 
     POS (udUPOS n), 
+    -- XPOS (udXPOS n), -- can be added after updating gf-ud, I think
     FEATS (prt $ udFEATS n), 
     DEPREL (udDEPREL n)
+    -- no MISC cause I dunno what the second string is supposed to be:
+    -- https://github.com/GrammaticalFramework/gf-ud/blob/f2705537347b417e37f1ccd156708bf066e790d6/UDPatterns.hs#L49
     ]
   udTree2udPattern (RTree n ts) = 
     TREE (udTree2udPattern (RTree n [])) (map udTree2udPattern ts)
