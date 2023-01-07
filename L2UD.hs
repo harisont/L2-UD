@@ -5,15 +5,21 @@ module L2UD where
   import qualified Text.Regex.Posix as R
   -- gf-ud
   import RTree
-  import UDConcepts
-  import UDPatterns
+  import UDConcepts (
+    UDSentence, UDTree, UDWord(..), UDData, POS, Label,
+    udTree2sentence, udSentence2tree, udWordLines, adjustUDIds, createRoot, prt
+    )
+  import UDPatterns (UDPattern(..), ifMatchUDPattern, matchesUDPattern)
   -- concept-alignment
-  import qualified ConceptAlignment as CA
+  import ConceptAlignment (
+    Alignment, AlignedTrees(..), Criterion(..), Reason(UNKNOWN),
+    alignSent, udSimpleDEPREL, linearize, trees,sl,tl
+    )
 
   -- ALIGNMENT CRITERIA FOR L1-L2 TREEBANKS
   
   -- | Ordered list of criteria
-  criteria :: [CA.Criterion]
+  criteria :: [Criterion]
   criteria = map mkCriterion [
     sameToken,
     sameForm,
@@ -22,8 +28,8 @@ module L2UD where
     ]
 
   -- | convert a comparison function into a full-blown Criterion
-  mkCriterion :: (UDTree -> UDTree -> Bool) -> CA.Criterion
-  mkCriterion f = CA.C f (S.singleton CA.UNKNOWN) False False 
+  mkCriterion :: (UDTree -> UDTree -> Bool) -> Criterion
+  mkCriterion f = C f (S.singleton UNKNOWN) False False 
 
   -- | Exact same root token
   sameToken :: UDTree -> UDTree -> Bool
@@ -44,7 +50,7 @@ module L2UD where
   -- | Same dependency relation (ignoring subtypes)
   sameSimpleDeprel :: UDTree -> UDTree -> Bool
   sameSimpleDeprel (RTree n _) (RTree m _) = 
-    CA.udSimpleDEPREL n == CA.udSimpleDEPREL m
+    udSimpleDEPREL n == udSimpleDEPREL m
 
   -- | Same root UPOS  
   -- (maybe use bag of contentTags for bag of subtree POSs?)
@@ -54,12 +60,12 @@ module L2UD where
   -- ERROR EXTRACTION
 
   -- | Check if an alignment contains an error, of any kind
-  hasError :: CA.Alignment -> Bool 
-  hasError (CA.AT (t,u), _) = CA.linearize t /= CA.linearize u
+  hasError :: Alignment -> Bool 
+  hasError (AT (t,u), _) = linearize t /= linearize u
 
   -- | Check if an alignment contains a grammatical error 
-  hasGrammError :: CA.Alignment -> Bool
-  hasGrammError (CA.AT (t,u), _) = map grammFields wt /= map grammFields wu
+  hasGrammError :: Alignment -> Bool
+  hasGrammError (AT (t,u), _) = map grammFields wt /= map grammFields wu
     where
       wt = udWordLines $ udTree2sentence t
       wu = udWordLines $ udTree2sentence u
@@ -74,11 +80,11 @@ module L2UD where
       grammFields w = (udUPOS w, udXPOS w, udFEATS w, udDEPREL w)
 
   -- OUTPUT
-  prettyPrintAlignment :: CA.Alignment -> String
+  prettyPrintAlignment :: Alignment -> String
   prettyPrintAlignment a = mark ++ " (\"" ++ lt ++ "\", \"" ++ lu ++ "\")"
     where 
-      (CA.AT (t,u)) = CA.trees a
-      (lt,lu) = (CA.linearize t, CA.linearize u)
+      (AT (t,u)) = trees a
+      (lt,lu) = (linearize t, linearize u)
       mark = if hasGrammError a 
           then "**" 
           else if hasError a then "* " else "  "
@@ -111,11 +117,11 @@ module L2UD where
 
   -- QUERIES
 
-  -- | CA.alignSent wrapper to align with default "optional arguments"
-  defaultAlign :: [UDSentence] -> [UDSentence] -> [CA.Alignment]
+  -- | alignSent wrapper to align with default "optional arguments"
+  defaultAlign :: [UDSentence] -> [UDSentence] -> [Alignment]
   defaultAlign ss1 ss2 = 
     concatMap 
-      (M.toList . CA.alignSent M.empty criteria Nothing False True False) 
+      (M.toList . alignSent M.empty criteria Nothing False True False) 
       (zip ss1 ss2)
   
   -- | Given a treebank of UD sentences and a HST pattern, return the matching
@@ -129,9 +135,9 @@ module L2UD where
         
   -- | Given some L1-L2 alignments and an error pattern, filter the alignment
   -- matching the pattern
-  queryL1L2treebank :: [CA.Alignment] -> ErrorPattern -> [CA.Alignment]
+  queryL1L2treebank :: [Alignment] -> ErrorPattern -> [Alignment]
   queryL1L2treebank as (l1p,l2p) = 
     filter 
-      --(\a -> CA.linearize (CA.sl a) `elem` map (CA.linearize . udSentence2tree) (queryTreebank l1ss l1p) && (not . null) (matchesUDPattern l2p (CA.tl a)))
-      (\a -> ifMatchUDPattern l1p (CA.sl a) && ifMatchUDPattern l2p (CA.tl a)) 
+      --(\a -> linearize (sl a) `elem` map (linearize . udSentence2tree) (queryTreebank l1ss l1p) && (not . null) (matchesUDPattern l2p (tl a)))
+      (\a -> ifMatchUDPattern l1p (sl a) && ifMatchUDPattern l2p (tl a)) 
       as
