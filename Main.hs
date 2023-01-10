@@ -33,11 +33,11 @@ main = do
             else return $ drop 3 args
           -- get matching alignments
           -- TODO: there should be a way to retreive the full sentences too
-          let matches = match (concat as) qs 
+          let ms = match (concat as) qs 
           if Linearize `elem` flags
-            then mapM_ (putStrLn . linearizeMatch) matches
+            then mapM_ (putStrLn . linearizeMatch) ms
             else do
-              let (l1s,l2s) = unzip matches
+              let (l1s,l2s) = unzip ms
               writeFile "out/L1.conllu" (unlines $ [prUDSentence n s | (n, s) <- [1 .. ] `zip` l1s])
               writeFile "out/L2.conllu" (unlines $ [prUDSentence n s | (n, s) <- [1 .. ] `zip` l2s])
         "extract" -> undefined
