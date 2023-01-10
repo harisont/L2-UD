@@ -4,11 +4,6 @@ import Data.Maybe
 import RTree
 import UDConcepts
 import UDPatterns
--- TODO: rm if hasError etc. change
-import ConceptAlignment(
-    Alignment, AlignedTrees(..), 
-    linearize
-    ) 
 import Utils
 
 -- TODO: rework & expand
