@@ -6,14 +6,10 @@ import System.Console.GetOpt
 import System.Directory
 import UDConcepts
 import UDPatterns
-import ConceptAlignment ( -- TODO: rm when no longer necessary
-  Alignment, AlignedTrees(..),
-  alignment2sentencePair, linearize, trees
-  ) 
--- local
 import Align
 import Extract
 import Match
+import Utils
 
 main = do
   argv <- getArgs
@@ -22,26 +18,26 @@ main = do
     then putStrLn $ usageInfo usage opts
     else do
       createDirectoryIfMissing True "out" -- just in case it's needed later
-      l1Sentences <- parseUDFile (args !! 1)
-      l2Sentences <- parseUDFile (args !! 2)
+      s1s <- parseUDFile (args !! 1)
+      s2s <- parseUDFile (args !! 2)
       -- align sentences
-      let alignments = defaultAlign l1Sentences l2Sentences 
+      let as = align s1s s2s 
       case head args of
         "match" -> do
           -- read query from text file or command line
           isFile <- doesFileExist $ args !! 3
-          queries <- if length args == 4 && isFile
+          qs <- if length args == 4 && isFile
             then do
               content <- readFile $ args !! 3
               return $ lines content
             else return $ drop 3 args
           -- get matching alignments
           -- TODO: there should be a way to retreive the full sentences too
-          let matches = patternMatch alignments queries 
+          let matches = match as qs 
           if Linearize `elem` flags
-            then mapM_ (putStrLn . prettyPrintAlignment) matches
+            then mapM_ (putStrLn . linearizeMatch) matches
             else do
-              let (l1s, l2s) = unzip $ map alignment2sentencePair matches
+              let (l1s,l2s) = unzip matches
               writeFile "out/L1.conllu" (unlines $ [prUDSentence n s | (n, s) <- [1 .. ] `zip` l1s])
               writeFile "out/L2.conllu" (unlines $ [prUDSentence n s | (n, s) <- [1 .. ] `zip` l2s])
         "extract" -> undefined
@@ -51,6 +47,7 @@ main = do
 type Arg = String
 data Flag = Help | Linearize deriving Eq
 
+-- | List of available commands (first arg)
 cmds :: [Arg]
 cmds = ["extract", "match"]
 
@@ -70,15 +67,3 @@ parseArgv :: [String] -> String -> [OptDescr Flag] -> ([Flag],[Arg])
 parseArgv argv usage opts = case getOpt Permute opts argv of
   (flags,args,[]) -> (flags,args)
   (_,_,errs) -> error $ concat errs ++ usage
-
--- OUTPUT
--- | Temp pretty printer for L1-L2 alignments
--- TODO: replace with something Intro to Programming in Python-inspired
-prettyPrintAlignment :: Alignment -> String
-prettyPrintAlignment a = mark ++ " (\"" ++ lt ++ "\", \"" ++ lu ++ "\")"
-  where 
-    (AT (t,u)) = trees a
-    (lt,lu) = (linearize t, linearize u)
-    mark = if hasGrammError a 
-        then "**" 
-        else if hasError a then "* " else "  "

@@ -16,6 +16,9 @@ import ConceptAlignment(
 
 -- TODO: rework & expand
 
+-- | TODO: Top-level pattern matching function used in the main
+extract = undefined
+
 -- | Check if an alignment contains an error, of any kind
 hasError :: Alignment -> Bool 
 hasError (AT (t,u), _) = linearize t /= linearize u

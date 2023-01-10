@@ -2,15 +2,9 @@ module Align where -- ConceptAlignment wrapper
 
 import Data.Map (toList, empty)
 import Data.Set (singleton)
-import RTree (RTree(..))
-import UDConcepts(
-  UDSentence, UDTree,
-  udFORM, udLEMMA, udUPOS, udDEPREL
-  )
-import ConceptAlignment (
-  Alignment, Criterion(..), Reason(..),
-  alignSent, udSimpleDEPREL
-  )
+import RTree
+import UDConcepts
+import ConceptAlignment
 
 -- ALIGNMENT CRITERIA FOR L1-L2 TREEBANKS
   
@@ -53,11 +47,13 @@ sameSimpleDeprel (RTree n _) (RTree m _) =
 sameUPOS :: UDTree -> UDTree -> Bool
 sameUPOS (RTree n _) (RTree m _) = udUPOS n == udUPOS n
 
--- | alignSent wrapper to align with default "optional arguments"
--- TODO: rename
-defaultAlign :: [UDSentence] -> [UDSentence] -> [Alignment]
-defaultAlign ss1 ss2 = 
-  concatMap 
-    (toList . alignSent empty criteria Nothing False True False) 
-    (zip ss1 ss2)
+-- | alignSent wrapper to align with default "optional arguments" and return
+-- pairs of alignment rather than the idiotic Alignment data type I for some
+-- reason decided to use in concept-alignment
+align :: [UDSentence] -> [UDSentence] -> [(UDSentence,UDSentence)]
+align ss1 ss2 = 
+  map alignment2sentencePair as
+  where as = concatMap 
+          (toList . alignSent empty criteria Nothing False True False) 
+          (zip ss1 ss2)
   

@@ -2,19 +2,22 @@ module Match where
 
 import Data.List.Split (splitOn)
 import qualified Text.Regex.Posix as R
-import UDConcepts (UDSentence)
+import UDConcepts (
+  UDSentence,
+  udSentence2tree
+  )
 import UDPatterns (UDPattern(..), ifMatchUDPattern)
-import ConceptAlignment (Alignment, sl, tl)
 
 -- | Top-level pattern matching function used in the main
-patternMatch :: [Alignment] -> [String] -> [Alignment]
-patternMatch as qs = filter (\a -> any (\p -> a `matches` p) ps) as --concatMap (filter matches as) patterns
+match :: [(UDSentence,UDSentence)] -> [String] -> [(UDSentence,UDSentence)]
+match as qs = filter (\a -> any (\p -> a `matches` p) ps) as 
   where 
     ps = map parseQuery qs
 
 -- | Checks whether an alignment matches a particular error pattern
-matches :: Alignment -> ErrorPattern -> Bool
-matches a (l1,l2) = ifMatchUDPattern l1 (sl a) && ifMatchUDPattern l2 (tl a)
+matches :: (UDSentence,UDSentence) -> ErrorPattern -> Bool
+matches (s1,s2) (p1,p2) = ifMatchUDPattern p1 t1 && ifMatchUDPattern p2 t2
+  where (t1,t2) = (udSentence2tree s1,udSentence2tree s2)
 
 type ErrorPattern = (UDPattern, UDPattern)
 
