@@ -43,7 +43,7 @@ udTree2udPattern (RTree n []) = AND [
   FORM (udFORM n), 
   LEMMA (udLEMMA n), 
   POS (udUPOS n), 
-  -- XPOS (udXPOS n), -- can be added after updating gf-ud, I think
+  XPOS (udXPOS n),
   FEATS (prt $ udFEATS n), 
   DEPREL (udDEPREL n)
   -- no MISC cause I dunno what the second string is supposed to be:
@@ -63,15 +63,16 @@ simplifyUDPattern (AND vals) cols = AND $
     if "FORM" `elem` cols then Just $ vals !! 0 else Nothing,
     if "LEMMA" `elem` cols then Just $ vals !! 1 else Nothing,
     if "POS" `elem` cols then Just $ vals !! 2 else Nothing,
-    if "FEATS" `elem` cols then Just $ vals !! 3 else Nothing,
-    if "DEPREL" `elem` cols then Just $ vals !! 4 else Nothing
+    if "XPOS" `elem` cols then Just $ vals !! 3 else Nothing,
+    if "FEATS" `elem` cols then Just $ vals !! 4 else Nothing,
+    if "DEPREL" `elem` cols then Just $ vals !! 5 else Nothing
   ]
 simplifyUDPattern (TREE n ts) cols = 
   TREE (simplifyUDPattern n cols) (map (`simplifyUDPattern` cols) ts) 
 simplifyUDPattern _ _ = undefined 
 
--- | Shorthand for getting the morphosyntactic (POS + FEATS + DEPREL) UD 
--- pattern corresponding to a given UD tree
+-- | Shorthand for getting the morphosyntactic (POS + XPOS + FEATS + DEPREL)  
+-- UD pattern corresponding to a given UD tree
 morphosynUDPattern :: UDTree -> UDPattern
 morphosynUDPattern = 
-  (`simplifyUDPattern` ["POS", "FEATS", "DEPREL"]) . udTree2udPattern
+  (`simplifyUDPattern` ["POS", "XPOS", "FEATS", "DEPREL"]) . udTree2udPattern
