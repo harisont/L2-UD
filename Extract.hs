@@ -1,13 +1,9 @@
 module Extract where
 
 import Data.Maybe
-import RTree (RTree(..))
-import UDConcepts (
-    UDTree, Label, UDData, UDWord, POS, UDSentence,
-    udFORM, udLEMMA, udUPOS, udXPOS, udDEPREL, udFEATS, 
-    udTree2sentence, udWordLines, prt
-    )
-import UDPatterns (UDPattern(..))
+import RTree
+import UDConcepts
+import UDPatterns
 -- TODO: rm if hasError etc. change
 import ConceptAlignment(
     Alignment, AlignedTrees(..), 
