@@ -21,7 +21,7 @@ main = do
       s1s <- parseUDFile (args !! 1)
       s2s <- parseUDFile (args !! 2)
       -- align sentences
-      let as = align s1s s2s 
+      let as = map align (zip s1s s2s) 
       case head args of
         "match" -> do
           -- read query from text file or command line
@@ -33,7 +33,7 @@ main = do
             else return $ drop 3 args
           -- get matching alignments
           -- TODO: there should be a way to retreive the full sentences too
-          let matches = match as qs 
+          let matches = match (concat as) qs 
           if Linearize `elem` flags
             then mapM_ (putStrLn . linearizeMatch) matches
             else do

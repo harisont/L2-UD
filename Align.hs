@@ -50,10 +50,7 @@ sameUPOS (RTree n _) (RTree m _) = udUPOS n == udUPOS n
 -- | alignSent wrapper to align with default "optional arguments" and return
 -- pairs of alignment rather than the idiotic Alignment data type I for some
 -- reason decided to use in concept-alignment
-align :: [UDSentence] -> [UDSentence] -> [(UDSentence,UDSentence)]
-align ss1 ss2 = 
-  map alignment2sentencePair as
-  where as = concatMap 
-          (toList . alignSent empty criteria Nothing False True False) 
-          (zip ss1 ss2)
+align :: (UDSentence,UDSentence) -> [(UDSentence,UDSentence)]
+align ss = map alignment2sentencePair as
+  where as = toList $ alignSent empty criteria Nothing False True False ss
   

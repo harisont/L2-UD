@@ -3,7 +3,7 @@ module Extract where
 import Data.Maybe
 import RTree (RTree(..))
 import UDConcepts (
-    UDTree, Label, UDData, UDWord, POS,
+    UDTree, Label, UDData, UDWord, POS, UDSentence,
     udFORM, udLEMMA, udUPOS, udXPOS, udDEPREL, udFEATS, 
     udTree2sentence, udWordLines, prt
     )
@@ -16,7 +16,8 @@ import ConceptAlignment(
 
 -- TODO: rework & expand
 
--- | TODO: Top-level pattern matching function used in the main
+-- | TODO: Top-level pattern extraction function used in the main
+extract :: [(UDSentence,UDSentence)] -> [UDPattern]
 extract = undefined
 
 -- | Check if an alignment contains an error, of any kind
