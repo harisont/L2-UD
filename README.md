@@ -1,23 +1,33 @@
 # L2-UD
-Tools for working with UD treebanks of learner texts.
+Tools for working with parallel L1-L2 UD treebanks.
 
-## Usage
+## Extracting error patterns
+Return the error [error patterns](#l1-l2-patterns) contained in a parallel L1-L2 treebank.
 
-### Querying parallel L1-L2 treebanks
 ```
-stack run -- PATH-TO-L1-TREEBANK PATH-TO-L2-TREEBANK PATTERNS [--linearize]
+stack run -- extract L1-TREEBANK L2-TREEBANK
 ```
-
 Note that:
 
 - the L1 treebank contains corrections
 - the L2 treebank contains the original learner sentences
+
+## Querying parallel L1-L2 treebanks
+Given a parallel L1-L2 treebank and one or more [error patterns](#l1-l2-patterns), return the set of sentences containing errors matching the pattern.
+
+```
+stack run -- match L1-TREEBANK L2-TREEBANK PATTERNS [--linearize]
+```
+
+Note that:
+
+- again, the L1 treebank contains corrections while the L2 treebank contains the original learner sentences
 - the two treebanks should be parallel, i.e. sentence-aligned
 - `PATTERNS` is a list of space-separated L1-L2 query patterns (see [below](#l1-l2-patterns)) or the path to a file containing an L1-L2 pattern per line (see the [saved queries folder](queries) for examples).
 - output CoNNL-U files are created in the `out` directory and called `L1.conllu` and `L2.conllu`
 
-#### L1-L2 patterns
-An L1-L2 pattern is a "parallel" [`gf-ud`](https://github.com/GrammaticalFramework/gf-ud) pattern[^1].
+## L1-L2 error patterns
+An L1-L2 error pattern is a "parallel" [`gf-ud`](https://github.com/GrammaticalFramework/gf-ud) pattern[^1].
 This means that the pattern encodes, enclosed in curly braces, the differences to look for in a parallel UD treebank. For instance, the pattern
 
 ```
