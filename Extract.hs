@@ -9,32 +9,32 @@ import ConceptAlignment(
     Alignment, AlignedTrees(..), 
     linearize
     ) 
+import Utils
 
 -- TODO: rework & expand
 
--- | TODO: Top-level pattern extraction function used in the main
+-- | TODO: Top-level pattern extraction function used in the main.
+-- The input is the list of alignments obtained for a single L1-L2 sentence.
 extract :: [(UDSentence,UDSentence)] -> [UDPattern]
-extract = undefined
+extract as = undefined
+  where 
+    es = filter (not . morphosynCorrect) as
 
--- | Check if an alignment contains an error, of any kind
-hasError :: Alignment -> Bool 
-hasError (AT (t,u), _) = linearize t /= linearize u
+-- | Check if an alignment contains any discrepancy, i.e. an error of any kind
+correct :: (UDSentence,UDSentence) -> Bool 
+correct (s1,s2) = linearizeSentence s1 == linearizeSentence s2
 
--- | Check if an alignment contains a grammatical error 
-hasGrammError :: Alignment -> Bool
-hasGrammError (AT (t,u), _) = map grammFields wt /= map grammFields wu
-  where
-    wt = udWordLines $ udTree2sentence t
-    wu = udWordLines $ udTree2sentence u
-    
-    -- get fields that signal grammar errors. Word order errors are
-    -- captured when comparing the full lists and I hope it's not too
-    -- bad that I am ignoring udHEAD
-    -- known issues: 
-    -- - some lexical errors are treated as grammatical due to POS
-    --   tag (AUX vs. VERB) and deprel (cop) differences 
-    grammFields :: UDWord -> (POS,String,[UDData],Label)
-    grammFields w = (udUPOS w, udXPOS w, udFEATS w, udDEPREL w)
+-- | Check if an alignment is morphosyntactically correct, defined as a 
+-- discrepancy found upon comparing the sentences ignoring the FORM and LEMMA
+-- fields.
+-- Known issues: some errors that are, according to the SweLL taxonomy, 
+-- classified as O-Comp, are treated as morphosyntactical too. This is the
+-- case with, for instance, split compounds. 
+-- NOTE on implementation: the hacky way I implemented this is to compare the
+-- corresponding simplified (cf. simplifyUDPattern) UD patterns in HST 
+morphosynCorrect :: (UDSentence,UDSentence) -> Bool 
+morphosynCorrect (s1,s2) = pattern s1 == pattern s2
+  where pattern = morphosynUDPattern . udSentence2tree
 
 -- | Convert a UD tree into a UD pattern (HST)
 -- maybe this belongs in gf-ud though
@@ -69,3 +69,9 @@ simplifyUDPattern (AND vals) cols = AND $
 simplifyUDPattern (TREE n ts) cols = 
   TREE (simplifyUDPattern n cols) (map (`simplifyUDPattern` cols) ts) 
 simplifyUDPattern _ _ = undefined 
+
+-- | Shorthand for getting the morphosyntactic (POS + FEATS + DEPREL) UD 
+-- pattern corresponding to a given UD tree
+morphosynUDPattern :: UDTree -> UDPattern
+morphosynUDPattern = 
+  (`simplifyUDPattern` ["POS", "FEATS", "DEPREL"]) . udTree2udPattern

@@ -40,7 +40,9 @@ main = do
               let (l1s,l2s) = unzip ms
               writeFile "out/L1.conllu" (unlines $ [prUDSentence n s | (n, s) <- [1 .. ] `zip` l1s])
               writeFile "out/L2.conllu" (unlines $ [prUDSentence n s | (n, s) <- [1 .. ] `zip` l2s])
-        "extract" -> undefined
+        "extract" -> do
+          let ps = concat $ map extract as
+          mapM_ print ps
 
 -- COMMAND LINE OPTIONS PARSING
 
