@@ -4,19 +4,21 @@ import qualified Data.Map as M
 import System.Environment (getArgs)
 import System.Console.GetOpt
 import System.Directory
--- gf-ud
 import UDConcepts
 import UDPatterns
--- concept-alignment
-import ConceptAlignment (alignment2sentencePair) -- TODO: rm when no longer necessary
+import ConceptAlignment ( -- TODO: rm when no longer necessary
+  Alignment, AlignedTrees(..),
+  alignment2sentencePair, linearize, trees
+  ) 
 -- local
 import Align
+import Extract
 import Match
 
 main = do
   argv <- getArgs
   let (flags,args) = parseArgv argv usage opts
-  if Help `elem` flags || length args < 3 
+  if Help `elem` flags || length args < 3 || head args `notElem` cmds
     then putStrLn $ usageInfo usage opts
     else do
       createDirectoryIfMissing True "out" -- just in case it's needed later
@@ -43,14 +45,14 @@ main = do
               writeFile "out/L1.conllu" (unlines $ [prUDSentence n s | (n, s) <- [1 .. ] `zip` l1s])
               writeFile "out/L2.conllu" (unlines $ [prUDSentence n s | (n, s) <- [1 .. ] `zip` l2s])
         "extract" -> undefined
-        _ -> do 
-          putStrLn "The first argument should be an L2-UD command."
-          putStrLn "Available commands are: extract, match."
 
 -- COMMAND LINE OPTIONS PARSING
-  
-data Flag = Help | Linearize deriving Eq
+
 type Arg = String
+data Flag = Help | Linearize deriving Eq
+
+cmds :: [Arg]
+cmds = ["extract", "match"]
 
 opts :: [OptDescr Flag]
 opts = [
@@ -60,8 +62,9 @@ opts = [
 
 usage :: String
 usage = concat [
-  "stack run -- extract PATH-TO-L1-TREEBANK PATH-TO-L2-TREEBANK, or\n"
-  "stack run -- match PATH-TO-L1-TREEBANK PATH-TO-L2-TREEBANK PATTERNS [--linearize]"]
+  "\nUsage:\n",
+  "stack run -- extract L1-TREEBANK L2-TREEBANK, or\n",
+  "stack run -- match L1-TREEBANK L2-TREEBANK PATTERNS [--linearize]"]
 
 parseArgv :: [String] -> String -> [OptDescr Flag] -> ([Flag],[Arg])
 parseArgv argv usage opts = case getOpt Permute opts argv of

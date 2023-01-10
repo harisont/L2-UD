@@ -7,10 +7,10 @@ import UDPatterns (UDPattern(..), ifMatchUDPattern)
 import ConceptAlignment (Alignment, sl, tl)
 
 -- | Top-level pattern matching function used in the main
-patternMatch :: [Alignment] -> [String] -> [UDSentence]
-patternMatch alignments queries = concatMap (filter matches alignments) patterns
+patternMatch :: [Alignment] -> [String] -> [Alignment]
+patternMatch as qs = filter (\a -> any (\p -> a `matches` p) ps) as --concatMap (filter matches as) patterns
   where 
-    patterns = map parseQuery queries
+    ps = map parseQuery qs
 
 -- | Checks whether an alignment matches a particular error pattern
 matches :: Alignment -> ErrorPattern -> Bool
