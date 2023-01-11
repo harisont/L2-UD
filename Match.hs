@@ -5,7 +5,7 @@ import qualified Text.Regex.Posix as R
 import UDConcepts
 import UDPatterns (UDPattern(..), ifMatchUDPattern)
 import Align
-import ErrorPatterns
+import Errors
 
 -- | Top-level pattern matching function used in the main
 match :: [Alignment] -> [String] -> [Alignment]

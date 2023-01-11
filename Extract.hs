@@ -5,13 +5,14 @@ import RTree
 import UDConcepts
 import UDPatterns
 import Align
-import ErrorPatterns
+import Errors
 
 -- | Top-level pattern extraction function used in the main.
--- The input is the list of alignments obtained for a single L1-L2 sentence.
+-- The input is the list of alignments obtained for a single L1-L2 sentence,
+-- the output is a list of errors
 -- TODO: add pruning
-extract :: [Alignment] -> [ErrorPattern]
-extract = patterns . smallest . morphosynErrors
+extract :: [Alignment] -> [Error]
+extract = smallest . morphosynErrors
   where 
     morphosynErrors = filter (not . morphosynCorrect)
     smallest as = filter (\(t1,t2) -> hasNoSuperTrees t1 t1s || hasNoSuperTrees t2 t2s) as

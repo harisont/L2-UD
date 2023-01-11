@@ -9,6 +9,7 @@ import UDPatterns
 import Align
 import Extract
 import Match
+import Errors
 
 main = do
   argv <- getArgs
@@ -34,14 +35,20 @@ main = do
           -- TODO: there should be a way to retreive the full sentences too
           let ms = match (concat as) qs 
           if Linearize `elem` flags
-            then mapM_ (putStrLn . linaarizeAlignment) ms
+            then mapM_ (putStrLn . linearizeAlignment) ms
             else do
               let (l1t,l2t) = unzip ms
               writeFile "out/L1.conllu" (unlines $ [prUDSentence n (udTree2sentence t) | (n, t) <- [1 .. ] `zip` l1t])
               writeFile "out/L2.conllu" (unlines $ [prUDSentence n (udTree2sentence t) | (n, t) <- [1 .. ] `zip` l2t])
         "extract" -> do
-          let ps = concat $ map extract as
-          mapM_ print ps
+          let es = concat $ map extract as
+          if Linearize `elem` flags
+            then mapM_ (putStrLn . linearizeError) es
+            else do
+              let ps = map error2Pattern es
+              let (p1s,p2s) = unzip ps
+              writeFile "out/L1.hst" (unlines $ map show p1s)
+              writeFile "out/L2.hst" (unlines $ map show p2s)
 
 -- COMMAND LINE OPTIONS PARSING
 

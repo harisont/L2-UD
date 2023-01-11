@@ -57,6 +57,6 @@ align ss = map (\a -> (sl a,tl a)) as
   where as = toList $ alignSent empty criteria Nothing False True False ss
 
 -- | Linearize matches, aka pairs of aligned UD (sub)sentences 
-linaarizeAlignment :: Alignment -> String
-linaarizeAlignment (s1,s2) = prUDTreeString s1 ++ " - " ++ prUDTreeString s2
+linearizeAlignment :: Alignment -> String
+linearizeAlignment (s1,s2) = prUDTreeString s1 ++ " - " ++ prUDTreeString s2
   

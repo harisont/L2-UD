@@ -1,11 +1,16 @@
-module ErrorPatterns where
+module Errors where
 
 import Data.Maybe
 import RTree
 import UDConcepts
 import UDPatterns
+import Align
 
+type Error = (UDTree,UDTree)
 type ErrorPattern = (UDPattern,UDPattern)
+
+linearizeError :: Error -> String
+linearizeError = linearizeAlignment
 
 -- | Convert a UD tree into a UD pattern (HST)
 -- maybe this belongs in gf-ud though
@@ -22,6 +27,10 @@ udTree2udPattern (RTree n []) = AND [
   ]
 udTree2udPattern (RTree n ts) = 
   TREE (udTree2udPattern (RTree n [])) (map udTree2udPattern ts)
+
+-- | Shorthand to convert errors to error patterns
+error2Pattern :: Error -> ErrorPattern
+error2Pattern (e1,e2) = (udTree2udPattern e1,udTree2udPattern e2)
 
 type ColumnName = String -- name of a UD column
 
