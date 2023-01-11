@@ -1,6 +1,6 @@
 module Extract where
 
-import Data.Maybe
+import Data.List
 import RTree
 import UDConcepts
 import UDPatterns
