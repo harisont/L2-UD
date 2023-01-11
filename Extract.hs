@@ -13,8 +13,10 @@ extract :: [Alignment] -> [ErrorPattern]
 extract = patterns . smallest . morphosynErrors
   where 
     morphosynErrors = filter (not . morphosynCorrect)
-    smallest ts = filter (\(t1,t2) -> not $ any (\t -> isSubRTree t t1) t1s) ts
-      where (t1s,t2s) = unzip ts
+    smallest as = filter (\(t1,t2) -> hasNoSuperTrees t1 t1s || hasNoSuperTrees t2 t2s) as
+      where 
+        hasNoSuperTrees t ts = not $ any (\t' -> isSubRTree t' t) (ts \\ [t])
+        (t1s,t2s) = unzip as
     patterns = map (\(t1,t2) -> (udTree2udPattern t1, udTree2udPattern t2))
 
 -- | Check if an alignment contains any discrepancy, i.e. an error of any kind
