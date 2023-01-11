@@ -4,11 +4,8 @@ import Data.Map (toList, empty)
 import Data.Set (singleton)
 import RTree
 import UDConcepts
-import UDPatterns
 import ConceptAlignment hiding (Alignment)
 
--- SOME HANDY TYPE SYNONYMS
-type ErrorPattern = (UDPattern,UDPattern)
 type Alignment = (UDTree,UDTree)
 
 -- ALIGNMENT CRITERIA FOR L1-L2 TREEBANKS
