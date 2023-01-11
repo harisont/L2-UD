@@ -7,6 +7,7 @@ import UDConcepts (
   udSentence2tree
   )
 import UDPatterns (UDPattern(..), ifMatchUDPattern)
+import Utils
 
 -- | Top-level pattern matching function used in the main
 match :: [(UDSentence,UDSentence)] -> [String] -> [(UDSentence,UDSentence)]
@@ -18,8 +19,6 @@ match as qs = filter (\a -> any (\p -> a `matches` p) ps) as
 matches :: (UDSentence,UDSentence) -> ErrorPattern -> Bool
 matches (s1,s2) (p1,p2) = ifMatchUDPattern p1 t1 && ifMatchUDPattern p2 t2
   where (t1,t2) = (udSentence2tree s1,udSentence2tree s2)
-
-type ErrorPattern = (UDPattern, UDPattern)
 
 -- | Parses a query string into an error pattern, simplifying any {X->Y}
 -- shorthand 

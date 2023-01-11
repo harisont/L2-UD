@@ -6,18 +6,21 @@ import UDConcepts
 import UDPatterns
 import Utils
 
--- TODO: rework & expand
-
--- | TODO: Top-level pattern extraction function used in the main.
+-- | Top-level pattern extraction function used in the main.
 -- The input is the list of alignments obtained for a single L1-L2 sentence.
-extract :: [(UDSentence,UDSentence)] -> [UDPattern]
-extract as = undefined
+-- TODO: add pruning
+extract :: [(UDSentence,UDSentence)] -> [ErrorPattern]
+extract = patterns . smallest . morphosynErrors . trees
   where 
-    es = filter (not . morphosynCorrect) as
+    trees = map (\(s1,s2) -> (udSentence2tree s1,udSentence2tree s2))
+    morphosynErrors = filter (not . morphosynCorrect)
+    smallest ts = filter (\(t1,t2) -> not $ any (\t -> isSubRTree t t1) t1s) ts
+      where (t1s,t2s) = unzip ts
+    patterns = map (\(t1,t2) -> (udTree2udPattern t1, udTree2udPattern t2))
 
 -- | Check if an alignment contains any discrepancy, i.e. an error of any kind
-correct :: (UDSentence,UDSentence) -> Bool 
-correct (s1,s2) = linearizeSentence s1 == linearizeSentence s2
+correct :: (UDTree,UDTree) -> Bool 
+correct (s1,s2) = prUDTreeString s1 == prUDTreeString s2
 
 -- | Check if an alignment is morphosyntactically correct, defined as a 
 -- discrepancy found upon comparing the sentences ignoring the FORM and LEMMA
@@ -27,9 +30,8 @@ correct (s1,s2) = linearizeSentence s1 == linearizeSentence s2
 -- case with, for instance, split compounds. 
 -- NOTE on implementation: the hacky way I implemented this is to compare the
 -- corresponding simplified (cf. simplifyUDPattern) UD patterns in HST 
-morphosynCorrect :: (UDSentence,UDSentence) -> Bool 
-morphosynCorrect (s1,s2) = pattern s1 == pattern s2
-  where pattern = morphosynUDPattern . udSentence2tree
+morphosynCorrect :: (UDTree,UDTree) -> Bool 
+morphosynCorrect (s1,s2) = morphosynUDPattern s1 == morphosynUDPattern s2
 
 -- | Convert a UD tree into a UD pattern (HST)
 -- maybe this belongs in gf-ud though
