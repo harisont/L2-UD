@@ -4,16 +4,16 @@ import Data.List.Split (splitOn)
 import qualified Text.Regex.Posix as R
 import UDConcepts
 import UDPatterns (UDPattern(..), ifMatchUDPattern)
-import Utils
+import Align
 
 -- | Top-level pattern matching function used in the main
-match :: [(UDTree,UDTree)] -> [String] -> [(UDTree,UDTree)]
+match :: [Alignment] -> [String] -> [Alignment]
 match as qs = filter (\a -> any (\p -> a `matches` p) ps) as 
   where 
     ps = map parseQuery qs
 
 -- | Checks whether an alignment matches a particular error pattern
-matches :: (UDTree,UDTree) -> ErrorPattern -> Bool
+matches :: Alignment -> ErrorPattern -> Bool
 matches (t1,t2) (p1,p2) = ifMatchUDPattern p1 t1 && ifMatchUDPattern p2 t2
 
 -- | Parses a query string into an error pattern, simplifying any {X->Y}

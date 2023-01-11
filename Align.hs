@@ -4,7 +4,12 @@ import Data.Map (toList, empty)
 import Data.Set (singleton)
 import RTree
 import UDConcepts
-import ConceptAlignment
+import UDPatterns
+import ConceptAlignment hiding (Alignment)
+
+-- SOME HANDY TYPE SYNONYMS
+type ErrorPattern = (UDPattern,UDPattern)
+type Alignment = (UDTree,UDTree)
 
 -- ALIGNMENT CRITERIA FOR L1-L2 TREEBANKS
   
@@ -50,7 +55,11 @@ sameUPOS (RTree n _) (RTree m _) = udUPOS n == udUPOS n
 -- | alignSent wrapper to align with default "optional arguments" and return
 -- pairs of alignment rather than the idiotic Alignment data type I for some
 -- reason decided to use in concept-alignment
-align :: (UDSentence,UDSentence) -> [(UDTree,UDTree)]
+align :: (UDSentence,UDSentence) -> [Alignment]
 align ss = map (\a -> (sl a,tl a)) as
   where as = toList $ alignSent empty criteria Nothing False True False ss
+
+-- | Linearize matches, aka pairs of aligned UD (sub)sentences 
+linaarizeAlignment :: Alignment -> String
+linaarizeAlignment (s1,s2) = prUDTreeString s1 ++ " - " ++ prUDTreeString s2
   

@@ -4,12 +4,12 @@ import Data.Maybe
 import RTree
 import UDConcepts
 import UDPatterns
-import Utils
+import Align
 
 -- | Top-level pattern extraction function used in the main.
 -- The input is the list of alignments obtained for a single L1-L2 sentence.
 -- TODO: add pruning
-extract :: [(UDTree,UDTree)] -> [ErrorPattern]
+extract :: [Alignment] -> [ErrorPattern]
 extract = patterns . smallest . morphosynErrors
   where 
     morphosynErrors = filter (not . morphosynCorrect)
@@ -18,7 +18,7 @@ extract = patterns . smallest . morphosynErrors
     patterns = map (\(t1,t2) -> (udTree2udPattern t1, udTree2udPattern t2))
 
 -- | Check if an alignment contains any discrepancy, i.e. an error of any kind
-correct :: (UDTree,UDTree) -> Bool 
+correct :: Alignment -> Bool 
 correct (s1,s2) = prUDTreeString s1 == prUDTreeString s2
 
 -- | Check if an alignment is morphosyntactically correct, defined as a 
@@ -29,7 +29,7 @@ correct (s1,s2) = prUDTreeString s1 == prUDTreeString s2
 -- case with, for instance, split compounds. 
 -- NOTE on implementation: the hacky way I implemented this is to compare the
 -- corresponding simplified (cf. simplifyUDPattern) UD patterns in HST 
-morphosynCorrect :: (UDTree,UDTree) -> Bool 
+morphosynCorrect :: Alignment -> Bool 
 morphosynCorrect (s1,s2) = morphosynUDPattern s1 == morphosynUDPattern s2
 
 -- | Convert a UD tree into a UD pattern (HST)
