@@ -3,13 +3,10 @@ module Utils where
 import UDConcepts
 import UDPatterns
 
--- | Turns a CoNNL-U sentence into linearized plain text
-linearizeSentence :: UDSentence -> String
-linearizeSentence = prUDTreeString . udSentence2tree
-
 -- | Linearize matches, aka pairs of aligned UD (sub)sentences 
-linearizeMatch :: (UDSentence,UDSentence) -> String
-linearizeMatch (s1,s2) = linearizeSentence s1 ++ " - " ++ linearizeSentence s2
+-- TODO: rn to linarizeAlignment
+linearizeMatch :: (UDTree,UDTree) -> String
+linearizeMatch (s1,s2) = prUDTreeString s1 ++ " - " ++ prUDTreeString s2
 
 -- SOME HANDY TYPE SYNONYMS
 type ErrorPattern = (UDPattern,UDPattern)

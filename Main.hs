@@ -37,9 +37,9 @@ main = do
           if Linearize `elem` flags
             then mapM_ (putStrLn . linearizeMatch) ms
             else do
-              let (l1s,l2s) = unzip ms
-              writeFile "out/L1.conllu" (unlines $ [prUDSentence n s | (n, s) <- [1 .. ] `zip` l1s])
-              writeFile "out/L2.conllu" (unlines $ [prUDSentence n s | (n, s) <- [1 .. ] `zip` l2s])
+              let (l1t,l2t) = unzip ms
+              writeFile "out/L1.conllu" (unlines $ [prUDSentence n (udTree2sentence t) | (n, t) <- [1 .. ] `zip` l1t])
+              writeFile "out/L2.conllu" (unlines $ [prUDSentence n (udTree2sentence t) | (n, t) <- [1 .. ] `zip` l2t])
         "extract" -> do
           let ps = concat $ map extract as
           mapM_ print ps

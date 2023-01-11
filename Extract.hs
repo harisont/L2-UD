@@ -9,10 +9,9 @@ import Utils
 -- | Top-level pattern extraction function used in the main.
 -- The input is the list of alignments obtained for a single L1-L2 sentence.
 -- TODO: add pruning
-extract :: [(UDSentence,UDSentence)] -> [ErrorPattern]
-extract = patterns . smallest . morphosynErrors . trees
+extract :: [(UDTree,UDTree)] -> [ErrorPattern]
+extract = patterns . smallest . morphosynErrors
   where 
-    trees = map (\(s1,s2) -> (udSentence2tree s1,udSentence2tree s2))
     morphosynErrors = filter (not . morphosynCorrect)
     smallest ts = filter (\(t1,t2) -> not $ any (\t -> isSubRTree t t1) t1s) ts
       where (t1s,t2s) = unzip ts

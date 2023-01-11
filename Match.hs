@@ -2,23 +2,19 @@ module Match where
 
 import Data.List.Split (splitOn)
 import qualified Text.Regex.Posix as R
-import UDConcepts (
-  UDSentence,
-  udSentence2tree
-  )
+import UDConcepts
 import UDPatterns (UDPattern(..), ifMatchUDPattern)
 import Utils
 
 -- | Top-level pattern matching function used in the main
-match :: [(UDSentence,UDSentence)] -> [String] -> [(UDSentence,UDSentence)]
+match :: [(UDTree,UDTree)] -> [String] -> [(UDTree,UDTree)]
 match as qs = filter (\a -> any (\p -> a `matches` p) ps) as 
   where 
     ps = map parseQuery qs
 
 -- | Checks whether an alignment matches a particular error pattern
-matches :: (UDSentence,UDSentence) -> ErrorPattern -> Bool
-matches (s1,s2) (p1,p2) = ifMatchUDPattern p1 t1 && ifMatchUDPattern p2 t2
-  where (t1,t2) = (udSentence2tree s1,udSentence2tree s2)
+matches :: (UDTree,UDTree) -> ErrorPattern -> Bool
+matches (t1,t2) (p1,p2) = ifMatchUDPattern p1 t1 && ifMatchUDPattern p2 t2
 
 -- | Parses a query string into an error pattern, simplifying any {X->Y}
 -- shorthand 
