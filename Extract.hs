@@ -15,9 +15,10 @@ extract :: [Alignment] -> [Error]
 extract = smallest . morphosynErrors
   where 
     morphosynErrors = filter (not . morphosynCorrect)
-    smallest as = filter (\(t1,t2) -> hasNoSuperTrees t1 t1s || hasNoSuperTrees t2 t2s) as
+    smallest as = 
+      filter (\(t1,t2) -> noSuperTrees t1 t1s || noSuperTrees t2 t2s) as
       where 
-        hasNoSuperTrees t ts = not $ any (\t' -> isSubRTree t' t) (ts \\ [t])
+        noSuperTrees t ts = not $ any (\t' -> isSubRTree t' t) (ts \\ [t])
         (t1s,t2s) = unzip as
     patterns = map (\(t1,t2) -> (udTree2udPattern t1, udTree2udPattern t2))
 
