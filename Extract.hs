@@ -6,15 +6,15 @@ import UDConcepts
 import UDPatterns
 import Align
 import Errors
+import Utils
 
 -- | Top-level pattern extraction function used in the main.
 -- The input is the list of alignments obtained for a single L1-L2 sentence,
 -- the output is a list of errors
--- TODO: add pruning
 extract :: [Alignment] -> [Error]
-extract = smallest . morphosynErrors
+extract = map pruned . smallest . morphosynErrors
   where 
-    morphosynErrors = filter (not . correct)
+    morphosynErrors = filter (not . morphosynCorrect)
     smallest as = 
       filter (\(t1,t2) -> noSuperTrees t1 t1s || noSuperTrees t2 t2s) as
       where 
@@ -37,3 +37,27 @@ correct (s1,s2) = prUDTreeString s1 == prUDTreeString s2
 morphosynCorrect :: Alignment -> Bool 
 morphosynCorrect (s1,s2) = morphosynUDPattern t1 == morphosynUDPattern t2
   where (t1,t2) = (udTree2udPattern s1,udTree2udPattern s2)
+
+coreArgs :: [Label]
+coreArgs = ["nsubj", "obj", "iobj", "csubj", "ccomp", "xcomp"]
+
+-- | Check whether a UD subtree is a core argument, as defined in
+-- https://universaldependencies.org/u/dep/index.html
+isCoreArg :: UDTree -> Bool
+isCoreArg (RTree n ts) = udDEPREL n `elem` coreArgs
+
+-- | Remove non-discrepant non-core arguments from an error
+-- NOTE: this is nonrecursive, as I think recursion is not needed and may 
+-- even be harmful, but I am not completely sure
+pruned :: Error -> Error
+pruned (t1,t2) = (RTree (root t1) t1s, RTree (root t2) t2s)
+  where
+    subErrors = filter morphosynCorrect subAlignments
+      -- NOTE: re-aligning is not efficient but passing all the alignments 
+      -- around is annoying. Maybe one day with the state monad?
+      where subAlignments = 
+              align (udTree2adjustedSentence t1,udTree2adjustedSentence t2)
+    t1s = filter (\t -> isCoreArg t || t `elem` e1s) (subtrees t1)
+      where e1s = map fst subErrors
+    t2s = filter (\t -> isCoreArg t || t `elem` e2s) (subtrees t2)
+      where e2s = map snd subErrors
