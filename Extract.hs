@@ -49,15 +49,19 @@ isCoreArg (RTree n ts) = udDEPREL n `elem` coreArgs
 -- | Remove non-discrepant non-core arguments from an error
 -- NOTE: this is nonrecursive, as I think recursion is not needed and may 
 -- even be harmful, but I am not completely sure
+-- NOTE: not sure this works with all the word order errors
 pruned :: Error -> Error
 pruned (t1,t2) = (RTree (root t1) t1s, RTree (root t2) t2s)
   where
-    subErrors = filter morphosynCorrect subAlignments
+    subErrors = filter (not . morphosynCorrect) subAlignments
       -- NOTE: re-aligning is not efficient but passing all the alignments 
       -- around is annoying. Maybe one day with the state monad?
       where subAlignments = 
               align (udTree2adjustedSentence t1,udTree2adjustedSentence t2)
-    t1s = filter (\t -> isCoreArg t || t `elem` e1s) (subtrees t1)
-      where e1s = map fst subErrors
-    t2s = filter (\t -> isCoreArg t || t `elem` e2s) (subtrees t2)
-      where e2s = map snd subErrors
+    -- NOTE: comparing patterns rather than the trees themselves to prevent 
+    -- the adjustment of IDs from causing problems in the comparison implicit
+    -- with the use of elem  
+    t1s = filter (\t -> isCoreArg t || (udTree2udPattern t) `elem` p1s) (subtrees t1)
+      where p1s = map (udTree2udPattern . fst) subErrors
+    t2s = filter (\t -> isCoreArg t || (udTree2udPattern t) `elem` p2s) (subtrees t2)
+      where p2s = map (udTree2udPattern . snd) subErrors
