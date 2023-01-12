@@ -48,16 +48,8 @@ simplifyUDPattern :: UDPattern -> [ColumnName] -> UDPattern
 simplifyUDPattern (AND [TREE n ts, SEQUENCE ns]) cols = AND [
   simplifyUDPattern (TREE n ts) cols, 
   simplifyUDPattern (SEQUENCE ns) cols]
-simplifyUDPattern (AND vals) cols = AND $ 
-  -- there must be a better way that can be applied repeatedly but I'm tired
-  catMaybes [
-    if "FORM" `elem` cols then Just $ vals !! 0 else Nothing,
-    if "LEMMA" `elem` cols then Just $ vals !! 1 else Nothing,
-    if "POS" `elem` cols then Just $ vals !! 2 else Nothing,
-    if "XPOS" `elem` cols then Just $ vals !! 3 else Nothing,
-    if "FEATS" `elem` cols then Just $ vals !! 4 else Nothing,
-    if "DEPREL" `elem` cols then Just $ vals !! 5 else Nothing
-  ]
+simplifyUDPattern (AND vals) cols = 
+  AND $ mapMaybe (\col -> find (\val -> col `isPrefixOf` show val) vals) cols
 simplifyUDPattern (TREE n ts) cols = 
   TREE (simplifyUDPattern n cols) (map (`simplifyUDPattern` cols) ts)
 simplifyUDPattern (SEQUENCE ns) cols = 
@@ -67,4 +59,9 @@ simplifyUDPattern p _ = p
 -- | Shorthand for getting the morphosyntactic (POS + XPOS + FEATS + DEPREL)  
 -- UD pattern corresponding to a "full" UD pattern
 morphosynUDPattern :: UDPattern -> UDPattern
-morphosynUDPattern = (flip simplifyUDPattern) morphosynColumns
+morphosynUDPattern = flip simplifyUDPattern morphosynColumns
+
+-- | Shorthand for getting the "universal" morphosyntactic (POS + FEATS +   
+-- DEPREL) UD pattern corresponding to a "full" UD pattern
+uniMorphosynUDPattern :: UDPattern -> UDPattern
+uniMorphosynUDPattern = flip simplifyUDPattern (morphosynColumns \\ ["XPOS"])
