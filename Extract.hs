@@ -14,7 +14,7 @@ import Errors
 extract :: [Alignment] -> [Error]
 extract = smallest . morphosynErrors
   where 
-    morphosynErrors = filter (not . morphosynCorrect)
+    morphosynErrors = filter (not . correct)
     smallest as = 
       filter (\(t1,t2) -> noSuperTrees t1 t1s || noSuperTrees t2 t2s) as
       where 
@@ -35,4 +35,5 @@ correct (s1,s2) = prUDTreeString s1 == prUDTreeString s2
 -- NOTE on implementation: the hacky way I implemented this is to compare the
 -- corresponding simplified (cf. simplifyUDPattern) UD patterns in HST 
 morphosynCorrect :: Alignment -> Bool 
-morphosynCorrect (s1,s2) = morphosynUDPattern s1 == morphosynUDPattern s2
+morphosynCorrect (s1,s2) = morphosynUDPattern t1 == morphosynUDPattern t2
+  where (t1,t2) = (udTree2udPattern s1,udTree2udPattern s2)
