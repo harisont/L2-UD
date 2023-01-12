@@ -51,17 +51,21 @@ isCoreArg (RTree n ts) = udDEPREL n `elem` coreArgs
 -- even be harmful, but I am not completely sure
 -- NOTE: not sure this works with all the word order errors
 pruned :: Error -> Error
-pruned (t1,t2) = (RTree (root t1) t1s, RTree (root t2) t2s)
+pruned (t1,t2) = (RTree (root t1) (prune t1 p1s), RTree (root t2) (prune t2 p2s))
   where
-    subErrors = filter (not . morphosynCorrect) subAlignments
-      -- NOTE: re-aligning is not efficient but passing all the alignments 
-      -- around is annoying. Maybe one day with the state monad?
-      where subAlignments = 
-              align (udTree2adjustedSentence t1,udTree2adjustedSentence t2)
     -- NOTE: comparing patterns rather than the trees themselves to prevent 
     -- the adjustment of IDs from causing problems in the comparison implicit
     -- with the use of elem  
-    t1s = filter (\t -> isCoreArg t || (udTree2udPattern t) `elem` p1s) (subtrees t1)
-      where p1s = map (udTree2udPattern . fst) subErrors
-    t2s = filter (\t -> isCoreArg t || (udTree2udPattern t) `elem` p2s) (subtrees t2)
-      where p2s = map (udTree2udPattern . snd) subErrors
+    prune t ps = filter 
+                  (\t -> isCoreArg t || (udTree2udPattern t) `elem` ps)
+                  (subtrees t)
+    (p1s,p2s) = unzip ps
+      where ps = map error2Pattern es
+              where es = filter (not . morphosynCorrect) as
+                      -- NOTE: re-aligning is not efficient but passing all 
+                      -- the alignments around is annoying. Maybe one day 
+                      -- with the state monad?
+                      where as = align (
+                                  udTree2adjustedSentence t1,
+                                  udTree2adjustedSentence t2
+                                  )
