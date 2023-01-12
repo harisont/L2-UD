@@ -18,7 +18,7 @@ extract = map pruned . smallest . morphosynErrors
     smallest as = 
       filter (\(t1,t2) -> noSuperTrees t1 t1s || noSuperTrees t2 t2s) as
       where 
-        noSuperTrees t ts = not $ any (\t' -> isSubRTree t' t) (ts \\ [t])
+        noSuperTrees t ts = not $ any (`isSubRTree` t) (ts \\ [t])
         (t1s,t2s) = unzip as
     patterns = map (\(t1,t2) -> (udTree2udPattern t1, udTree2udPattern t2))
 
@@ -57,7 +57,7 @@ pruned (t1,t2) = (RTree (root t1) (prune t1 p1s), RTree (root t2) (prune t2 p2s)
     -- the adjustment of IDs from causing problems in the comparison implicit
     -- with the use of elem  
     prune t ps = filter 
-                  (\t -> isCoreArg t || (udTree2udPattern t) `elem` ps)
+                  (\t -> isCoreArg t || udTree2udPattern t `elem` ps)
                   (subtrees t)
     (p1s,p2s) = unzip ps
       where ps = map error2Pattern es
