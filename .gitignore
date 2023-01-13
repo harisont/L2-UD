@@ -1,4 +1,4 @@
 # Haskell artifacts
 .stack-work/*
 stack.yaml.lock
-out/*
+out/*data/
