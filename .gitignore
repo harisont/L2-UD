@@ -1,5 +1,3 @@
-*.txt
-
 # Haskell artifacts
 .stack-work/*
 stack.yaml.lock
