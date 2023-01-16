@@ -1,6 +1,0 @@
-TREE (AND [FORM "bodde",LEMMA "bo",POS "VERB",XPOS "VB|PRT|AKT",FEATS "Mood=Ind|Tense=Past|VerbForm=Fin|Voice=Act",DEPREL "root"]) [AND [FORM "jag",LEMMA "jag",POS "PRON",XPOS "PN|UTR|SIN|DEF|SUB",FEATS "Case=Nom|Definite=Def|Gender=Com|Number=Sing|PronType=Prs",DEPREL "nsubj"]]
-AND [FORM "kom",LEMMA "komma",POS "VERB",XPOS "VB|PRT|AKT",FEATS "Mood=Ind|Tense=Past|VerbForm=Fin|Voice=Act",DEPREL "advcl"]
-AND [FORM "sn\228ll",LEMMA "sn\228ll",POS "ADJ",XPOS "JJ|POS|UTR|SIN|IND|NOM",FEATS "Case=Nom|Definite=Ind|Degree=Pos|Gender=Com|Number=Sing",DEPREL "xcomp"]
-AND [FORM "muntlig",LEMMA "muntlig",POS "ADJ",XPOS "JJ|POS|UTR|SIN|IND|NOM",FEATS "Case=Nom|Definite=Ind|Degree=Pos|Gender=Com|Number=Sing",DEPREL "conj"]
-AND [FORM "de",LEMMA "de",POS "PRON",XPOS "PN|UTR/NEU|PLU|DEF|SUB",FEATS "Case=Nom|Definite=Def|Number=Plur|PronType=Prs",DEPREL "obl"]
-AND [FORM "spr\229k",LEMMA "spr\229k",POS "NOUN",XPOS "NN|NEU|SIN|IND|NOM",FEATS "Case=Nom|Definite=Ind|Gender=Neut|Number=Sing",DEPREL "nsubj"]

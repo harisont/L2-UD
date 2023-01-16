@@ -1,2 +1,0 @@
-il ||| suo (they are both dets in the same subtree at the same level)
-suo ||| un (?!? they are at the same level but do not belong to the same subtree!)
