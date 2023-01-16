@@ -1,0 +1,6 @@
+TREE (AND [FORM "bodde",LEMMA "bo",POS "VERB",XPOS "VB|PRT|AKT",FEATS "Mood=Ind|Tense=Past|VerbForm=Fin|Voice=Act",DEPREL "root"]) [AND [FORM "jag",LEMMA "jag",POS "PRON",XPOS "PN|UTR|SIN|DEF|SUB",FEATS "Case=Nom|Definite=Def|Gender=Com|Number=Sing|PronType=Prs",DEPREL "nsubj"]]
+TREE (AND [FORM "kom",LEMMA "komma",POS "VERB",XPOS "VB|PRT|AKT",FEATS "Mood=Ind|Tense=Past|VerbForm=Fin|Voice=Act",DEPREL "advcl"]) [AND [FORM "jag",LEMMA "jag",POS "PRON",XPOS "PN|UTR|SIN|DEF|SUB",FEATS "Case=Nom|Definite=Def|Gender=Com|Number=Sing|PronType=Prs",DEPREL "nsubj"]]
+AND [FORM "sn\228llt",LEMMA "sn\228ll",POS "ADV",XPOS "AB|POS",FEATS "Degree=Pos",DEPREL "advmod"]
+AND [FORM "muntligt",LEMMA "muntlig",POS "ADJ",XPOS "JJ|POS|NEU|SIN|IND|NOM",FEATS "Case=Nom|Definite=Ind|Degree=Pos|Gender=Neut|Number=Sing",DEPREL "conj"]
+AND [FORM "dem",LEMMA "de",POS "PRON",XPOS "PN|UTR/NEU|PLU|DEF|OBJ",FEATS "Case=Acc|Definite=Def|Number=Plur|PronType=Prs",DEPREL "obl"]
+AND [FORM "spr\229ket",LEMMA "spr\229k",POS "NOUN",XPOS "NN|NEU|SIN|DEF|NOM",FEATS "Case=Nom|Definite=Def|Gender=Neut|Number=Sing",DEPREL "nsubj"]
