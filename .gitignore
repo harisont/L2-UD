@@ -3,3 +3,5 @@
 stack.yaml.lock
 out/*data/
 data/
+
+out/*
