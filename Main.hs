@@ -20,6 +20,7 @@ main = do
       createDirectoryIfMissing True "out" -- just in case it's needed later
       s1s <- parseUDFile (args !! 1)
       s2s <- parseUDFile (args !! 2)
+      let ids = map sentId s1s `zip` map sentId s2s
       -- align sentences
       let as = map align (zip s1s s2s) 
       case head args of
@@ -41,14 +42,17 @@ main = do
               writeFile "out/L1.conllu" (unlines $ [prUDSentence n (udTree2sentence t) | (n, t) <- [1 .. ] `zip` l1t])
               writeFile "out/L2.conllu" (unlines $ [prUDSentence n (udTree2sentence t) | (n, t) <- [1 .. ] `zip` l2t])
         "extract" -> do
-          let es = concat $ map extract as
+          let ess = map extract as
           if Linearize `elem` flags
-            then mapM_ (putStrLn . linearizeError) es
+            then do
+              let lines = concatMap showSentErrors (ess `zip` ids) 
+              mapM_ putStrLn lines 
             else do
-              let ps = map error2Pattern es
+              let ps = map error2Pattern (concat ess)
               let (p1s,p2s) = unzip ps
               writeFile "out/L1.hst" (unlines $ map show p1s)
               writeFile "out/L2.hst" (unlines $ map show p2s)
+  where showSentErrors (es, (i1,i2)) = map (\e -> (if i1 == i2 then i1 else i1 ++ "-" ++ i2) ++ ": " ++ linearizeError e) es
 
 -- COMMAND LINE OPTIONS PARSING
 
