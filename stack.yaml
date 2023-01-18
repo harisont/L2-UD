@@ -12,7 +12,7 @@ extra-deps:
 - github: GrammaticalFramework/gf-ud
   commit: 1a4a8c1ac08c02895fa886ca20e5e7a706f484e2
 - github: harisont/concept-alignment
-  commit: 51464c8d92c9a0de0d7f2dd9337ac10b7626d08e
+  commit: 5d7718ecdad05001b68b68ec42094d399fdef508 # l2-ud branch
 
 flags:
   gf:
