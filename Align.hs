@@ -16,7 +16,7 @@ mkCriterion f = C f (singleton UNKNOWN) False False
 
 -- | List of criteria used by align, sorted by priority
 criteria :: [Criterion]
-criteria = [udpos, ud, divs, pass, pos]
+criteria = [udpos, ud, divs, pos]
 
 {- Functions used in criteria -}
 
@@ -68,22 +68,9 @@ nsubjObl :: UDTree -> UDTree -> Bool
 nsubjObl t u = t `isLabelled` "nsubj" && u `isLabelled` "obl"
              && t `posEquiv` u
 
--- | The sentence in the TL is passive and its translation is active:
--- passive subject becomes object
-passSubjObj :: UDTree -> UDTree -> Bool
--- t's label is checked subtypes included, so isLabelled can't be used
-passSubjObj t u = udDEPREL (root t) == "nsubj:pass" && u `isLabelled` "obj"
-              && t `posEquiv` u
-
--- | The sentence in the TL is passive and its translation is active:
--- agent becomes subject
-passOblSubj :: UDTree -> UDTree -> Bool
-passOblSubj t u = t `isLabelled` "obl" && u `isLabelled` "nsubj"
-                  && t `posEquiv` u
-
 {- Some language pair independent-ish criteria -}
 
-ud, pos, divs, udpos, pass :: Criterion
+ud, pos, divs, udpos :: Criterion
 ud = C udMatch (singleton UD) True False
 pos = C posEquiv (singleton POS) True False 
 udpos = 
@@ -98,9 +85,6 @@ divs = C (\t u ->
     amodNmod t u, amodNmod u t,
     amodAdvmod t u, amodAdvmod u t
   ]) (singleton DIV) False False
-pass = C (\t u -> or [passSubjObj t u, passSubjObj u t,
-                      passOblSubj t u, passOblSubj u t]) 
-          (fromList [PASS, DIV]) True False
 
 -- | Exact same root token
 sameToken :: UDTree -> UDTree -> Bool
