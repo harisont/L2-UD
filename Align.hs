@@ -48,7 +48,7 @@ t1 `posEquiv` t2 = (not . null) ct1 && (ct1 == ct2)
 -- reason decided to use in concept-alignment
 align :: (UDSentence,UDSentence) -> [Alignment]
 align ss = map (\a -> (sl a,tl a)) as
-  where as = toList $ alignSent empty criteria Nothing False True False ss
+  where as = toList $ alignSent empty criteria Nothing False False False ss
 
 -- | Linearize matches, aka pairs of aligned UD (sub)sentences 
 linearizeAlignment :: Alignment -> String
