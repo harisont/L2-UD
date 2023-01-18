@@ -16,7 +16,7 @@ mkCriterion f = C f (singleton UNKNOWN) False False
 
 -- | List of criteria used by align, sorted by priority
 criteria :: [Criterion]
-criteria = [udpos, ud, pass, pos]
+criteria = [udpos, ud, divs, pass, pos]
 
 {- Functions used in criteria -}
 
