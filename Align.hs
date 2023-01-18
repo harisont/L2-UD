@@ -16,7 +16,7 @@ mkCriterion f = C f (singleton UNKNOWN) False False
 
 -- | List of criteria used by align, sorted by priority
 criteria :: [Criterion]
-criteria = [udpos, ud, divs, pos]
+criteria = [udpos, ud, pos]
 
 {- Functions used in criteria -}
 
@@ -68,23 +68,11 @@ nsubjObl :: UDTree -> UDTree -> Bool
 nsubjObl t u = t `isLabelled` "nsubj" && u `isLabelled` "obl"
              && t `posEquiv` u
 
-{- Some language pair independent-ish criteria -}
-
-ud, pos, divs, udpos :: Criterion
+ud, pos, udpos :: Criterion
 ud = C udMatch (singleton UD) True False
 pos = C posEquiv (singleton POS) True False 
 udpos = 
   C (\t u -> udMatch t u && posEquiv t u) (fromList [UD,POS]) True True
-divs = C (\t u -> 
-  or [
-    advmodObl t u, advmodObl u t, 
-    objObl t u, objObl u t,
-    iobjObj t u, iobjObj u t,
-    nsubjObl t u, nsubjObl u t,
-    --iobjObl t u, iobjObl u t,
-    amodNmod t u, amodNmod u t,
-    amodAdvmod t u, amodAdvmod u t
-  ]) (singleton DIV) False False
 
 -- | Exact same root token
 sameToken :: UDTree -> UDTree -> Bool
