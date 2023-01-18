@@ -29,45 +29,6 @@ posEquiv :: UDTree -> UDTree -> Bool
 t1 `posEquiv` t2 = (not . null) ct1 && (ct1 == ct2)
   where (ct1, ct2) = (contentTags t1, contentTags t2)
   
--- | A an adverb is translated as a PP (structural divergence)
-advmodObl :: UDTree -> UDTree -> Bool
-advmodObl t u = t `isLabelled` "advmod" && u `isLabelled` "obl"
-                -- POS-equiv would be too strict here
-                && length (contentTags t) == length (contentTags u)
-
--- | An adjective is translated as a nmod (categorial divergence)
-amodNmod :: UDTree -> UDTree -> Bool
-amodNmod t u = t `isLabelled` "amod" && u `isLabelled` "nmod"
-                && subtreesTags t == subtreesTags u 
-
--- | An adjective is translated as an adverb (categorial divergence)
-amodAdvmod :: UDTree -> UDTree -> Bool
-amodAdvmod t u = t `isLabelled` "amod" && u `isLabelled` "advmod"
-                && subtreesTags t == subtreesTags u
-
--- | A verb is transitive in the SL but not in the TL
--- (structural divergences regarding object)
-objObl :: UDTree -> UDTree -> Bool
-objObl t u = t `isLabelled` "obj" && u `isLabelled` "obl"
-             && t `posEquiv` u
-
--- | The indirect object of a verb in the SL is rendered as a PP in the TL
--- (structural divergences regarding indirect object)
-iobjObl :: UDTree -> UDTree -> Bool
-iobjObl t u = t `isLabelled` "iobj" && u `isLabelled` "obl"
-              && t `posEquiv` u
-
--- | The indirect object of a sentence is the object in its translation
-iobjObj :: UDTree -> UDTree -> Bool
-iobjObj t u = t `isLabelled` "iobj" && u `isLabelled` "obj"
-             && t `posEquiv` u
-
--- | A verb is transitive in the SL but not in the TL
--- (structural divergences regarding subject)
-nsubjObl :: UDTree -> UDTree -> Bool
-nsubjObl t u = t `isLabelled` "nsubj" && u `isLabelled` "obl"
-             && t `posEquiv` u
-
 ud, pos, udpos :: Criterion
 ud = C udMatch (singleton UD) True False
 pos = C posEquiv (singleton POS) True False 
