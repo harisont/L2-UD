@@ -62,12 +62,13 @@ main = do
 
 -- | Render matches as markdown
 sentMatches2md :: ((UDSentence,UDSentence),[Alignment]) -> String
-sentMatches2md (s12@(s1,s2),as) = unlines $ map match2md as
+sentMatches2md (s12@(s1,s2),as) = unlines [
+  "## Sentence " ++ showIds s12 ++ ":",
+  "| L1 | L2 |",
+  "| --- | --- |"
+  ] ++ unlines (map match2md as)
   where
-    match2md (t1,t2) = "## Sentence " ++ showIds s12 ++ ":\n" ++ unlines [
-                                "- L1: " ++ words2md t1 w1s,
-                                "- L2: " ++ words2md t2 w2s
-                                ]
+    match2md (t1,t2) = "|" ++ words2md t1 w1s ++ "|" ++ words2md t2 w2s ++ "|"
       where
         (w1s,w2s) = (udWordLines s1, udWordLines s2)
         words2md t ws = unwords $ map (word2md t) ws
