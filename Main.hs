@@ -21,8 +21,9 @@ main = do
       s1s <- parseUDFile (args !! 1)
       s2s <- parseUDFile (args !! 2)
       let ids = map sentId s1s `zip` map sentId s2s
+      let s12s = s1s `zip` s2s
       -- align sentences
-      let as = map align (zip s1s s2s) 
+      let as = map align s12s 
       case head args of
         "match" -> do
           -- read query from text file or command line
@@ -33,12 +34,14 @@ main = do
               return $ lines content
             else return $ drop 3 args
           -- get matching alignments
-          -- TODO: there should be a way to retreive the full sentences too
-          let ms = match (concat as) qs 
+          let mss = map ((flip match) qs) as
           if Linearize `elem` flags
-            then mapM_ (putStrLn . linearizeAlignment) ms
+            then do 
+              -- get sentence-match pairs for sentences that do have a match
+              let smss = filter (not . null . snd) (s12s `zip` mss)
+              mapM_ putStrLn (map sentMatches2md (smss))
             else do
-              let (l1t,l2t) = unzip ms
+              let (l1t,l2t) = unzip (concat mss)
               writeFile "out/L1.conllu" (unlines $ [prUDSentence n (udTree2sentence t) | (n, t) <- [1 .. ] `zip` l1t])
               writeFile "out/L2.conllu" (unlines $ [prUDSentence n (udTree2sentence t) | (n, t) <- [1 .. ] `zip` l2t])
         "extract" -> do
@@ -52,7 +55,31 @@ main = do
               let (p1s,p2s) = unzip ps
               writeFile "out/L1.hst" (unlines $ map show p1s)
               writeFile "out/L2.hst" (unlines $ map show p2s)
+              -- TODO: use showIds here
   where showSentErrors (es, (i1,i2)) = map (\e -> (if i1 == i2 then i1 else i1 ++ "-" ++ i2) ++ ": " ++ linearizeError e) es
+
+-- OUTPUT FUNCTIONS
+
+-- | Render matches as markdown
+sentMatches2md :: ((UDSentence,UDSentence),[Alignment]) -> String
+sentMatches2md (s12@(s1,s2),as) = unlines $ map match2md as
+  where
+    match2md (t1,t2) = "## Sentence " ++ showIds s12 ++ ":\n" ++ unlines [
+                                "- L1: " ++ words2md t1 w1s,
+                                "- L2: " ++ words2md t2 w2s
+                                ]
+      where
+        (w1s,w2s) = (udWordLines s1, udWordLines s2)
+        words2md t ws = unwords $ map (word2md t) ws
+        word2md t w = if w `elem` tws then "**" ++ form ++ "**" else form
+          where 
+            form = udFORM w
+            tws = udWordLines $ udTree2sentence t
+
+-- | Show the ID(s) of two parallel sentences
+showIds :: (UDSentence,UDSentence) -> String
+showIds (s1,s2) = if i1 == i2 then i1 else i1 ++ "-" ++ i2
+  where (i1,i2) = (sentId s1,sentId s2)
 
 -- COMMAND LINE OPTIONS PARSING
 
