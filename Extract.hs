@@ -1,6 +1,5 @@
 module Extract where
 
-import Data.List
 import RTree
 import UDConcepts
 import UDPatterns
@@ -15,11 +14,6 @@ extract :: [Alignment] -> [Error]
 extract = map pruned . smallest . morphosynErrors
   where 
     morphosynErrors = filter (not . morphosynCorrect)
-    smallest as = 
-      filter (\(t1,t2) -> noSuperTrees t1 t1s || noSuperTrees t2 t2s) as
-      where 
-        noSuperTrees t ts = not $ any (`isSubRTree` t) (ts \\ [t])
-        (t1s,t2s) = unzip as
     patterns = map (\(t1,t2) -> (udTree2udPattern t1, udTree2udPattern t2))
 
 -- | Check if an alignment contains any discrepancy, i.e. an error of any kind
