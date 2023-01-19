@@ -55,10 +55,12 @@ align ss = map (\a -> (sl a,tl a)) as
 linearizeAlignment :: Alignment -> String
 linearizeAlignment (s1,s2) = prUDTreeString s1 ++ " - " ++ prUDTreeString s2
   
--- | Discard non-minimal alignments
+-- | Only keep minimal alignments
 smallest :: [Alignment] -> [Alignment]
 smallest as = 
-  filter (\(t1,t2) -> noSuperTrees t1 t1s || noSuperTrees t2 t2s) as
-      where 
-        noSuperTrees t ts = not $ any (`isSubRTree` t) (ts \\ [t])
-        (t1s,t2s) = unzip as
+  filter 
+    (\a@(t1,t2) -> let as' = as \\ [a] in
+      not $ any (\(t1',t2') -> t1' `isSubRTree` t1 && t2' `isSubRTree` t2 && isOtherwiseCorrect t1 t1' t2 t2') as' 
+    )
+    as
+    where isOtherwiseCorrect t1 t1' t2 t2' = (udWordLines . udTree2sentence) t1 \\ (udWordLines . udTree2sentence) t1' == (udWordLines . udTree2sentence) t2 \\ (udWordLines . udTree2sentence) t2'
