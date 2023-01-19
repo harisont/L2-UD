@@ -37,6 +37,10 @@ udTree2udPattern (RTree n ts) = AND [
 error2Pattern :: Error -> ErrorPattern
 error2Pattern (e1,e2) = (udTree2udPattern e1,udTree2udPattern e2)
 
+-- | Show an error pattern as a single "L1-L2" pattern ({A -> B} syntax)
+showL1L2Pattern :: ErrorPattern -> String
+showL1L2Pattern (p1,p2) = "{" ++ show p1 ++ " -> " ++ show p2 ++ "}"
+
 type ColumnName = String -- name of a UD column
 
 morphosynColumns :: [ColumnName]
