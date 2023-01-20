@@ -1,0 +1,2 @@
+SEQUENCE [POS "ADP", AND [POS "PRON", FEATS_ "Case={Acc->Nom}"]]
+SEQUENCE [POS "ADP", AND [POS "PRON", FEATS_ "Case={Nom->Acc}"]]
