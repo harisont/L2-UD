@@ -9,7 +9,7 @@ import Errors
 
 -- | Top-level pattern matching function used in the main
 match :: [Alignment] -> [String] -> [Alignment]
-match as qs = filter (\a -> any (\p -> a `matches` p) ps) (smallest as) 
+match as qs = filter (\a -> any (\p -> a `matches` p) ps) (minimal as) 
   where 
     ps = map parseQuery qs
 

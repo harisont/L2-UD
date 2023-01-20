@@ -11,7 +11,7 @@ import Utils
 -- The input is the list of alignments obtained for a single L1-L2 sentence,
 -- the output is a list of errors
 extract :: [Alignment] -> [Error]
-extract = map pruned . smallest . morphosynErrors
+extract = map pruned . minimal . morphosynErrors
   where 
     morphosynErrors = filter (not . morphosynCorrect)
     patterns = map (\(t1,t2) -> (udTree2udPattern t1, udTree2udPattern t2))
