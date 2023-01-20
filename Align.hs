@@ -60,7 +60,6 @@ minimal :: [Alignment] -> [Alignment]
 minimal as = 
   filter 
     (\a@(t1,t2) -> let as' = as \\ [a] in
-      not $ any (\(t1',t2') -> t1' `isSubRTree` t1 && t2' `isSubRTree` t2 && isOtherwiseCorrect t1 t1' t2 t2') as' 
+      not $ any (\(t1',t2') -> t1' `isSubRTree` t1 && t2' `isSubRTree` t2) as' 
     )
     as
-    where isOtherwiseCorrect t1 t1' t2 t2' = (udWordLines . udTree2sentence) t1 \\ (udWordLines . udTree2sentence) t1' == (udWordLines . udTree2sentence) t2 \\ (udWordLines . udTree2sentence) t2'
