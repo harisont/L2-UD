@@ -1,0 +1,1 @@
+SEQUENCE {[DEPREL_ "nsubj", OR [POS "VERB", POS "AUX"]]->[OR [POS "AUX", POS "VERB"], DEPREL_ "nsubj"]}

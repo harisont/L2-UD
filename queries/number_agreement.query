@@ -1,0 +1,4 @@
+TREE_ {(FEATS_ "Number=Sing") [FEATS_ "Number=Sing"] -> (FEATS_ "Number=Plur") [FEATS_ "Number=Sing"]}
+TREE_ {(FEATS_ "Number=Plur") [FEATS_ "Number=Plur"] -> (FEATS_ "Number=Plur") [FEATS_ "Number=Sing"]}
+TREE_ {(FEATS_ "Number=Sing") [FEATS_ "Number=Sing"] -> (FEATS_ "Number=Sing") [FEATS_ "Number=Plur"]}
+TREE_ {(FEATS_ "Number=Plur") [FEATS_ "Number=Plur"] -> (FEATS_ "Number=Sing") [FEATS_ "Number=Plur"]}
