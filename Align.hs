@@ -1,5 +1,6 @@
 module Align where -- ConceptAlignment wrapper
 
+import Data.List
 import Data.Map (toList, empty)
 import Data.Set (singleton, fromList)
 import RTree
@@ -54,3 +55,11 @@ align ss = map (\a -> (sl a,tl a)) as
 linearizeAlignment :: Alignment -> String
 linearizeAlignment (s1,s2) = prUDTreeString s1 ++ " - " ++ prUDTreeString s2
   
+-- | Only keep minimal alignments
+minimal :: [Alignment] -> [Alignment]
+minimal as = 
+  filter 
+    (\a@(t1,t2) -> let as' = as \\ [a] in
+      not $ any (\(t1',t2') -> t1' `isSubRTree` t1 && t2' `isSubRTree` t2) as' 
+    )
+    as

@@ -30,20 +30,19 @@ Some more example patterns:
 Return the [error patterns](#l1-l2-error-patterns) contained in a parallel L1-L2 treebank.
 
 ```
-stack run -- extract L1-TREEBANK L2-TREEBANK [--linearize]
+stack run -- extract L1-TREEBANK L2-TREEBANK [--markdown]
 ```
 Note that:
 
 - the L1 treebank contains corrections
 - the L2 treebank contains the original learner sentences
-- by default, the program creates two output `.hst` files named `L1.hst` and `L2.hst` in the `out` directory, which is created automatically if not present. The first (resp. second) file contains the L1 (resp. L2) portion of each extracted error pattern
-- running `extract` with the `--linearize` flag prints the linearizations of all the morphosyntactic errors the program detects to the standard output
+- running `extract` with the `--markdown` flag outputs a markdown report instead of just the list of extracted L1-L2 patterns
 
 ## Querying parallel L1-L2 treebanks
 Given a parallel L1-L2 treebank and one or more [error patterns](#l1-l2-error-patterns), return the set of sentences containing errors matching the pattern.
 
 ```
-stack run -- match L1-TREEBANK L2-TREEBANK PATTERNS [--linearize]
+stack run -- match L1-TREEBANK L2-TREEBANK PATTERNS [--markdown]
 ```
 
 Note that:
@@ -51,7 +50,6 @@ Note that:
 - again, the L1 treebank contains corrections while the L2 treebank contains the original learner sentences
 - the two treebanks should be parallel, i.e. sentence-aligned
 - `PATTERNS` is a list of space-separated L1-L2 query patterns (see [above](#l1-l2-error-patterns)) or the path to a file containing an L1-L2 pattern per line (see the [saved queries folder](queries) for examples).
-- by default, the program creates two output CoNNL-U files named `L1.conllu` and `L2.conllu` in the `out` directory, which is created automatically if not present
-- running `match` with the `--linearize` flag causes the program to print the linearizations of the errors matching the patterns to the standard output
+- running `match` with the `--markdown` flag outputs a markdown report instead of just the list of IDs of the sentences matching the L1-L2 patterns
 
 [^1]: The syntax of `gf-ud`'s pattern matching language is described extensively [here](https://github.com/GrammaticalFramework/gf-ud/blob/master/doc/patterns.md).
