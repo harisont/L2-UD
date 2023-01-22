@@ -1,1 +1,1 @@
-SEQUENCE {[DEPREL_ "nsubj", OR [POS "VERB", POS "AUX"]]->[OR [POS "AUX", POS "VERB"], DEPREL_ "nsubj"]}
+SEQUENCE [OR [DEPREL_ "advcl", DEPREL_ "advmod"], {OR [POS "VERB", POS "AUX"], DEPREL_ "nsubj"->DEPREL_ "nsubj", OR [POS "VERB", POS "AUX"]}]
