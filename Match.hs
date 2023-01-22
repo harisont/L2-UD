@@ -55,13 +55,18 @@ matchesUDPattern p tree@(RTree node subtrees) = case p of
   where
     -- | Of a tree matching a pattern, only keep the portion that is actually
     -- involved in the match by filtering subtrees
+    -- TODO: should this be recursive, actually?
     pruneWithPattern :: UDPattern -> UDTree -> UDTree
     pruneWithPattern p t = case p of
       (TREE p ps) -> filterSubtrees t p ps
       (TREE_ p ps) -> filterSubtrees t p ps
-      _ -> t -- TODO: SEQUENCE? 
-      where filterSubtrees t p ps = fst $ replacementsWithUDPattern r t
-              where r = FILTER_SUBTREES p (OR ps)
+      (SEQUENCE ps) -> filterTokens t ps 
+      (SEQUENCE_ ps) -> filterTokens t ps
+      _ -> t
+      where
+        filterTokens t = filterSubtrees t TRUE -- very hacky but hey
+        filterSubtrees t p ps = fst $ replacementsWithUDPattern r t
+          where r = FILTER_SUBTREES p (OR ps)
 
 -- | Parses a query string into an error pattern, simplifying any {X->Y}
 -- shorthand 
