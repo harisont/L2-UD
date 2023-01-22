@@ -19,11 +19,18 @@ match as qs = minimal $ concatMap (\a -> concatMap (matches a) ps) as
     -- Note that checking if an alignment matches an error pattern crucially 
     -- implies to make sure that the matching portions are actually aligned 
     -- with each other, meaning that their subtrees should belong to a 
-    -- (smaller) alignment  
+    -- (smaller) alignment obtained previously
     matches :: Alignment -> ErrorPattern -> [Alignment]
-    matches (t1,t2) (p1,p2) = [(m1,m2) | m1 <- m1s, m2 <- m2s, 
-                                         m1 `aligned` m2]
+    matches (t1,t2) (p1,p2) = [pruneAlignment (m1,m2) | m1 <- m1s, m2 <- m2s, 
+                                              m1 `aligned` m2]
       where
+        pruneAlignment (RTree n1 t1s,RTree n2 t2s) = 
+          (RTree n1 t1s', RTree n2 t2s') 
+          where 
+            -- I'm not completely clear in my mind but this seems to work?
+            (t1s',t2s') = unzip [(t1,t2) | t1 <- t1s, t2 <- t2s,
+                                           n1 /= n2 || t1 /= t2,
+                                           (t1,t2) `elem` as]
         (m1s,m2s) = (matchesUDPattern p1 t1,matchesUDPattern p2 t2)
         m1 `aligned` m2 = 
           -- using or because if something is aligned it already means we
@@ -41,15 +48,15 @@ match as qs = minimal $ concatMap (\a -> concatMap (matches a) ps) as
 matchesUDPattern :: UDPattern -> UDTree -> [UDTree]
 matchesUDPattern p tree@(RTree node subtrees) = case p of
   SEQUENCE ps  -> 
-    map (pruneWith p) (maybe [] return $ findMatchingUDSequence True ps tree)
+    map (pruneWithPattern p) (maybe [] return $ findMatchingUDSequence True ps tree)
   SEQUENCE_ ps  -> 
-    map (pruneWith p) (maybe [] return $ findMatchingUDSequence False ps tree)
-  _ -> [pruneWith p tree | ifMatchUDPattern p tree]
+    map (pruneWithPattern p) (maybe [] return $ findMatchingUDSequence False ps tree)
+  _ -> [pruneWithPattern p tree | ifMatchUDPattern p tree]
   where
     -- | Of a tree matching a pattern, only keep the portion that is actually
     -- involved in the match by filtering subtrees
-    pruneWith :: UDPattern -> UDTree -> UDTree
-    pruneWith p t = case p of
+    pruneWithPattern :: UDPattern -> UDTree -> UDTree
+    pruneWithPattern p t = case p of
       (TREE p ps) -> filterSubtrees t p ps
       (TREE_ p ps) -> filterSubtrees t p ps
       _ -> t -- TODO: SEQUENCE? 
