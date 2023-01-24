@@ -18,12 +18,12 @@ criteria = [udposlemma, udpos, lemma, ud, pos]
 {- Functions used in criteria -}
   
 ud, pos, lemma, udpos, udposlemma :: Criterion
-ud = C sameSimpleDeprel (singleton UD) True False
-pos = C posEquiv (singleton POS) True False 
-lemma = C lemmaEquiv (singleton LEMMA) True False
+ud = C sameSimpleDeprel (singleton UD) False False
+pos = C posEquiv (singleton POS) False False 
+lemma = C lemmaEquiv (singleton LEMMA) False False
 udpos = 
-  C (\t u -> sameSimpleDeprel t u && posEquiv t u) (fromList [UD,POS]) True True
-udposlemma = C (\t u -> sameSimpleDeprel t u && posEquiv t u && lemmaEquiv t u) (fromList [UD,POS, LEMMA]) True True
+  C (\t u -> sameSimpleDeprel t u && posEquiv t u) (fromList [UD,POS]) False True
+udposlemma = C (\t u -> sameSimpleDeprel t u && posEquiv t u && lemmaEquiv t u) (fromList [UD,POS, LEMMA]) False True
 
 -- | Same word from
 sameForm :: UDTree -> UDTree -> Bool
@@ -49,7 +49,7 @@ t1 `posEquiv` t2 = (not . null) ct1 && (ct1 == ct2)
 -- reason decided to use in concept-alignment
 align :: (UDSentence,UDSentence) -> [Alignment]
 align ss = map (\a -> (sl a,tl a)) as
-  where as = toList $ alignSent empty criteria Nothing False True False ss
+  where as = toList $ alignSent empty criteria Nothing False False False ss
 
 -- | Linearize matches, aka pairs of aligned UD (sub)sentences 
 linearizeAlignment :: Alignment -> String
