@@ -37,16 +37,16 @@ main = do
           -- (l1-l2 sentence, nonempty list of aligned matching subtrees)
           let ms = filter 
                     (not . null . snd) 
-                    (s12s `zip` (map ((flip match) qs) as))
+                    (s12s `zip` map (`match` qs) as)
           if Markdown `elem` flags
-            then mapM_ putStrLn (map sentMatches2md ms)
-            else mapM_ putStrLn (map showIds (map fst ms))
+            then mapM_ (putStrLn . sentMatches2md) ms
+            else mapM_ ((putStrLn . showIds) . fst) ms
         "extract" -> do
           let ess = map extract as
           if Markdown `elem` flags
             then do
               let es = filter (not . null . snd) (s12s `zip` ess)
-              mapM_ putStrLn (map extractedErrs2md es)
+              mapM_ (putStrLn . extractedErrs2md) es
             else do
               let ps = rmDuplicates $ map error2Pattern (concat ess)
               mapM_ (putStrLn . showL1L2Pattern) ps
@@ -85,7 +85,8 @@ parseArgv argv usage opts = case getOpt Permute opts argv of
 
 -- | Linearize a sentence highlighting the token that belongs to a subsentence
 highlin :: UDSentence -> UDSentence -> String
-highlin s ss = unwords $ map (\w -> if w `elem` wss then bold (udFORM w) else udFORM w) ws
+highlin s ss = 
+  unwords $ map (\w -> if w `elem` wss then bold (udFORM w) else udFORM w) ws
   where 
     ws = udWordLines s
     wss = udWordLines ss
