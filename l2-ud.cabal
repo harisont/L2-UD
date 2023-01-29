@@ -23,5 +23,6 @@ executable l2-ud
         concept-alignment,
         regex-posix,
         split,
-        directory
+        directory,
+        filepath
     default-language: Haskell2010

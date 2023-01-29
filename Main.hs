@@ -1,5 +1,7 @@
 module Main where
-  
+
+import Data.Maybe
+import System.FilePath
 import System.Environment (getArgs)
 import System.Console.GetOpt
 import System.Directory
@@ -34,13 +36,23 @@ main = do
               return $ lines content
             else return $ drop 3 args
           -- get matches, i.e. pairs of 
-          -- (l1-l2 sentence, nonempty list of aligned matching subtrees)
+          -- (l1-l2 sentences, nonempty list of aligned matching subtrees)
           let ms = filter 
                     (not . null . snd) 
                     (s12s `zip` map (`match` qs) as)
           if Markdown `elem` flags
             then mapM_ (putStrLn . sentMatches2md) ms
             else mapM_ ((putStrLn . showIds) . fst) ms
+          case [f | f@CoNNLU {} <- flags] of
+            [CoNNLU path] -> do
+              let as = concatMap snd ms
+              writeFile 
+                (path </> "L1.conllu") 
+                (unlines $ map (conlluText . fst) as)
+              writeFile 
+                (path </> "L2.conllu") 
+                (unlines $ map (conlluText . snd) as)
+            _ -> return ()
         "extract" -> do
           let ess = map extract as
           if Markdown `elem` flags
@@ -50,11 +62,18 @@ main = do
             else do
               let ps = rmDuplicates $ map error2Pattern (concat ess)
               mapM_ (putStrLn . showL1L2Pattern) ps
+          case [f | f@CoNNLU {} <- flags] of
+            [CoNNLU path] -> undefined
+            _ -> return ()
 
 -- COMMAND LINE OPTIONS PARSING
 
 type Arg = String
-data Flag = Help | Markdown deriving Eq
+
+data Flag = Help | Markdown | CoNNLU String deriving Eq
+
+conlluOutDir :: Maybe String -> Flag
+conlluOutDir = CoNNLU . fromMaybe "." -- default = current folder
 
 -- | List of available commands (first arg)
 cmds :: [Arg]
@@ -67,7 +86,12 @@ opts = [
     ['m'] 
     ["markdown"] 
     (NoArg Markdown) 
-    "output a markdown report instead of sentence IDs/patterns"
+    "output a markdown report instead of sentence IDs/patterns",
+  Option 
+    ['c'] 
+    ["conllu"] 
+    (OptArg conlluOutDir "DIR") 
+    "path to the directory for the output conllu files"
   ]
 
 usage :: String
@@ -123,3 +147,6 @@ sentMatches2md (s12@(s1,s2),as) = unlines [
 showIds :: (UDSentence,UDSentence) -> String
 showIds (s1,s2) = if i1 == i2 then i1 else i1 ++ "-" ++ i2
   where (i1,i2) = (sentId s1,sentId s2)
+
+conlluText :: UDTree -> String
+conlluText = prReducedUDSentence "xxxxxxxx" . udTree2adjustedSentence
