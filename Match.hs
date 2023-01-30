@@ -4,7 +4,7 @@ import Data.Maybe
 import qualified Data.Map as M
 import Data.List
 import Data.List.Split (splitOn)
-import Data.List.Extra (replace)
+import Data.List.Extra (replace, anySame)
 import qualified Text.Regex.Posix as R
 import RTree
 import UDConcepts
@@ -16,7 +16,7 @@ import Utils
 
 -- | Top-level pattern matching function used in the main
 match :: [Alignment] -> [String] -> [Alignment]
-match as qs = error $ show $ ps--minimal $ concatMap (\a -> concatMap (matches a) ps) as 
+match as qs = minimal $ concatMap (\a -> concatMap (matches a) ps) as 
   where 
     ps = concatMap (parseQuery vals) qs 
     --VALS = (M.fromList [("POS", ["NOUN", "VERB"])])
@@ -29,7 +29,7 @@ match as qs = error $ show $ ps--minimal $ concatMap (\a -> concatMap (matches a
       -- TODO: ("FEATS", values udFEATS),
       -- TODO: add FEATS_
       ]
-    values f = take 2 (concatMap (\(t1,t2) -> rmDuplicates $ map f (allNodesRTree t1) ++ map f (allNodesRTree t2)) as) -- TODO: rm take
+    values f = concatMap (\(t1,t2) -> rmDuplicates $ map f (allNodesRTree t1) ++ map f (allNodesRTree t2)) as
     -- | Checks whether an alignment matches a particular error pattern. If it
     -- does, it returns the portions of the two aligned subtrees actually 
     -- matching the pattern.
@@ -115,16 +115,16 @@ parseQuery vals q = map (\(q1',q2') -> (read q1',read q2')) (expandVars (q1,q2) 
     --                then M.insertWith (++) ("FEATS_" ++ k) [v] m
     --                else m)
     --    (map (\f -> let [k,v] = splitOn "=" f in (k,v)) (splitOn "|" s))
-    variables m (AND ps) = M.unions (map (variables m) ps)
-    variables m (OR ps) = M.unions (map (variables m) ps)
+    variables m (AND ps) = M.unionsWith (++) (map (variables m) ps)
+    variables m (OR ps) = M.unionsWith (++) (map (variables m) ps)
     --variables m (ARG pos deprel) = TODO:
-    variables m (SEQUENCE ps) = M.unions (map (variables m) ps)
-    variables m (SEQUENCE_ ps) = M.unions (map (variables m) ps)
+    variables m (SEQUENCE ps) = M.unionsWith (++) (map (variables m) ps)
+    variables m (SEQUENCE_ ps) = M.unionsWith (++) (map (variables m) ps)
     variables m (NOT p) = variables m p
     variables m (TREE p ps) = 
-      M.unions ((variables m p):(map (variables m) ps))
+      M.unionsWith (++) (variables m p:map (variables m) ps)
     variables m (TREE_ p ps) = 
-      M.unions ((variables m p):(map (variables m) ps))
+      M.unionsWith (++) (variables m p:map (variables m) ps)
     variables m _ = m
 
     splitL1L2 s f = case s R.=~ "\\{([^}]*)\\}" :: (String,String,String) of
@@ -133,12 +133,14 @@ parseQuery vals q = map (\(q1',q2') -> (read q1',read q2')) (expandVars (q1,q2) 
       (before,match,after) ->
          before ++ f (splitOn "->" (tail $ init match)) ++ splitL1L2 after f
     
-    exps = concatMap (\(f,ids) -> map (\(i) -> (i, fromJust $ M.lookup f vals)) ids) (map (\(f,ids) -> (f,rmDuplicates ids)) (M.toList $ M.unionWith (++) (variables M.empty p1) (variables M.empty p2)))
+    vars =  map (\(f,ids) -> (f,rmDuplicates ids)) (M.toList $ M.unionWith (++) (variables M.empty p1) (variables M.empty p2))
+
+    exps = concatMap (\(f,ids) -> ids `zip` transpose (filter (not . anySame) (combinations (fromJust $ M.lookup f vals)))) vars 
     
-    expandVars (q1,q2) [] = [(q1,q2)]
-    expandVars (q1,q2) (e:es) =
-      -- TODO: this does NOT work with multiple variables 
-      filter (\(a,b) -> q1 == q2 || a /= b) (concatMap ((flip expandVars) es) (expandVar (q1,q2) e))
-      where expandVar (q1,q2) (i,vs) = 
-              map (\v -> (replace i v q1,replace i v q2)) vs
+    expandVars q [] = [q]
+    expandVars q es = replaceVars es (replicate (length $ snd $ head es) q)
+      where 
+        replaceVars [] qs = qs
+        replaceVars (e@(id,vs):es) qs = 
+          replaceVars es (zipWith (\v (q1,q2) -> (replace id v q1,replace id v q2)) vs qs)
         

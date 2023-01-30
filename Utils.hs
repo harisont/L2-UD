@@ -15,3 +15,6 @@ rmDuplicates :: Eq a => [a] -> [a]
 rmDuplicates [] = []
 rmDuplicates (x:xs) | x `elem` xs = rmDuplicates xs
                     | otherwise = x:rmDuplicates xs
+
+combinations :: [a] -> [[a]]
+combinations xs = sequence (replicate (length xs) xs)
