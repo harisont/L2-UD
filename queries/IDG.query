@@ -1,2 +1,1 @@
-TREE_ (FEATS_ "Gender=Masc") [AND [POS "DET", FEATS_ "Gender={Masc->Fem}"]]
-TREE_ (FEATS_ "Gender=Fem") [AND [POS "DET", FEATS_ "Gender={Fem->Masc}"]]
+TREE_ (FEATS_ "Gender=$A") [AND [POS "DET", FEATS_ "Gender={$A->$B}"]]

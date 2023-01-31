@@ -15,21 +15,10 @@ import Errors
 import Utils
 
 -- | Top-level pattern matching function used in the main
-match :: [Alignment] -> [String] -> [Alignment]
-match as qs = minimal $ concatMap (\a -> concatMap (matches a) ps) as 
+match :: M.Map Field [Value] -> [String] -> [Alignment] -> [Alignment]
+match vals qs as = minimal $ concatMap (\a -> concatMap (matches a) ps) as 
   where 
     ps = concatMap (parseQuery vals) qs 
-    --VALS = (M.fromList [("POS", ["NOUN", "VERB"])])
-    vals = M.fromList [
-      ("FORM",values udFORM),
-      ("LEMMA",values udLEMMA),
-      ("POS",values udUPOS),
-      ("DEPREL",values udDEPREL),
-      ("DEPREL_",values udSimpleDEPREL)
-      -- TODO: ("FEATS", values udFEATS),
-      -- TODO: add FEATS_
-      ]
-    values f = concatMap (\(t1,t2) -> rmDuplicates $ map f (allNodesRTree t1) ++ map f (allNodesRTree t2)) as
     -- | Checks whether an alignment matches a particular error pattern. If it
     -- does, it returns the portions of the two aligned subtrees actually 
     -- matching the pattern.
@@ -65,9 +54,13 @@ match as qs = minimal $ concatMap (\a -> concatMap (matches a) ps) as
 matchesUDPattern :: UDPattern -> UDTree -> [UDTree]
 matchesUDPattern p tree@(RTree node subtrees) = case p of
   SEQUENCE ps -> 
-    map (pruneWithPattern p) (maybe [] return $ findMatchingUDSequence True ps tree)
+    map 
+      (pruneWithPattern p) 
+      (maybe [] return $ findMatchingUDSequence True ps tree)
   SEQUENCE_ ps -> 
-    map (pruneWithPattern p) (maybe [] return $ findMatchingUDSequence False ps tree)
+    map 
+      (pruneWithPattern p) 
+      (maybe [] return $ findMatchingUDSequence False ps tree)
   _ -> [pruneWithPattern p tree | ifMatchUDPattern p tree]
   where
     -- | Of a tree matching a pattern, only keep the portion that is actually
@@ -85,62 +78,73 @@ matchesUDPattern p tree@(RTree node subtrees) = case p of
         filterSubtrees t p ps = fst $ replacementsWithUDPattern r t
           where r = FILTER_SUBTREES p (OR ps)
 
-type Field = String -- the name of a CoNNL-U "column" or morphological feature
-type Value = String -- the value of a certain "field" 
-
 -- | Parses a query string into a list of error patterns, expanding variables
 -- and splitting any {X->Y} shorthand. 
 parseQuery :: M.Map Field [Value] -> String -> [ErrorPattern]
-parseQuery vals q = map (\(q1',q2') -> (read q1',read q2')) (expandVars (q1,q2) exps)
+parseQuery vals q = 
+  map (\(q1',q2') -> (read q1',read q2')) (expandVars (q1,q2) exps)
   where 
-    (p1,p2) = (read (splitL1L2 q head),read (splitL1L2 q last))
+    -- there's a lot of read and show so both should be at hand :()
+    (p1,p2) = (read (desugar q head),read (desugar q last))
     (q1,q2) = (show p1,show p2)
 
-    variables m (FORM s) = 
-      if head s == '$' then M.insertWith (++) "FORM" [s] m else m
-    variables m (LEMMA s) =
-      if head s == '$' then M.insertWith (++) "LEMMA" [s] m else m
-    variables m (POS s) =
-      if head s == '$' then M.insertWith (++) "POS" [s] m else m
-    variables m (DEPREL s) =
-      if head s == '$' then M.insertWith (++) "DEPREL" [s] m else m
-    variables m (DEPREL_ s) =
-      if head s == '$' then M.insertWith (++) "DEPREL_" [s] m else m
-    variables m (FEATS s) =
-      if head s == '$' then M.insertWith (++) "FEATS" [s] m else m
-    -- TODO:
-    --variables m (FEATS_ s) = 
-    --  M.unions $ map 
-    --    (\(k,v) -> if head v == "$" 
-    --                then M.insertWith (++) ("FEATS_" ++ k) [v] m
-    --                else m)
-    --    (map (\f -> let [k,v] = splitOn "=" f in (k,v)) (splitOn "|" s))
-    variables m (AND ps) = M.unionsWith (++) (map (variables m) ps)
-    variables m (OR ps) = M.unionsWith (++) (map (variables m) ps)
-    --variables m (ARG pos deprel) = TODO:
-    variables m (SEQUENCE ps) = M.unionsWith (++) (map (variables m) ps)
-    variables m (SEQUENCE_ ps) = M.unionsWith (++) (map (variables m) ps)
-    variables m (NOT p) = variables m p
-    variables m (TREE p ps) = 
-      M.unionsWith (++) (variables m p:map (variables m) ps)
-    variables m (TREE_ p ps) = 
-      M.unionsWith (++) (variables m p:map (variables m) ps)
-    variables m _ = m
-
-    splitL1L2 s f = case s R.=~ "\\{([^}]*)\\}" :: (String,String,String) of
+    -- would be incomprehensible even with a type annotation
+    -- but basically, if f == head it returns the L1 component of s, 
+    --                if f == last it returns the L2 component of s
+    desugar s f = case s R.=~ "\\{([^}]*)\\}" :: (String,String,String) of
       (before,"",after) -> s
       -- head and tail remove {}
       (before,match,after) ->
-         before ++ f (splitOn "->" (tail $ init match)) ++ splitL1L2 after f
-    
-    vars =  map (\(f,ids) -> (f,rmDuplicates ids)) (M.toList $ M.unionWith (++) (variables M.empty p1) (variables M.empty p2))
+         before ++ f (splitOn "->" (tail $ init match)) ++ desugar after f
 
-    exps = concatMap (\(f,ids) -> ids `zip` transpose (filter (not . anySame) (combinations (fromJust $ M.lookup f vals)))) vars 
-    
+    -- variable expansions (ARGH!)
+    exps = 
+      concatMap (\(f,ids) -> 
+        let diffCombs = 
+              filter 
+                (not . anySame) 
+                (combinations (fromJust $ M.lookup f vals))
+        in ids `zip` transpose diffCombs) vars 
+      where 
+        vars = map 
+                (\(f,ids) -> (f,rmDuplicates ids)) 
+                (M.toList $ M.unionWith 
+                              (++) 
+                              (variables M.empty p1) (variables M.empty p2)
+                )
+
+    -- | Expand variables in a sugar-free L1-L2 query
+    expandVars :: (String,String) -> [(String, [Value])] -> [(String,String)]
     expandVars q [] = [q]
     expandVars q es = replaceVars es (replicate (length $ snd $ head es) q)
       where 
         replaceVars [] qs = qs
         replaceVars (e@(id,vs):es) qs = 
           replaceVars es (zipWith (\v (q1,q2) -> (replace id v q1,replace id v q2)) vs qs)
+
+-- | Find categorical variables ("$X") in the depths of a UD pattern
+variables :: M.Map Field [Value] -> UDPattern -> M.Map Field [Value]
+variables m (POS s) =
+  if head s == '$' then M.insertWith (++) "POS" [s] m else m
+variables m (DEPREL_ s) =
+  if head s == '$' then M.insertWith (++) "DEPREL_" [s] m else m
+variables m (FEATS_ s) = M.unionsWith (++) (m:fms)
+  where fms = map
+                (\d -> let [k,v] = splitOn "=" d in 
+                    if head v == '$' 
+                      then M.singleton ("FEATS_" ++ k) [v] 
+                      else M.empty
+                ) 
+                (splitOn "|" s)
+variables m (AND ps) = M.unionsWith (++) (map (variables m) ps)
+variables m (OR ps) = M.unionsWith (++) (map (variables m) ps)
+variables m (ARG pos deprel) = variables m (AND [POS pos, DEPREL deprel])
+variables m (SEQUENCE ps) = M.unionsWith (++) (map (variables m) ps)
+variables m (SEQUENCE_ ps) = M.unionsWith (++) (map (variables m) ps)
+variables m (NOT p) = variables m p
+variables m (TREE p ps) = 
+  M.unionsWith (++) (variables m p:map (variables m) ps)
+variables m (TREE_ p ps) = 
+  M.unionsWith (++) (variables m p:map (variables m) ps)
+variables m _ = m
         

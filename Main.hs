@@ -39,7 +39,7 @@ main = do
           -- (l1-l2 sentences, nonempty list of aligned matching subtrees)
           let ms = filter 
                     (not . null . snd) 
-                    (s12s `zip` map (`match` qs) as)
+                    (s12s `zip` map (match fieldVals qs) as)
           if Markdown `elem` flags
             then mapM_ (putStrLn . sentMatches2md) ms
             else mapM_ ((putStrLn . showIds) . fst) ms
