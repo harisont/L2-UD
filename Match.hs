@@ -18,7 +18,7 @@ import Utils
 match :: M.Map Field [Value] -> [String] -> [Alignment] -> [Alignment]
 match vals qs as = minimal $ concatMap (\a -> concatMap (matches a) ps) as 
   where 
-    ps = concatMap (parseQuery vals) qs 
+    ps = rmDuplicates $ concatMap (parseQuery vals) qs 
     -- | Checks whether an alignment matches a particular error pattern. If it
     -- does, it returns the portions of the two aligned subtrees actually 
     -- matching the pattern.

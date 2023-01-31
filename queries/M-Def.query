@@ -1,2 +1,1 @@
-FEATS_ "Definite={Def->Ind}"
-FEATS_ "Definite={Ind->Def}"
+FEATS_ "Definite={$A->$B}"

@@ -1,2 +1,1 @@
-AND [POS "NOUN", FEATS_ "Gender={Masc->Fem}"]
-AND [POS "NOUN", FEATS_ "Gender={Fem->Masc}"]
+AND [POS "NOUN", FEATS_ "Gender={$A->$B}"]
