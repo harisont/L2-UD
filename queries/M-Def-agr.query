@@ -1,0 +1,1 @@
+TREE_ (FEATS_ "Definite={Def->Ind}") [AND [DEPREL_ "det", FEATS_ "Definite=Def"]]
