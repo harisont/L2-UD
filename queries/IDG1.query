@@ -1,0 +1,1 @@
+TREE_ (AND [POS "NOUN", FEATS_ "Gender=$A"]) [AND [POS "DET", FEATS_ "Gender={$A->$B}"]]
