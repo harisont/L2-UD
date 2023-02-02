@@ -25,5 +25,5 @@ if __name__ == "__main__":
     print("Precision:", str(round((tp_n / (tp_n + fp_n)) * 100)) + "%")
     print("Recall:   ", str(round((tp_n / (tp_n + fn_n)) * 100)) + "%")
     print()
-    print("False negatives:", fn)
-    print("False positives:", fp)
+    print("False negatives:", fn, "({})".format(fn_n))
+    print("False positives:", fp, "({})".format(fp_n))
