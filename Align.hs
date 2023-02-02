@@ -13,7 +13,7 @@ type Alignment = (UDTree,UDTree)
   
 -- | List of criteria used by align, sorted by priority
 criteria :: [Criterion]
-criteria = [udposlemma, lemma, udpos, ud, pos]
+criteria = [udposlemma, udpos, lemma, ud, pos]
 
 {- Functions used in criteria -}
   
@@ -28,10 +28,6 @@ udposlemma = C (\t u -> sameSimpleDeprel t u && posEquiv t u && lemmaEquiv t u) 
 -- | Same word from
 sameForm :: UDTree -> UDTree -> Bool
 sameForm (RTree n _) (RTree m _) = udFORM n == udFORM m
-
--- | Same root lemma
-sameLemma :: UDTree -> UDTree -> Bool
-sameLemma (RTree n _) (RTree m _) = udLEMMA n == udLEMMA m
 
 -- | Lemma-equivalence
 lemmaEquiv :: UDTree -> UDTree -> Bool
