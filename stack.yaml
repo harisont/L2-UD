@@ -3,8 +3,6 @@ resolver: lts-18.28
 packages: 
 - .
 
-local-bin-path: .
-
 extra-deps:
 - multiset-0.3.4.3
 - git: https://github.com/GrammaticalFramework/gf-core
