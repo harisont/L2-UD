@@ -84,8 +84,10 @@ parseQuery :: M.Map Field [Value] -> String -> [ErrorPattern]
 parseQuery vals q = 
   map (\(q1',q2') -> (read q1',read q2')) (expandVars (q1,q2) exps)
   where 
-    -- there's a lot of read and show so both should be at hand :()
-    (p1,p2) = (read (desugar q head),read (desugar q last))
+    -- there's a lot of read and show so both should be at hand :(
+    (p1,p2) = if "->" `isInfixOf` q
+                then (read (desugar q head),read (desugar q last))
+                else (TRUE, read q) -- L2-only queries 
     (q1,q2) = (show p1,show p2)
 
     -- would be incomprehensible even with a type annotation
@@ -93,8 +95,7 @@ parseQuery vals q =
     --                if f == last it returns the L2 component of s
     desugar s f = case s R.=~ "\\{([^}]*)\\}" :: (String,String,String) of
       (before,"",after) -> s
-      -- head and tail remove {}
-      (before,match,after) ->
+      (before,match,after) -> -- head and tail remove {}
          before ++ f (splitOn "->" (tail $ init match)) ++ desugar after f
 
     -- variable expansions (ARGH!)
