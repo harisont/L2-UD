@@ -46,12 +46,8 @@ main = do
           case [f | f@CoNNLU {} <- flags] of
             [CoNNLU path] -> do
               let as = concatMap snd ms
-              writeFile 
-                (path </> "L1.conllu") 
-                (unlines $ map (conlluText . fst) as)
-              writeFile 
-                (path </> "L2.conllu") 
-                (unlines $ map (conlluText . snd) as)
+              writeFile (path </> "L1.conllu") (conlluText (map fst as))
+              writeFile (path </> "L2.conllu") (conlluText (map snd as))
             _ -> return ()
         "extract" -> do
           let ess = map extract as
@@ -157,7 +153,15 @@ showIds :: (UDSentence,UDSentence) -> String
 showIds (s1,s2) = if i1 == i2 then i1 else i1 ++ "-" ++ i2
   where (i1,i2) = (sentId s1,sentId s2)
 
--- | Convert a tree to an adjusted UD sentence (i.e. create a root and adjust
--- ids) and return the corresponding CoNNL-U string
-conlluText :: UDTree -> String
-conlluText = prReducedUDSentence "xxxxxxxx" . udTree2adjustedSentence
+-- | Return the string to write in the CoNNL-U file corresponding to a list of 
+-- UD trees 
+conlluText :: [UDTree] -> String
+conlluText ts = 
+  unlines $ map showUDSentence ([1..] `zip` map udTree2adjustedSentence ts)
+
+-- | Print a UD sentences with metadata. i is the sent_id. Very similar to
+-- https://github.com/GrammaticalFramework/gf-ud/blob/1a4a8c1ac08c02895fa886ca20e5e7a706f484e2/UDConcepts.hs#L172-L180
+showUDSentence :: (Int,UDSentence) -> String
+showUDSentence (i,s) = (prt . addMeta i) s
+ where addMeta i u = 
+        u { udCommentLines = ("# sent_id = " ++ show i):udCommentLines s }
