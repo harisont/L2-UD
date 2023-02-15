@@ -5,9 +5,10 @@ import qualified Data.Map as M
 import Data.List
 import Data.List.Split (splitOn)
 import Data.List.Extra (replace, anySame)
+import Data.String.Utils (strip)
 import qualified Text.Regex.Posix as R
 import RTree
-import UDConcepts
+import UDConcepts hiding (strip)
 import UDPatterns hiding (matchesUDPattern)
 import ConceptAlignment (udSimpleDEPREL)
 import Align
@@ -126,13 +127,13 @@ parseQuery vals q =
 -- | Find categorical variables ("$X") in the depths of a UD pattern
 variables :: M.Map Field [Value] -> UDPattern -> M.Map Field [Value]
 variables m (POS s) =
-  if head s == '$' then M.insertWith (++) "POS" [s] m else m
+  if (head $ strip s) == '$' then M.insertWith (++) "POS" [s] m else m
 variables m (DEPREL_ s) =
-  if head s == '$' then M.insertWith (++) "DEPREL_" [s] m else m
+  if (head $ strip s) == '$' then M.insertWith (++) "DEPREL_" [s] m else m
 variables m (FEATS_ s) = M.unionsWith (++) (m:fms)
   where fms = map
                 (\d -> let [k,v] = splitOn "=" d in 
-                    if head v == '$' 
+                    if (head $ strip v) == '$' 
                       then M.singleton ("FEATS_" ++ k) [v] 
                       else M.empty
                 ) 
