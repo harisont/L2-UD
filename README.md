@@ -2,6 +2,8 @@
 Tools for working with [L1-L2 parallel UD treebanks](https://aclanthology.org/W17-6306.pdf).
 
 ## Installation
+(requires [the Haskell Tool Stack](https://docs.haskellstack.org/en/stable/))
+
 1. clone this repository
 2. move inside the corresponding folder and run
    ```
@@ -58,7 +60,7 @@ reads as "feminine determiners corrected with their masculine form", or "feminin
 
 ### L2-only patterns
 For some types of error, an L2 pattern is sufficient to concisely describe an error. 
-When that is the case, it is possible to write a single UD pattern $P$, which is expanded to a pair $\langle$ `TRUE`, `P` $\rangle$.
+When that is the case, it is possible to write a single UD pattern `P`, which is expanded to a pair $\langle$ `TRUE`, `P` $\rangle$.
 
 ### Variables (__EXPERIMENTAL__)
 To avoid enumerating all combinations of values for categorial attributes, it is possible to use variables, i.e. capital letters preceded by a `$` sign.
