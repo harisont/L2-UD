@@ -157,5 +157,7 @@ showIds :: (UDSentence,UDSentence) -> String
 showIds (s1,s2) = if i1 == i2 then i1 else i1 ++ "-" ++ i2
   where (i1,i2) = (sentId s1,sentId s2)
 
+-- | Convert a tree to an adjusted UD sentence (i.e. create a root and adjust
+-- ids) and return the corresponding CoNNL-U string
 conlluText :: UDTree -> String
 conlluText = prReducedUDSentence "xxxxxxxx" . udTree2adjustedSentence
