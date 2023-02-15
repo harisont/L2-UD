@@ -107,14 +107,23 @@ parseArgv argv usage opts = case getOpt Permute opts argv of
 
 -- HELPER FUNCTIONS FOR OUTPUT
 
--- | Linearize a sentence highlighting the token that belongs to a subsentence
+-- | Linearize a sentence highlighting its tokens that belong to a subsentence
 highlin :: UDSentence -> UDSentence -> String
-highlin s ss = 
+highlin s s' = 
   unwords $ map (\w -> if w `elem` wss then bold (udFORM w) else udFORM w) ws
   where 
-    ws = udWordLines s
-    wss = udWordLines ss
+    ws = udWords s
+    wss = udWords s'
 
+-- | Return the words a UD sentence is composed of, ignoring unsplit tokens
+-- (cf. https://github.com/harisont/L2-UD/issues/12)
+udWords :: UDSentence -> [UDWord]
+udWords s = filter ((not . isRange) . udID) (udWordLines s)
+  where
+    isRange :: UDId -> Bool
+    isRange (UDIdRange _ _) = True
+    isRange _ = False
+    
 -- | Render extracted errors/patterns as markdown
 extractedErrs2md :: ((UDSentence,UDSentence),[Error]) -> String
 extractedErrs2md (s12@(s1,s2),es) = unlines [
