@@ -22,65 +22,47 @@ match vals qs as = minimal $ concatMap (\a -> concatMap (matches a) ps) as
   where 
     ps = rmDuplicates $ concatMap (parseQuery vals) qs 
     matches :: Alignment -> ErrorPattern -> [Alignment]
-    matches (t1,t2) (p1,p2) = [(m1,m2) | m1 <- m1s, m2 <- m2s, m1 `aligns` m2]
+    matches (t1,t2) e@(e1,e2) = [(m1,m2) | m1 <- m1s, 
+                                           m2 <- m2s, 
+                                           aligns m1 m2 e]
       where 
-        (m1s,m2s) = (matchesUDPattern p1 t1,matchesUDPattern p2 t2)
-        m1@(RTree n1 t1s) `aligns` m2@(RTree n2 t2s) = (m1,m2) `elem` as &&
-          case (p1,p2) of
-            (TREE p1 p1s,TREE p2 p2s) -> 
-              all (\(t1,t2) -> (t1,t2) `elem` as) (t1s `zip` t2s)
-            (TREE_ p1 p1s,TREE_ p2 p2s) -> undefined
+        (m1s,m2s) = (matchesUDPattern e1 t1,matchesUDPattern e2 t2)
+
+        aligns :: UDTree -> UDTree -> ErrorPattern -> Bool
+        aligns t1@(RTree n1 t1s) t2@(RTree n2 t2s) e = 
+          (t1,t2) `elem` as && case e of
+            (NOT p1,NOT p2) -> aligns t1 t2 (p1,p2) -- ?
+            (AND p1s,AND p2s) -> all (aligns' t1 t2) (common p1s p2s) -- ?
+            (OR p1s,OR p2s) -> all (aligns' t1 t2) (common p1s p2s) -- ?
+            (a1@(ARG _ _),a2@(ARG _ _)) -> 
+              aligns t1 t2 (arg2and a1,arg2and a2)
             (SEQUENCE p1s,SEQUENCE p2s) -> undefined
             (SEQUENCE_ p1s,SEQUENCE_ p2s) -> undefined
-            -- TODO: other relevant?
-            (p1,p2) -> undefined 
-    -- | Checks whether an alignment matches a particular error pattern. If it
-    -- does, it returns the portions of the two aligned subtrees actually 
-    -- matching the pattern.
-    -- Note that checking if an alignment matches an error pattern crucially 
-    -- implies to make sure that the matching portions are actually aligned 
-    -- with each other, meaning that their subtrees should belong to a 
-    -- (smaller) alignment obtained previously
-    --matches :: Alignment -> ErrorPattern -> [Alignment]
-    --matches (t1,t2) (e1,e2) = 
-    --  let (m1s,m2s) = (matchesUDPattern e1 t1,matchesUDPattern e2 t2)
-    --  in case (e1,e2) of
-    --      (TREE p1 p1s,TREE p2 p2s) -> undefined
-    --      (TREE_ p1 p1s,TREE_ p2 p2s) -> undefined
-    --      (SEQUENCE p1s,SEQUENCE p2s) -> undefined
-    --      (SEQUENCE_ p1s,SEQUENCE_ p2s) -> undefined
-    --      (AND p1s,AND p2s) -> undefined
-    --      (OR p1s,OR p2s) -> undefined
-    --      -- TODO: ARG? NOT?
-    --      -- single-token patterns and non-matching patterns, e.g. TREE vs POS
-    --      (p1,p2) -> undefined 
-    --matches :: Alignment -> ErrorPattern -> [Alignment]
-    --matches (t1,t2) (p1,p2) = 
-    --  [(pruneUDTree p1 m1, pruneUDTree p2 m2) | m1 <- m1s, 
-    --                                            m2 <- m2s, 
-    --                                            m1 `aligned` m2]
-    --  where
-    --    (m1s,m2s) = (matchesUDPattern p1 t1,matchesUDPattern p2 t2)
-    --    m1 `aligned` m2 = 
-    --      -- using or because if something is aligned it already means we
-    --      -- are on the right track. No need to check that all subtrees are
-    --      -- aligned with each other
-    --      null t1s || null t2s || or [(t1,t2) `elem` as | t1 <- t1s, 
-    --                                                      t2 <- t2s]
-    --      where (t1s,t2s) = (subtrees m1,subtrees m2)
+            (TREE _ p1s,TREE _ p2s) -> all (\(m1,m2) -> and [if isJust m1 && isJust m2 && ifMatchUDPattern (fromJust m1) t1 && ifMatchUDPattern (fromJust m2) t2 then aligns' t1 t2 (m1,m2) else True | t1 <- t1s, t2 <- t2s]) (common p1s p2s) 
+            (TREE_ _ p1s,TREE_ _ p2s) -> all (\(m1,m2) -> and [if isJust m1 && isJust m2 && ifMatchUDPattern (fromJust m1) t1 && ifMatchUDPattern (fromJust m2) t2 then aligns' t1 t2 (m1,m2) else True | t1 <- t1s, t2 <- t2s]) (common p1s p2s) 
+            (_,_) -> True -- single-token pattern and nonmatching patterns (?)
+        
+        aligns' :: UDTree -> UDTree -> (Maybe UDPattern,Maybe UDPattern) -> Bool
+        aligns' t1 t2 (m1,m2) = (isNothing m1 || isNothing m2) 
+                                || aligns t1 t2 (fromJust m1,fromJust m2)
+
+        common :: [UDPattern] -> [UDPattern] -> [(Maybe UDPattern,Maybe UDPattern)]
+        common p1s p2s = 
+          [(Just p1, find (sameConstructor p1) p2s) | p1 <- p1s] 
 
 -- | Remove the parts of a tree not involved in a certain pattern 
-pruneUDTree :: UDPattern -> UDTree -> UDTree
+-- (for sequence patterns, this can result in a forest, hence the return type)
+pruneUDTree :: UDPattern -> UDTree -> [UDTree]
 pruneUDTree p t = case p of
-  (TREE p ps) -> filterSubtrees t p ps
-  (TREE_ p ps) -> filterSubtrees t p ps
-  (SEQUENCE ps) -> filterTokens t ps 
-  (SEQUENCE_ ps) -> filterTokens t ps
+  (TREE p ps) -> [filterSubtrees t p ps]
+  (TREE_ p ps) -> [filterSubtrees t p ps]
+  (SEQUENCE ps) -> filterSequence t ps 
+  (SEQUENCE_ ps) -> filterSequence t ps
   -- TODO: and, or...
   -- TODO: recursion? in what cases?
-  _ -> t
+  _ -> [t]
   where
-    filterTokens t = filterSubtrees t TRUE -- very hacky but hey, it works (?)
+    filterSequence t ps = concatMap (\p -> pruneUDTree p t) ps 
     filterSubtrees t p ps = fst $ replacementsWithUDPattern r t
       where r = FILTER_SUBTREES p (OR ps)
 --pruneAlignment (RTree n1 t1s,RTree n2 t2s) = 
@@ -93,13 +75,12 @@ pruneUDTree p t = case p of
 
 -- | Custom version of GF-UD's matchesUDPattern
 -- (cf. https://github.com/GrammaticalFramework/gf-ud/blob/1a4a8c1ac08c02895fa886ca20e5e7a706f484e2/UDPatterns.hs#L23-L27)
--- - non-recursive (i.e. it only returns the trees matching a pattern 
--- without considering the subtrees) 
+-- It differs from the original in that it is nonrecursive  
 matchesUDPattern :: UDPattern -> UDTree -> [UDTree]
 matchesUDPattern p tree@(RTree node subtrees) = case p of
   SEQUENCE ps -> (maybe [] return $ findMatchingUDSequence True ps tree)
   SEQUENCE_ ps -> (maybe [] return $ findMatchingUDSequence False ps tree)
-  _ -> [pruneUDTree p tree | ifMatchUDPattern p tree]
+  _ -> [tree | ifMatchUDPattern p tree]
 
 -- | Parses a query string into a list of error patterns, expanding variables
 -- and splitting any {X->Y} shorthand. 

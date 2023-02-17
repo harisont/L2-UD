@@ -1,9 +1,12 @@
 module Utils where
 
+import Data.Data
+import Data.Function
 import qualified Data.Map as M
 import Data.List
 import RTree
 import UDConcepts
+import UDPatterns
 
 udTree2adjustedSentence :: UDTree -> UDSentence
 udTree2adjustedSentence = adjustUDIds . udTree2sentence . createRoot
@@ -19,6 +22,15 @@ rmDuplicates (x:xs) | x `elem` xs = rmDuplicates xs
 
 combinations :: [a] -> [[a]]
 combinations xs = sequence (replicate (length xs) xs)
+
+-- | Desugar ARG patterns
+arg2and :: UDPattern -> UDPattern
+arg2and (ARG p d) = AND [POS p, DEPREL d]
+arg2and _ = error "Attempt to desugar non-ARG pattern!"
+
+-- | Check whether two UDPatterns are build with the same constructor
+sameConstructor :: UDPattern -> UDPattern -> Bool
+sameConstructor = (==) `on` toConstr
 
 type Field = String -- the name of a CoNNL-U "column" or morphological feature
 type Value = String -- the value of a certain "field" 
