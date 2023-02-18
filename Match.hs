@@ -9,7 +9,7 @@ import Data.String.Utils (strip)
 import qualified Text.Regex.Posix as R
 import RTree
 import UDConcepts hiding (strip)
-import UDPatterns hiding (matchesUDPattern)
+import UDPatterns
 import ConceptAlignment (udSimpleDEPREL)
 import Align
 import Errors
@@ -26,7 +26,7 @@ match vals qs as = minimal $ concatMap (\a -> concatMap (matches a) ps) as
                                            m2 <- m2s, 
                                            aligns m1 m2 e]
       where 
-        (m1s,m2s) = (matchesUDPattern e1 t1,matchesUDPattern e2 t2)
+        (m1s,m2s) = (matchesUDPattern' e1 t1,matchesUDPattern' e2 t2)
 
         aligns :: UDTree -> UDTree -> ErrorPattern -> Bool
         aligns t1@(RTree n1 t1s) t2@(RTree n2 t2s) e = 
@@ -54,17 +54,43 @@ match vals qs as = minimal $ concatMap (\a -> concatMap (matches a) ps) as
 -- (for sequence patterns, this can result in a forest, hence the return type)
 pruneUDTree :: UDPattern -> UDTree -> [UDTree]
 pruneUDTree p t = case p of
-  (TREE p ps) -> [filterSubtrees t p ps]
-  (TREE_ p ps) -> [filterSubtrees t p ps]
-  (SEQUENCE ps) -> filterSequence t ps 
-  (SEQUENCE_ ps) -> filterSequence t ps
-  -- TODO: and, or...
-  -- TODO: recursion? in what cases?
+  (FORM _) -> [pruneSingleTokenPattern t p]
+  (LEMMA _) -> [pruneSingleTokenPattern t p] 
+  (POS _) -> [pruneSingleTokenPattern t p]
+  (DEPREL _) -> [pruneSingleTokenPattern t p]
+  (DEPREL_ _) -> [pruneSingleTokenPattern t p] 
+  (FEATS _) -> [pruneSingleTokenPattern t p]
+  (FEATS_ _) -> [pruneSingleTokenPattern t p]
+  (NOT _) -> [t] -- return t rn, cause idk how to define pruning for NOTs :/
+  -- is it OK that AND and OR behave identically?
+  (AND ps) -> [mergeUDTrees $ concatMap (`pruneUDTree` t) ps]
+  (OR ps) -> [mergeUDTrees $ concatMap (`pruneUDTree` t) ps]
+  (ARG _ _) -> pruneUDTree (arg2and p) t
+  (SEQUENCE ps) -> adjacent (UDIdInt $ length ps) (filterPruneSequence t ps) 
+    where 
+      adjacent (UDIdInt n) (t:ts) = let i = udid2int $ udID $ root t in
+        t:filter 
+            (\t' -> udid2int (udID $ root t') `elem` [i..i + (n - 1)]) 
+            ts 
+  (SEQUENCE_ ps) -> filterPruneSequence t ps
+  -- is it OK that TREE and TREE_ behave identically?
+  (TREE p ps) -> [pruneSubtrees (filterSubtrees t p ps) ps]
+  (TREE_ p ps) -> [pruneSubtrees (filterSubtrees t p ps) ps]
   _ -> [t]
   where
-    filterSequence t ps = concatMap (\p -> pruneUDTree p t) ps 
-    filterSubtrees t p ps = fst $ replacementsWithUDPattern r t
-      where r = FILTER_SUBTREES p (OR ps)
+    pruneSingleTokenPattern :: UDTree -> UDPattern -> UDTree
+    pruneSingleTokenPattern t p = 
+      fst $ replacementsWithUDPattern (PRUNE p 0) t
+    filterPruneSequence :: UDTree -> [UDPattern] -> [UDTree]
+    filterPruneSequence t = concatMap (\p -> concatMap (pruneUDTree p) (matchesUDPattern p t))
+    filterSubtrees :: UDTree -> UDPattern -> [UDPattern] -> UDTree
+    filterSubtrees t p ps = 
+      fst $ replacementsWithUDPattern (FILTER_SUBTREES p (OR ps)) t
+    pruneSubtrees :: UDTree -> [UDPattern] -> UDTree
+    pruneSubtrees t [] = t
+    pruneSubtrees (RTree n ts) (p:ps) = 
+      pruneSubtrees (RTree n (concatMap (pruneUDTree p) ts)) ps
+    
 --pruneAlignment (RTree n1 t1s,RTree n2 t2s) = 
 --  (RTree n1 t1s', RTree n2 t2s') 
 --  where 
@@ -76,8 +102,8 @@ pruneUDTree p t = case p of
 -- | Custom version of GF-UD's matchesUDPattern
 -- (cf. https://github.com/GrammaticalFramework/gf-ud/blob/1a4a8c1ac08c02895fa886ca20e5e7a706f484e2/UDPatterns.hs#L23-L27)
 -- It differs from the original in that it is nonrecursive  
-matchesUDPattern :: UDPattern -> UDTree -> [UDTree]
-matchesUDPattern p tree@(RTree node subtrees) = case p of
+matchesUDPattern' :: UDPattern -> UDTree -> [UDTree]
+matchesUDPattern' p tree@(RTree node subtrees) = case p of
   SEQUENCE ps -> (maybe [] return $ findMatchingUDSequence True ps tree)
   SEQUENCE_ ps -> (maybe [] return $ findMatchingUDSequence False ps tree)
   _ -> [tree | ifMatchUDPattern p tree]

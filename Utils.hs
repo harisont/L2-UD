@@ -32,6 +32,16 @@ arg2and _ = error "Attempt to desugar non-ARG pattern!"
 sameConstructor :: UDPattern -> UDPattern -> Bool
 sameConstructor = (==) `on` toConstr
 
+mergeUDTrees :: [UDTree] -> UDTree
+mergeUDTrees [] = error "Trying to merge an empty list of UD trees!"
+mergeUDTrees [t] = t
+mergeUDTrees (t1:t2:ts) = mergeUDTrees ((t1 `merge` t2):ts)
+    where 
+        t1@(RTree n1 t1s) `merge` t2@(RTree n2 t2s) = 
+            if n1 == n2 
+                then RTree n1 (map mergeUDTrees (groupBy (\t1 t2 -> root t1 == root t2) (t1s ++ t2s)))
+                else error "Trying to merge UD trees with nonmatching roots!"
+
 type Field = String -- the name of a CoNNL-U "column" or morphological feature
 type Value = String -- the value of a certain "field" 
 
@@ -52,7 +62,7 @@ fieldVals = M.fromList [
     ("FEATS_Number", ["Coll", "Count", "Dual", "Grpa", "Grpl", "Inv", "Pauc", "Plur", "Ptan", "Sing", "Tri"]),
     ("FEATS_Aspect", ["Hab", "Imp", "Iter", "Perf", "Prog", "Prosp"]),
     ("FEATS_Foreign", ["Yes"]),
-    ("FEATS_Case", ["Abs", "Acc", "Erg", "Nom", "Abe", "Ben", "Cau", "Cmp", "Cns", "Com", "Dat", "Dis", "Equ", "Gen", "Ins", "Par", "Tem", "Tra", "Voc", "Abl", "Add", "Ade", "All", "Del", "Ela", "Ess", "Ill", "Ine", "Lat", "Loc", "Per", "Sbe", "Sbl", "Spl", "Sub", "Sup", "Ter"]),
+    ("FEATS_Case", ["Acc", "Nom", "Gen"]),
     ("FEATS_Voice", ["Act", "Antip", "Bfoc", "Cau", "Dir", "Inv", "Lfoc", "Mid", "Pass", "Rcp"]),
     ("FEATS_Abbr", ["Yes"]),
     ("FEATS_Definite", ["Com", "Cons", "Def", "Ind", "Spec"]),
