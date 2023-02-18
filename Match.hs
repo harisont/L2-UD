@@ -20,76 +20,74 @@ match :: M.Map Field [Value] -> [String] -> [Alignment] -> [Alignment]
 -- TODO: is minimal really necessary at this point?
 match vals qs as = minimal $ concatMap (\a -> concatMap (matches a) ps) as 
   where 
-    ps = rmDuplicates $ concatMap (parseQuery vals) qs 
+    ps = rmDuplicates $ concatMap (parseQuery vals) qs
+
     matches :: Alignment -> ErrorPattern -> [Alignment]
-    matches (t1,t2) e@(e1,e2) = [(m1,m2) | m1 <- m1s, 
+    matches (t1,t2) e@(e1,e2) = map (pruneAlignment e) [(m1,m2) | m1 <- m1s, 
                                            m2 <- m2s, 
-                                           aligns m1 m2 e]
+                                           m1 `aligns` m2]
       where 
         (m1s,m2s) = (matchesUDPattern' e1 t1,matchesUDPattern' e2 t2)
 
-        aligns :: UDTree -> UDTree -> ErrorPattern -> Bool
-        aligns t1@(RTree n1 t1s) t2@(RTree n2 t2s) e = 
+        t1@(RTree n1 t1s) `aligns` t2@(RTree n2 t2s) = 
           (t1,t2) `elem` as && case e of
-            (NOT p1,NOT p2) -> aligns t1 t2 (p1,p2) -- ?
-            (AND p1s,AND p2s) -> all (aligns' t1 t2) (common p1s p2s) -- ?
-            (OR p1s,OR p2s) -> all (aligns' t1 t2) (common p1s p2s) -- ?
-            (a1@(ARG _ _),a2@(ARG _ _)) -> 
-              aligns t1 t2 (arg2and a1,arg2and a2)
-            (SEQUENCE p1s,SEQUENCE p2s) -> undefined
-            (SEQUENCE_ p1s,SEQUENCE_ p2s) -> undefined
-            (TREE _ p1s,TREE _ p2s) -> all (\(m1,m2) -> and [if isJust m1 && isJust m2 && ifMatchUDPattern (fromJust m1) t1 && ifMatchUDPattern (fromJust m2) t2 then aligns' t1 t2 (m1,m2) else True | t1 <- t1s, t2 <- t2s]) (common p1s p2s) 
-            (TREE_ _ p1s,TREE_ _ p2s) -> all (\(m1,m2) -> and [if isJust m1 && isJust m2 && ifMatchUDPattern (fromJust m1) t1 && ifMatchUDPattern (fromJust m2) t2 then aligns' t1 t2 (m1,m2) else True | t1 <- t1s, t2 <- t2s]) (common p1s p2s) 
-            (_,_) -> True -- single-token pattern and nonmatching patterns (?)
-        
-        aligns' :: UDTree -> UDTree -> (Maybe UDPattern,Maybe UDPattern) -> Bool
-        aligns' t1 t2 (m1,m2) = (isNothing m1 || isNothing m2) 
-                                || aligns t1 t2 (fromJust m1,fromJust m2)
+            (TREE _ p1s,TREE _ p2s) -> listAligns p1s p2s t1s t2s
+            (TREE_ _ p1s,TREE_ _ p2s) -> listAligns p1s p2s t1s t2s
+            (SEQUENCE p1s,SEQUENCE p2s) -> listAligns p1s p2s (t1:t1s) (t2:t2s)
+            (SEQUENCE_ p1s,SEQUENCE_ p2s) -> listAligns p1s p2s (t1:t1s) (t2:t2s)
+            (_,_) -> True 
+          where 
+            listAligns p1s p2s t1s t2s = all (\p -> any (`elem` as) [(m1,m2) | m1 <- t1s, p `ifMatchUDPattern` m1, m2 <- t2s, p `ifMatchUDPattern` m2]) (p1s `intersect` p2s)
 
-        common :: [UDPattern] -> [UDPattern] -> [(Maybe UDPattern,Maybe UDPattern)]
-        common p1s p2s = 
-          [(Just p1, find (sameConstructor p1) p2s) | p1 <- p1s] 
+        pruneAlignment :: ErrorPattern -> Alignment -> Alignment
+        pruneAlignment (p1,p2) (RTree n1 t1s,RTree n2 t2s) = 
+          (pruneUDTree p1 (RTree n1 t1s'),pruneUDTree p2 (RTree n2 t2s')) 
+          where 
+            (t1s',t2s') = unzip [(t1,t2) | t1 <- t1s, t2 <- t2s,
+                                           n1 /= n2 || t1 /= t2,
+                                           (t1,t2) `elem` as]
 
 -- | Remove the parts of a tree not involved in a certain pattern 
 -- (for sequence patterns, this can result in a forest, hence the return type)
-pruneUDTree :: UDPattern -> UDTree -> [UDTree]
+pruneUDTree :: UDPattern -> UDTree -> UDTree
 pruneUDTree p t = case p of
-  (FORM _) -> [pruneSingleTokenPattern t p]
-  (LEMMA _) -> [pruneSingleTokenPattern t p] 
-  (POS _) -> [pruneSingleTokenPattern t p]
-  (DEPREL _) -> [pruneSingleTokenPattern t p]
-  (DEPREL_ _) -> [pruneSingleTokenPattern t p] 
-  (FEATS _) -> [pruneSingleTokenPattern t p]
-  (FEATS_ _) -> [pruneSingleTokenPattern t p]
-  (NOT _) -> [t] -- return t rn, cause idk how to define pruning for NOTs :/
+  (FORM _) -> pruneSingleTokenPattern t p
+  (LEMMA _) -> pruneSingleTokenPattern t p 
+  (POS _) -> pruneSingleTokenPattern t p
+  (DEPREL _) -> pruneSingleTokenPattern t p
+  (DEPREL_ _) -> pruneSingleTokenPattern t p 
+  (FEATS _) -> pruneSingleTokenPattern t p
+  (FEATS_ _) -> pruneSingleTokenPattern t p
+  (NOT _) -> t -- return t rn, cause idk how to define pruning for NOTs :/
   -- is it OK that AND and OR behave identically?
-  (AND ps) -> [mergeUDTrees $ concatMap (`pruneUDTree` t) ps]
-  (OR ps) -> [mergeUDTrees $ concatMap (`pruneUDTree` t) ps]
+  (AND ps) -> mergeUDTrees $ map (`pruneUDTree` t) ps
+  (OR ps) -> mergeUDTrees $ map (`pruneUDTree` t) ps
   (ARG _ _) -> pruneUDTree (arg2and p) t
-  (SEQUENCE ps) -> adjacent (UDIdInt $ length ps) (filterPruneSequence t ps) 
-    where 
-      adjacent (UDIdInt n) (t:ts) = let i = udid2int $ udID $ root t in
-        t:filter 
-            (\t' -> udid2int (udID $ root t') `elem` [i..i + (n - 1)]) 
-            ts 
-  (SEQUENCE_ ps) -> filterPruneSequence t ps
+  -- too complicated to reconstruct the tree
+  --(SEQUENCE ps) -> adjacent (UDIdInt $ length ps) (filterPruneSequence t ps) 
+  --  where 
+  --    adjacent (UDIdInt n) (t:ts) = let i = udid2int $ udID $ root t in
+  --      t:filter 
+  --          (\t' -> udid2int (udID $ root t') `elem` [i..i + (n - 1)]) 
+  --          ts 
+  --(SEQUENCE_ ps) -> filterPruneSequence t ps
   -- is it OK that TREE and TREE_ behave identically?
-  (TREE p ps) -> [pruneSubtrees (filterSubtrees t p ps) ps]
-  (TREE_ p ps) -> [pruneSubtrees (filterSubtrees t p ps) ps]
-  _ -> [t]
+  (TREE p ps) -> pruneSubtrees (filterSubtrees t p ps) ps
+  (TREE_ p ps) -> pruneSubtrees (filterSubtrees t p ps) ps
+  _ -> t
   where
     pruneSingleTokenPattern :: UDTree -> UDPattern -> UDTree
     pruneSingleTokenPattern t p = 
       fst $ replacementsWithUDPattern (PRUNE p 0) t
-    filterPruneSequence :: UDTree -> [UDPattern] -> [UDTree]
-    filterPruneSequence t = concatMap (\p -> concatMap (pruneUDTree p) (matchesUDPattern p t))
+    --filterPruneSequence :: UDTree -> [UDPattern] -> [UDTree]
+    --filterPruneSequence t = concatMap (\p -> concatMap (pruneUDTree p) (matchesUDPattern p t))
     filterSubtrees :: UDTree -> UDPattern -> [UDPattern] -> UDTree
     filterSubtrees t p ps = 
       fst $ replacementsWithUDPattern (FILTER_SUBTREES p (OR ps)) t
     pruneSubtrees :: UDTree -> [UDPattern] -> UDTree
     pruneSubtrees t [] = t
     pruneSubtrees (RTree n ts) (p:ps) = 
-      pruneSubtrees (RTree n (concatMap (pruneUDTree p) ts)) ps
+      pruneSubtrees (RTree n (map (pruneUDTree p) ts)) ps
     
 --pruneAlignment (RTree n1 t1s,RTree n2 t2s) = 
 --  (RTree n1 t1s', RTree n2 t2s') 

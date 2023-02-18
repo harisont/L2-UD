@@ -25,7 +25,7 @@ L1 sentence | L2 sentence
 ## Sentence 34-12_en-3:
 L1 sentence | L2 sentence
 --- | ---
-Ho voltato la pagina e ho iniziato a leggere **un** **altro** **titolo** . | Ho voltato la pagina e ho iniziato a leggere **un'** altro **titolo** .
+Ho voltato la pagina e ho iniziato a leggere **un** altro **titolo** . | Ho voltato la pagina e ho iniziato a leggere **un'** altro **titolo** .
 
 
 ## Sentence 19-01_en-3:
@@ -37,7 +37,7 @@ Ieri a il parco , **un** **uomo** brutto è arrivato e ha detto delle parole cat
 ## Sentence 27-02_de-3:
 L1 sentence | L2 sentence
 --- | ---
-Subito guarda come un altro uomo con grande forza fisica e con malumore porta su **le** **sue** **spalle** una ragazza che grida . | Subito guarda come un altro uomo con grande forza fisica e con malumore porta una ragazza su le **sui** **spalle** che grida .
+Subito guarda come un altro uomo con grande forza fisica e con malumore porta su **le** sue **spalle** una ragazza che grida . | Subito guarda come un altro uomo con grande forza fisica e con malumore porta una ragazza su le sui **spalle** che grida .
 
 
 ## Sentence 3-12_fr-3:
@@ -49,7 +49,7 @@ Era **un** vero **momento** di benessere . | Era **una** vero **momento** di ben
 ## Sentence 27-08_de-3:
 L1 sentence | L2 sentence
 --- | ---
-« **Il** **mio** **amore** non dipende da il suo comportamento . » | « Il **mia** **amore** non dipende da il suo comportamento . »
+« Il **mio** **amore** non dipende da il suo comportamento . » | « Il **mia** **amore** non dipende da il suo comportamento . »
 
 
 ## Sentence 32-06_de-2:

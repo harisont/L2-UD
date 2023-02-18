@@ -62,7 +62,7 @@ fieldVals = M.fromList [
     ("FEATS_Number", ["Coll", "Count", "Dual", "Grpa", "Grpl", "Inv", "Pauc", "Plur", "Ptan", "Sing", "Tri"]),
     ("FEATS_Aspect", ["Hab", "Imp", "Iter", "Perf", "Prog", "Prosp"]),
     ("FEATS_Foreign", ["Yes"]),
-    ("FEATS_Case", ["Acc", "Nom", "Gen"]),
+    ("FEATS_Case", ["Acc", "Nom", "Gen"]), -- TODO: restore full list
     ("FEATS_Voice", ["Act", "Antip", "Bfoc", "Cau", "Dir", "Inv", "Lfoc", "Mid", "Pass", "Rcp"]),
     ("FEATS_Abbr", ["Yes"]),
     ("FEATS_Definite", ["Com", "Cons", "Def", "Ind", "Spec"]),

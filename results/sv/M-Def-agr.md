@@ -28,6 +28,12 @@ L1 sentence | L2 sentence
 Pengar är ingenting utan **de** tre **sakerna** . | Pengar är ingenting utan **de** tre **saker** .
 
 
+## Sentence 639:
+L1 sentence | L2 sentence
+--- | ---
+Maria Tolppanen som har intervjuats anser att svenskan tar för stor plats i det finska samhället och hon kritiserar även **den** så kallade **tvångssvenskan** , alltså den obligatoriska svenskundervisningen i de finska skolorna . | Maria Tolppanen som har intervjuats anser att svenskan tar för stor plats i det finska samhället och hon kritiserar även **den** så kallad **tvångssvenskan** , alltså den obligatoriska svenskundervisningen i de finska skolorna .
+
+
 ## Sentence 1900:
 L1 sentence | L2 sentence
 --- | ---
