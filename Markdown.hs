@@ -1,4 +1,3 @@
--- TODO: make this a separate Haskell package
 module Markdown where
 
 import Data.List
@@ -29,7 +28,7 @@ table h rs = header h ++ unlines (map row rs)
       ]
 
     row :: [String] -> String
-    row cs = concat $ intersperse " | " (map cell cs)
+    row cs = intercalate " | " (map cell cs)
 
     cell :: String -> String
-    cell s = replace "|" "\\|" s
+    cell = replace "|" "\\|"

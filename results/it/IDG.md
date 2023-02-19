@@ -75,12 +75,6 @@ L1 sentence | L2 sentence
 SEDUTO SU **UN** SEDILE C' ERA UN UOMO CHE LEGGEVA UN GIORNALE . | SEDUTO SU **UNA** SEDILE C' ERA UN UOMO CHE LEGGEVA UN GIORNALE .
 
 
-## Sentence 12-01_es-1:
-L1 sentence | L2 sentence
---- | ---
-Ieri a il parco è successo un disastro perché una donna è andata a il parco con **suo** marito e in il parco c' era una gelateria e hanno comprato un gelato ma la donna ha lasciato la sua borsa lì . | ﻿Ieri a il parco ha suceso un distrasto per che **una** donna è andata a il parco con il suo marito ma in il parco aveva una gelateria e hanno comprato un gelato ma la donna ci ha lasciato la sua borsa lì .
-
-
 ## Sentence 14-02_de-1:
 L1 sentence | L2 sentence
 --- | ---
@@ -173,12 +167,6 @@ Ieri a il parco , **un** uomo brutto è arrivato e ha detto delle parole cattive
 L1 sentence | L2 sentence
 --- | ---
 Un altro ragazzo sta su **la** panca e legge un giornale e ha visto l' uomo brutto . | Un otro ragazzo sta su **l** banco e lego un giornale e visto l' uomo brutto .
-
-
-## Sentence 27-02_de-3:
-L1 sentence | L2 sentence
---- | ---
-Subito guarda come un altro uomo con grande forza fisica e con malumore porta su le **sue** spalle una ragazza che grida . | Subito guarda come un altro uomo con grande forza fisica e con malumore porta una ragazza su le **sui** spalle che grida .
 
 
 ## Sentence 3-12_fr-3:

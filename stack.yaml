@@ -5,7 +5,7 @@ packages:
 
 extra-deps:
 - multiset-0.3.4.3
-- git: https://github.com/GrammaticalFramework/gf-core
+- github: GrammaticalFramework/gf-core
   commit: 810640822dc3047af8fd9d7988e3f2423595c7b2
 - github: GrammaticalFramework/gf-ud
   commit: 1a4a8c1ac08c02895fa886ca20e5e7a706f484e2

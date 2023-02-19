@@ -7,7 +7,7 @@ Medan i Finland behandlas svenska som bara ett vanligt språk som **barnen** kan
 ## Sentence 530:
 L1 sentence | L2 sentence
 --- | ---
-” Det var ju dumt **av** **honom** ” , sa jag . | ” Det var ju dumt **av** **han** ” , sa jag .
+” Det var ju dumt av **honom** ” , sa jag . | ” Det var ju dumt av **han** ” , sa jag .
 
 
 ## Sentence 563:
@@ -31,13 +31,13 @@ Alltså , en nackdel med att avskaffa den obligatoriska svenskundervisningen i f
 ## Sentence 516:
 L1 sentence | L2 sentence
 --- | ---
-Hon är 45 år nu och har varit anmäld i kön i **fyra** **år** för att adoptera en liten unge från Kina . | Hon är 45 år nu och har varit anmäld i kön i **fyra** **års** för att adoptera en liten unge från Kina .
+Hon är 45 år nu och har varit anmäld i kön i fyra **år** för att adoptera en liten unge från Kina . | Hon är 45 år nu och har varit anmäld i kön i fyra **års** för att adoptera en liten unge från Kina .
 
 
 ## Sentence 491:
 L1 sentence | L2 sentence
 --- | ---
-Till exempel : diskmaskin , spis , dammsugare , TV , radio , mikro , kylskåp , torktumlare , vattenkokare , kaffemaskin , tvättmaskin , tryckkokare , stekpanna , så det finns många olika saker att ge **till** **dem** . | Till exempel : diskmaskin , spis , dammsugare , TV , radio , mikro , kylskåp , torktumlare , vattenkokare , kaffemaskin , tvättmaskin , tryckkokare , stekpanna , så det finns många olika saker att ge **till** **de** .
+Till exempel : diskmaskin , spis , dammsugare , TV , radio , mikro , kylskåp , torktumlare , vattenkokare , kaffemaskin , tvättmaskin , tryckkokare , stekpanna , så det finns många olika saker att ge till **dem** . | Till exempel : diskmaskin , spis , dammsugare , TV , radio , mikro , kylskåp , torktumlare , vattenkokare , kaffemaskin , tvättmaskin , tryckkokare , stekpanna , så det finns många olika saker att ge till **de** .
 
 
 ## Sentence 509:
@@ -70,16 +70,10 @@ L1 sentence | L2 sentence
 Denna möjlighet kommer tas bort från många finnar om skolor ska sluta jobba lika hårt som **de** gör nu för dem som vill vara tvåspråkiga och lära sig svenska . | Denna möjlighet kommer tas bort från många finnar om skolor ska sluta jobba lika hårt som **dem** gör nu för dem som vill vara tvåspråkiga och lära sig svenska .
 
 
-## Sentence 1932:
-L1 sentence | L2 sentence
---- | ---
-De kan hitta vänner , kanske börja lära känna nya människor , vem vet , vi kanske hittar **vårt** **livs** kärlek i en liten by i Australien , där deras språk håller på att dö . | De kan hitta vänner , kanske börja lära känna nya människor , vem vet , vi kanske hittar vårt livskärlek i en liten **by** **i** **Australien** , där deras språk håller på att dö .
-
-
 ## Sentence 1636:
 L1 sentence | L2 sentence
 --- | ---
-I litteraturens olika sätt att beröra allmänmänskliga teman kan vi hämta livsläxor och kunskaper som låter oss förstå vår värld **och** **oss** **själva** **bättre** . | I litteraturens olika sätt att beröra allmänmänskliga teman kan vi hämta livsläxor och kunskaper som låter oss förstå vår värld **och** **oss** **själva** bättre ,
+I litteraturens olika sätt att beröra allmänmänskliga teman kan vi hämta livsläxor och kunskaper som låter oss förstå vår värld och oss själva **bättre** . | I litteraturens olika sätt att beröra allmänmänskliga teman kan vi hämta livsläxor och kunskaper som låter oss förstå vår värld och **oss** själva bättre ,
 
 
 ## Sentence 565:
@@ -91,13 +85,13 @@ Temat familjekärlek syns i Stjärnlösa nätter i början av boken för att kil
 ## Sentence 486:
 L1 sentence | L2 sentence
 --- | ---
-Efter **fem** **års** kärlek lämnade jag Sverige på grund av kriget och lämnade flickan jag älskade , och jag var väldigt ledsen och nu har hon gift sig med någon annan . | Efter **fem** **år** kärlek lämnade jag Sverige på grund av kriget och lämnade flickan jag älskade , och jag var väldigt ledsen och nu har hon gift sig med någon annan .
+Efter fem **års** kärlek lämnade jag Sverige på grund av kriget och lämnade flickan jag älskade , och jag var väldigt ledsen och nu har hon gift sig med någon annan . | Efter fem **år** kärlek lämnade jag Sverige på grund av kriget och lämnade flickan jag älskade , och jag var väldigt ledsen och nu har hon gift sig med någon annan .
 
 
 ## Sentence 1296:
 L1 sentence | L2 sentence
 --- | ---
-**Till** **slut** sov jag på soffan bredvid dem . | Tillslut sov jag på soffan **bredvid** **dem** .
+Till **slut** sov jag på soffan bredvid dem . | Tillslut sov jag på soffan bredvid **dem** .
 
 
 ## Sentence 528:
@@ -139,7 +133,7 @@ Konsekvenserna man skulle få ifall undervisning i svenska blev frivilligt är a
 ## Sentence 526:
 L1 sentence | L2 sentence
 --- | ---
-Men det är bara jag **och** **hon** **som** **ska** **sippa** . | Men det är bara jag **och** **henne** **som** **ska** **sippa** .
+Men det är bara jag och **hon** som ska sippa . | Men det är bara jag och **henne** som ska sippa .
 
 
 ## Sentence 1811:
@@ -154,10 +148,16 @@ L1 sentence | L2 sentence
 Pengar är inte ett bra förslag som present eftersom pengarna kommer att hjälpa **dem** en kort period och försvinna , men om vi köper en sak , t.ex. en möbel , en vas eller en kökssak , kommer den att finnas kvar hos dem länge och de kommer alltid att komma ihåg oss . | Pengar är inte ett bra förslag som present eftersom pengarna kommer att hjälpa **de** en kort period och försvinna , men om vi köper en sak , t.ex. en möbel , en vas eller en kökssak , kommer den att finnas kvar hos dem länge och de kommer alltid att komma ihåg oss .
 
 
+## Sentence 2041:
+L1 sentence | L2 sentence
+--- | ---
+Det var julafton och det var inte många människor på flygplanet , så jag kände **mig** ensam och det var mitt första intryck när jag flyttade hit . | Det var julafton och det var inte många människor på flygplanet , så kände mig ensam och det var mitt första **intryck** när jag flyttade hit .
+
+
 ## Sentence 561:
 L1 sentence | L2 sentence
 --- | ---
-Det är lärorikt och lär oss att länderna i världen är olika , vissa **av** **dem** är sekulära och har bra ekonomi , ett bra samhälle , och har inte så höga förväntningar på sina barn , och vissa är traditionella och där har föräldrarna stora förväntningar på sina barn , vilket kan ha effekt på deras liv . | Det är lärorikt och lär oss att länderna i världen är olika , vissa **av** **de** är sekulära och har bra ekonomi , ett bra samhälle , och har inte så höga förväntningar på sina barn , och vissa är traditionella och där har föräldrarna stora förväntningar på sina barn , vilket kan ha effekt på deras liv .
+Det är lärorikt och lär oss att länderna i världen är olika , vissa av **dem** är sekulära och har bra ekonomi , ett bra samhälle , och har inte så höga förväntningar på sina barn , och vissa är traditionella och där har föräldrarna stora förväntningar på sina barn , vilket kan ha effekt på deras liv . | Det är lärorikt och lär oss att länderna i världen är olika , vissa av **de** är sekulära och har bra ekonomi , ett bra samhälle , och har inte så höga förväntningar på sina barn , och vissa är traditionella och där har föräldrarna stora förväntningar på sina barn , vilket kan ha effekt på deras liv .
 
 
 ## Sentence 555:
@@ -187,13 +187,19 @@ Dessutom är majoriteten av befolkningen någorlunda emot svenska på grund- och
 ## Sentence 522:
 L1 sentence | L2 sentence
 --- | ---
-Det fanns inte någon **med** **dem** . | Det fanns inte någon **med** **de** .
+Det fanns inte någon med **dem** . | Det fanns inte någon med **de** .
 
 
 ## Sentence 551:
 L1 sentence | L2 sentence
 --- | ---
 Därför väljer skolsystemet att undervisa i dessa språk för sina elever , för att **de** ska kunna kommunicera i en värld som talar flera språk . | Därför väljer skolsystemet att undervisa i dessa språk för sina elever , för att **dem** ska kunna kommunicera i en värld som talar flera språk .
+
+
+## Sentence 570:
+L1 sentence | L2 sentence
+--- | ---
+Allt det här handlar om relationen mellan barn och föräldrar och om hur relationen kan skapa avstånd mellan barn och föräldrar eller bringa kärlek mellan **dem** . | Allt det här handlar om relationen mellan barn och föräldrar och om hur relationen kan skapa avstånd mellan barn och föräldrar eller bringa kärlek mellan **de** .
 
 
 ## Sentence 524:
@@ -217,13 +223,13 @@ Hon ger sig iväg , vilket leder till en häxa som sätter **drottningens** liv 
 ## Sentence 472:
 L1 sentence | L2 sentence
 --- | ---
-Jag glömmer inte hur **nöjd** **jag** blev när jag kom in . | Jag glömmer inte hur **nöjd** **mig** blev när jag kom in .
+Jag glömmer inte hur nöjd **jag** blev när jag kom in . | Jag glömmer inte hur nöjd **mig** blev när jag kom in .
 
 
 ## Sentence 473:
 L1 sentence | L2 sentence
 --- | ---
-Det är inte möjligt **för** **dem** att lyssna på . | Det är inte möjligt **för** **de** att lyssna på .
+Det är inte möjligt för **dem** att lyssna på . | Det är inte möjligt för **de** att lyssna på .
 
 
 ## Sentence 557:
@@ -241,7 +247,7 @@ Så är det för minoritetsspråk , det enda sätt minoritetsspråk kan leva kva
 ## Sentence 2048:
 L1 sentence | L2 sentence
 --- | ---
-När jag flyttade till Sverige **kände** **jag** mig jätteledsen första tiden eftersom jag lämnade min familj i mitt land . | När jag flyttade till Sverige **kände** **mig** jätteledsen första tiden eftersom jag lämnade min familj i mitt land .
+När jag flyttade till Sverige kände **jag** mig jätteledsen första tiden eftersom jag lämnade min familj i mitt land . | När jag flyttade till Sverige kände **mig** jätteledsen första tiden eftersom jag lämnade min familj i mitt land .
 
 
 ## Sentence 1513:
@@ -259,7 +265,7 @@ När partner flyttar ihop är allt bra , **de** har mycket passion . | När part
 ## Sentence 482:
 L1 sentence | L2 sentence
 --- | ---
-Om du är intresserad av att träffa nya vänner , kan du prata **med** **dem** , eller bjuda hem dem till dig . | Om du är intresserad av att träffa nya vänner , kan du prata **med** **de** , eller bjuda hem dem till dig .
+Om du är intresserad av att träffa nya vänner , kan du prata med **dem** , eller bjuda hem dem till dig . | Om du är intresserad av att träffa nya vänner , kan du prata med **de** , eller bjuda hem dem till dig .
 
 
 ## Sentence 534:
@@ -286,6 +292,12 @@ L1 sentence | L2 sentence
 Begreppet **familj** kan definieras som att det helt enkelt är en institution som består av en mamma , en pappa och gemensamma barn som bor tillsammans . | **Familjens** begrepp kan definieras som att det helt är en institution som består av en mamma , en pappa och gemensamma barn som bor tillsammans .
 
 
+## Sentence 507:
+L1 sentence | L2 sentence
+--- | ---
+Innan trädet var borta fick de fars **äpplen** och hans fru lagade saft och mos av äpplena . | Innan trädet var borta fick **dem** fars äpplen och hans fru lagade saft och mos av äpplena .
+
+
 ## Sentence 571:
 L1 sentence | L2 sentence
 --- | ---
@@ -295,7 +307,7 @@ Familjekärlek skildras i den här filmen när föräldrarna till flickorna för
 ## Sentence 2032:
 L1 sentence | L2 sentence
 --- | ---
-Sedan kände jag **mig** mycket glad och lycklig **,** **jag** **kände** **faktiskt** **kärlek** **.** | Sedan kände mig mycket **glad** och lycklig **,** **jag** **kände** **faktiskt** **kärlek** **.**
+Sedan kände jag **mig** mycket glad och lycklig , jag kände faktiskt kärlek . | Sedan kände mig mycket **glad** och lycklig , jag kände faktiskt kärlek .
 
 
 ## Sentence 1918:
@@ -316,6 +328,12 @@ L1 sentence | L2 sentence
 Vad är det som medborgarna tänker kring bilden av **politiker** ? | Vad är det som medborgarna tänker kring **politikers** bild ?
 
 
+## Sentence 519:
+L1 sentence | L2 sentence
+--- | ---
+När jag var i mitt rum hörde jag nåt konstigt ljud och blev rädd och gick till vardagsrummet och kollade hundarna , om det var okej med **dem** , och det var okej med dem . | När jag var i mitt rum hörde jag nåt konstigt ljud och blev rädd och gick till vardagsrummet och kollade hundarna , om det var okej med **de** , och det var okej med dem .
+
+
 ## Sentence 562:
 L1 sentence | L2 sentence
 --- | ---
@@ -326,6 +344,12 @@ Alla började att dissa **honom** och ville inte ens bjuda honom på lunchen , o
 L1 sentence | L2 sentence
 --- | ---
 För det andra , bilar är inte så miljövänliga eftersom **de** använder bränslen som förorenar vår luft och jord . | För det andra , bilar är inte så miljövänliga eftersom **dem** använder bränslen som förorenar vår luft och jord .
+
+
+## Sentence 492:
+L1 sentence | L2 sentence
+--- | ---
+Jag tycker om den platsen eftersom jag känner att Göteborg är det bästa landet för **mig** för att jag kan bo där med lugn . | Jag tycker om den platsen eftersom jag känner att Göteborg är det bästa landet för **jag** för att jag kan bo där med lugn .
 
 
 ## Sentence 542:
@@ -343,13 +367,13 @@ För att göra det kan du bjuda hem **dem** . | För att göra det kan du bjuda 
 ## Sentence 567:
 L1 sentence | L2 sentence
 --- | ---
-Prinsessans mamma är sur på hennes val och prinsessan försöker att förändra **sin** **missnöjda** **mammas** åsikter med en förtrollning , men den fungerar inte riktigt utan förvandlar mamman till en björn . | Prinsessans mamma är sur på hennes val och prinsessan försöker att förändra **sin** **missnöjda** **mamma** åsikter med en förtrollning , men den fungerar inte riktigt utan förvandlar mamman till en björn .
+Prinsessans mamma är sur på hennes val och prinsessan försöker att förändra sin missnöjda **mammas** åsikter med en förtrollning , men den fungerar inte riktigt utan förvandlar mamman till en björn . | Prinsessans mamma är sur på hennes val och prinsessan försöker att förändra sin missnöjda **mamma** åsikter med en förtrollning , men den fungerar inte riktigt utan förvandlar mamman till en björn .
 
 
 ## Sentence 1030:
 L1 sentence | L2 sentence
 --- | ---
-Man funderar över vad som är viktigast : barnen , att umgås med dem , att ha roligt , gå **på** **bio** , eller att gå till jobbet och tjäna extra pengar . | Man funderar över vad som är viktigare : barnen , att umgås **med** **dem** , att ha roligt , gå på bio , eller att gå till jobbet och tjäna extra pengar .
+Man funderar över vad som är viktigast : barnen , att umgås med dem , att ha roligt , gå på **bio** , eller att gå till jobbet och tjäna extra pengar . | Man funderar över vad som är viktigare : barnen , att umgås med **dem** , att ha roligt , gå på bio , eller att gå till jobbet och tjäna extra pengar .
 
 
 ## Sentence 493:
@@ -361,7 +385,7 @@ När **de** ser våran present kommer de ihåg oss ! | När **dem** ser våran p
 ## Sentence 533:
 L1 sentence | L2 sentence
 --- | ---
-Då blir det svårt **för** **dem** att ha slöja . | Då blir det svårt **för** **de** att ha slöja .
+Då blir det svårt för **dem** att ha slöja . | Då blir det svårt för **de** att ha slöja .
 
 
 ## Sentence 1910:
@@ -373,7 +397,7 @@ L1 sentence | L2 sentence
 ## Sentence 206:
 L1 sentence | L2 sentence
 --- | ---
-Innan trädet var borta fick de fars **äpplen** **och** **hans** **fru** **lagade** **saft** **och** **mos** **av** **äpplena** . | Innan trädet var borta fick de **fars** **äpplen** **och** **sin** **fru** **lagade** **saft** **och** **mos** **av** **äpplena** **.**
+Innan trädet var borta fick de fars **äpplen** och hans fru lagade saft och mos av äpplena . | Innan trädet var borta fick de **fars** äpplen och sin fru lagade saft och mos av äpplena .
 
 
 ## Sentence 545:
@@ -391,25 +415,31 @@ Om ena personen i en dialog inte kan prata eller känner sig bekväm med ett spr
 ## Sentence 475:
 L1 sentence | L2 sentence
 --- | ---
-Du måste träffa dem och prata **med** **dem** . | Du måste träffa dem och prata **med** **de** .
+Du måste träffa dem och prata med **dem** . | Du måste träffa dem och prata med **de** .
 
 
 ## Sentence 541:
 L1 sentence | L2 sentence
 --- | ---
-**Marie** **Tolppanen** tycker också att finlandssvenskar har för stor makt i Finland och att den borde minskas . | **Marie** **Tolppanens** tycker också att finlandssvenskar har för stor makt i Finland och att den borde minskas .
+Marie **Tolppanen** tycker också att finlandssvenskar har för stor makt i Finland och att den borde minskas . | Marie **Tolppanens** tycker också att finlandssvenskar har för stor makt i Finland och att den borde minskas .
 
 
 ## Sentence 520:
 L1 sentence | L2 sentence
 --- | ---
-När jag var i mitt rum hörde jag nåt konstigt ljud och blev rädd och gick till vardagsrummet och kollade hundarna , om det var okej med dem , och det var okej **med** **dem** . | När jag var i mitt rum hörde jag nåt konstigt ljud och blev rädd och gick till vardagsrummet och kollade hundarna , om det var okej med dem , och det var okej **med** **de** .
+När jag var i mitt rum hörde jag nåt konstigt ljud och blev rädd och gick till vardagsrummet och kollade hundarna , om det var okej med dem , och det var okej med **dem** . | När jag var i mitt rum hörde jag nåt konstigt ljud och blev rädd och gick till vardagsrummet och kollade hundarna , om det var okej med dem , och det var okej med **de** .
 
 
 ## Sentence 325:
 L1 sentence | L2 sentence
 --- | ---
 Nadja måste hitta en make och gifta **sig** inom en månad , annars förlorar hon chansen . | Nadja måste hitta en make och gifta sig inom en månad , eller förlorar hon **chansen** .
+
+
+## Sentence 515:
+L1 sentence | L2 sentence
+--- | ---
+Jag är intresserad av många saker i boken , men en viktigt sak för mig var när hon gick till sitt tidigare barnhem och förklarade sin historia från början för fyra flickor som bodde på barnhemmet och som hade samma bakgrund som **hon** . | Jag är intresserad av många saker i boken , men en viktigt sak för mig var när hon gick till sitt tidigare barnhem och förklarade sin historia från början för fyra flickor som bodde på barnhemmet och som hade samma bakgrund som **henne** .
 
 
 ## Sentence 544:
@@ -421,24 +451,24 @@ Medan i Finland behandlas svenska som bara ett vanligt språk som barnen kan lä
 ## Sentence 227:
 L1 sentence | L2 sentence
 --- | ---
-De måste lyssna på sina föräldrar **när** **de** **är** **med** **dem** . | De måste lyssna på sina föräldrar **när** **de** **är** **med** sina **föräldrar** .
+De måste lyssna på sina föräldrar när de är med **dem** . | De måste lyssna på sina föräldrar när de är med sina **föräldrar** .
 
 
 ## Sentence 497:
 L1 sentence | L2 sentence
 --- | ---
-Men jag tycker inte att ni ska ge bort pengar i present därför att pengar är inte viktigt **för** **honom** . | Men jag tycker inte att ni ska ge bort pengar i present därför att pengar är inte viktigt **för** **han** .
+Men jag tycker inte att ni ska ge bort pengar i present därför att pengar är inte viktigt för **honom** . | Men jag tycker inte att ni ska ge bort pengar i present därför att pengar är inte viktigt för **han** .
 
 
 ## Sentence 569:
 L1 sentence | L2 sentence
 --- | ---
-Verket vill visa oss att barn kan ärva egenskaper från både mamma och pappa , och att föräldrarna måste förstå sina barn och ska inte tvinga dem att bli som föräldrarna vill , annars uppstår det en konflikt **mellan** **dem** . | Verket vill visa oss att barn kan ärva egenskaper från både mamma och pappa , och att föräldrarna måste förstå sina barn och ska inte tvinga dem att bli som föräldrarna vill , annars uppstår det en konflikt **mellan** **de** .
+Verket vill visa oss att barn kan ärva egenskaper från både mamma och pappa , och att föräldrarna måste förstå sina barn och ska inte tvinga dem att bli som föräldrarna vill , annars uppstår det en konflikt mellan **dem** . | Verket vill visa oss att barn kan ärva egenskaper från både mamma och pappa , och att föräldrarna måste förstå sina barn och ska inte tvinga dem att bli som föräldrarna vill , annars uppstår det en konflikt mellan **de** .
 
 
 ## Sentence 527:
 L1 sentence | L2 sentence
 --- | ---
-Med polisen var en tjej som jobbade **med** **dem** . | Med polisen var en tjej som jobbade **med** **de** .
+Med polisen var en tjej som jobbade med **dem** . | Med polisen var en tjej som jobbade med **de** .
 
 
