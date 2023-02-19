@@ -7,8 +7,8 @@ extra-deps:
 - multiset-0.3.4.3
 - github: GrammaticalFramework/gf-core
   commit: 810640822dc3047af8fd9d7988e3f2423595c7b2
-- github: harisont/gf-ud
-  commit: 0fd7ebf98cc21f46f3aeda16fe10703159a8dc13
+- github: GrammaticalFramework/gf-ud
+  commit: 1a4a8c1ac08c02895fa886ca20e5e7a706f484e2
 - github: harisont/concept-alignment
   commit: 5d7718ecdad05001b68b68ec42094d399fdef508 # l2-ud branch
 
