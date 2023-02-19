@@ -5,6 +5,7 @@ import qualified Data.Map as M
 import Data.List
 import Data.List.Split (splitOn)
 import Data.List.Extra (replace, anySame)
+import Data.List.Ordered (isSortedBy)
 import Data.String.Utils (strip)
 import qualified Text.Regex.Posix as R
 import RTree
@@ -66,14 +67,11 @@ pruneUDTree p t = case p of
   (OR ps) -> mergeUDTrees $ map (`pruneUDTree` t) ps
   (ARG _ _) -> pruneUDTree (arg2and p) t
   -- too complicated to reconstruct the tree
-  --(SEQUENCE ps) -> adjacent (UDIdInt $ length ps) (filterPruneSequence t ps) 
-  --  where 
-  --    adjacent (UDIdInt n) (t:ts) = let i = udid2int $ udID $ root t in
-  --      t:filter 
-  --          (\t' -> udid2int (udID $ root t') `elem` [i..i + (n - 1)]) 
-  --          ts 
-  --(SEQUENCE_ ps) -> filterPruneSequence t ps
-  -- is it OK that TREE and TREE_ behave identically?
+  (SEQUENCE ps) -> pruneSubtrees (filterSubtrees t TRUE ps) ps
+  (SEQUENCE_ ps) -> pruneSubtrees (filterSubtrees t TRUE ps) ps
+  -- pruning is hacky and not optimal for tree patterns, but the alternative
+  -- is complicated (returning lists of UDTrees) and can computationally
+  -- expensive 
   (TREE p ps) -> pruneSubtrees (filterSubtrees t p ps) ps
   (TREE_ p ps) -> pruneSubtrees (filterSubtrees t p ps) ps
   _ -> t
@@ -81,8 +79,6 @@ pruneUDTree p t = case p of
     pruneSingleTokenPattern :: UDTree -> UDPattern -> UDTree
     pruneSingleTokenPattern t p = 
       fst $ replacementsWithUDPattern (PRUNE p 0) t
-    --filterPruneSequence :: UDTree -> [UDPattern] -> [UDTree]
-    --filterPruneSequence t = concatMap (\p -> concatMap (pruneUDTree p) (matchesUDPattern p t))
     filterSubtrees :: UDTree -> UDPattern -> [UDPattern] -> UDTree
     filterSubtrees t p ps = 
       fst $ replacementsWithUDPattern (FILTER_SUBTREES p (OR ps)) t
@@ -91,14 +87,6 @@ pruneUDTree p t = case p of
     pruneSubtrees (RTree n ts) (p:ps) = 
       pruneSubtrees (RTree n (map (pruneUDTree p) ts)) ps
     
---pruneAlignment (RTree n1 t1s,RTree n2 t2s) = 
---  (RTree n1 t1s', RTree n2 t2s') 
---  where 
---    -- I'm not completely clear in my mind but this seems to work?
---    (t1s',t2s') = unzip [(t1,t2) | t1 <- t1s, t2 <- t2s,
---                                   n1 /= n2 || t1 /= t2,
---                                   (t1,t2) `elem` as]
-
 -- | Custom version of GF-UD's matchesUDPattern
 -- (cf. https://github.com/GrammaticalFramework/gf-ud/blob/1a4a8c1ac08c02895fa886ca20e5e7a706f484e2/UDPatterns.hs#L23-L27)
 -- It differs from the original in that it is nonrecursive  

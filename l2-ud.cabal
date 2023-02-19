@@ -19,6 +19,7 @@ executable l2-ud
         base,
         extra,
         containers,
+        data-ordlist,
         gf-ud,
         concept-alignment,
         regex-posix,
