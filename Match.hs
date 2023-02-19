@@ -40,12 +40,14 @@ match vals qs as = minimal $ concatMap (\a -> concatMap (matches a) ps) as
             listAligns p1s p2s t1s t2s = all (\p -> any (`elem` as) [(m1,m2) | m1 <- t1s, p `ifMatchUDPattern` m1, m2 <- t2s, p `ifMatchUDPattern` m2]) (p1s `intersect` p2s)
 
         pruneAlignment :: ErrorPattern -> Alignment -> Alignment
-        pruneAlignment (p1,p2) (RTree n1 t1s,RTree n2 t2s) = 
-          (pruneUDTree p1 (RTree n1 t1s'),pruneUDTree p2 (RTree n2 t2s')) 
+        pruneAlignment (p1,p2) (t1,t2) = (RTree n1 t1s', RTree n2 t2s')
           where 
+            (RTree n1 t1s,RTree n2 t2s) = 
+              (pruneUDTree p1 t1,pruneUDTree p2 t2)
             (t1s',t2s') = unzip [(t1,t2) | t1 <- t1s, t2 <- t2s,
                                            n1 /= n2 || t1 /= t2,
-                                           (t1,t2) `elem` as]
+                                           (root t1,root t2) `elem` as']
+              where as' = map (\(t1,t2) -> (root t1,root t2)) as
 
 -- | Remove the parts of a tree not involved in a certain pattern 
 -- (for sequence patterns, this can result in a forest, hence the return type)

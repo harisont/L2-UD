@@ -7,7 +7,7 @@ L1 sentence | L2 sentence
 ## Sentence 1943:
 L1 sentence | L2 sentence
 --- | ---
-**Tyvärr** **har** **någonting** **hänt** **som** **gör** **att** **jag** **inte** **kan** **gå** **på** **kursen** **och** **jag** **önskar** **att** **få** **pengarna** **tillbaka** **.** | **Tyvärr** **någonting** **har** **hänt** **som** **gör** **att** **jag** **inte** **kan** **gå** **på** **kursen** **och** **jag** **önskar** **att** **få** **pengarna** **tillbaka** **.**
+Tyvärr **har** **någonting** **hänt** som gör att jag inte kan gå på kursen och jag önskar att få pengarna tillbaka . | Tyvärr **någonting** **har** **hänt** som gör att jag inte kan gå på kursen och jag önskar att få pengarna tillbaka .
 
 
 ## Sentence 1965:

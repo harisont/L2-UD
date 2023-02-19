@@ -43,7 +43,7 @@ Förra veckan **anmälde** jag mig till en trafikkurs för att lära mig att få
 ## Sentence 1081:
 L1 sentence | L2 sentence
 --- | ---
-**Jag** **studerar** svenska på SFI **nu** **.** | **Jag** **studera** svenska på SFI **nu** **.**
+Jag **studerar** svenska på SFI nu . | Jag **studera** svenska på SFI nu .
 
 
 ## Sentence 1583:
@@ -133,6 +133,6 @@ Du har ett nytt jobb , på ditt jobb **finns** **människor** **som** **kommer**
 ## Sentence 765:
 L1 sentence | L2 sentence
 --- | ---
-**Vilket** **budskap** **framför** **jag** **?** | **Vilket** **budskap** **framförar** **jag** **?**
+Vilket budskap **framför** jag ? | Vilket budskap **framförar** jag ?
 
 
