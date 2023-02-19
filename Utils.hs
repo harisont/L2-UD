@@ -6,20 +6,25 @@ import RTree
 import UDConcepts
 import UDPatterns
 
+-- HANDY UD STUFF
+
+-- | Return the words a UD sentence is composed of, ignoring unsplit tokens.
+-- For instance such as "dello", usually tokenized as di + lo
+-- (cf. https://github.com/harisont/L2-UD/issues/12)
+udWords :: UDSentence -> [UDWord]
+udWords s = filter ((not . isRange) . udID) (udWordLines s)
+  where
+    isRange :: UDId -> Bool
+    isRange (UDIdRange _ _) = True
+    isRange _ = False
+
+-- | Create root token, convert to sentence and adjust the IDs
 udTree2adjustedSentence :: UDTree -> UDSentence
 udTree2adjustedSentence = adjustUDIds . udTree2sentence . createRoot
 
+-- | Return the ID of the root of a UD (sub)tree
 rootID :: UDTree -> UDId
 rootID (RTree n _) = udID n
-
--- using `elem` because UDPatterns do not derive Ord
-rmDuplicates :: Eq a => [a] -> [a]
-rmDuplicates [] = []
-rmDuplicates (x:xs) | x `elem` xs = rmDuplicates xs
-                    | otherwise = x:rmDuplicates xs
-
-combinations :: [a] -> [[a]]
-combinations xs = sequence (replicate (length xs) xs)
 
 -- | Desugar ARG patterns
 arg2and :: UDPattern -> UDPattern
@@ -73,3 +78,16 @@ fieldVals = M.fromList [
   ("FEATS_Polite", ["Elev", "Form", "Humb", "Infm"]),
   ("FEATS_Clusivity", ["Ex", "In"])
   ]
+
+-- TOTALLY RANDOM STUFF
+
+-- | Remove duplicates from a list, (using `elem` because it should also work
+-- on UDPatterns, which do not derive Ord
+rmDuplicates :: Eq a => [a] -> [a]
+rmDuplicates [] = []
+rmDuplicates (x:xs) | x `elem` xs = rmDuplicates xs
+                    | otherwise = x:rmDuplicates xs
+
+-- | Return all possible combinations of elements of a given list
+combinations :: [a] -> [[a]]
+combinations xs = sequence (replicate (length xs) xs)
