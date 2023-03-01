@@ -37,13 +37,19 @@ Available `OPTIONS`:
 Return the [error patterns](#l1-l2-patterns) contained in an L1-L2 treebank.
 
 ```
-l2-ud extract L1-TREEBANK L2-TREEBANK
+l2-ud extract L1-TREEBANK L2-TREEBANK [OPTIONS]
 ```
 
 Where:
 
 - `L1-TREEBANK` is the CoNNL-U file containing correction hypotheses
 - `L2-TREEBANK` is the CoNNL-U file containing original learner sentences
+
+Available `OPTIONS`:
+
+- `--help`, `-h`: show usage instructions
+- `--markdown`, `-m`: rather than sentence IDs, output a markdown report showing the sentences with errors highlighted in bold next to the error patterns that were detected
+- `--conllu=DIR`, `-cDIR`: on top of printing the error patterns to the standard output, extract the pairs of subtrees where the errors were found and write them to an `L1.conllu` and an `L2.conllu` file in the given `DIR`ectory (if no directory is specified, files are created in the current folder)
 
 ## L1-L2 patterns
 An L1-L2 error pattern is a "parallel" [`gf-ud`](https://github.com/GrammaticalFramework/gf-ud) pattern[^1], i.e. essentially a pair of UD patterns.

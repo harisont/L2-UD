@@ -59,7 +59,10 @@ main = do
               let ps = rmDuplicates $ map error2Pattern (concat ess)
               mapM_ (putStrLn . showErrorPattern) ps
           case [f | f@CoNNLU {} <- flags] of
-            [CoNNLU path] -> undefined
+            [CoNNLU path] -> do
+              let es = concat ess
+              writeFile (path </> "L1.conllu") (conlluText (map fst es))
+              writeFile (path </> "L2.conllu") (conlluText (map snd es))
             _ -> return ()
 
 -- COMMAND LINE OPTIONS PARSING
