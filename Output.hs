@@ -24,13 +24,12 @@ extractedErrs2md :: ((UDSentence,UDSentence),[Error]) -> String
 extractedErrs2md (s12@(s1,s2),es) = unlines [
   h2 $ "Sentence " ++ showIds s12 ++ ":",
   table 
-    ["L1 sentence", "L2 sentence", "L1 pattern", "L2 pattern"]
+    ["L1 sentence", "L2 sentence", "Error pattern"]
     (map 
-      (\e@(t1,t2) -> let (p1,p2) = error2Pattern e in [
+      (\e@(t1,t2) -> [
         highlin s1 (udTree2sentence t1), 
         highlin s2 (udTree2sentence t2), 
-        code $ show p1, 
-        code $ show p2]) 
+        code $ showErrorPattern $ error2Pattern e]) 
       es)
   ] 
 
