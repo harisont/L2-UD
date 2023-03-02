@@ -1,5 +1,6 @@
 module Extract where
 
+import Data.List
 import RTree
 import UDConcepts
 import UDPatterns
@@ -11,7 +12,7 @@ import Utils
 -- The input is the list of alignments obtained for a single L1-L2 sentence,
 -- the output is a list of errors
 extract :: [Alignment] -> [Error]
-extract = map pruned . minimal . morphosynErrors
+extract = map pruneError . minimal . morphosynErrors
   where 
     morphosynErrors = filter (not . morphosynCorrect)
     patterns = map (\(t1,t2) -> (udTree2udPattern t1, udTree2udPattern t2))
@@ -40,26 +41,9 @@ coreArgs = ["nsubj", "obj", "iobj", "csubj", "ccomp", "xcomp"]
 isCoreArg :: UDTree -> Bool
 isCoreArg (RTree n ts) = udDEPREL n `elem` coreArgs
 
--- | Remove non-discrepant non-core arguments from an error
--- NOTE: this is nonrecursive, as I think recursion is not needed and may 
--- even be harmful, but I am not completely sure
--- NOTE: not sure this works with all the word order errors
-pruned :: Error -> Error
-pruned (t1,t2) = (RTree (root t1) (prune t1 p1s), RTree (root t2) (prune t2 p2s))
-  where
-    -- NOTE: comparing patterns rather than the trees themselves to prevent 
-    -- the adjustment of IDs from causing problems in the comparison implicit
-    -- with the use of elem  
-    prune t ps = filter 
-                  (\t -> isCoreArg t || udTree2udPattern t `elem` ps)
-                  (subtrees t)
-    (p1s,p2s) = unzip ps
-      where ps = map error2Pattern es
-              where es = filter (not . morphosynCorrect) as
-                      -- NOTE: re-aligning is not efficient but passing all 
-                      -- the alignments around is annoying. Maybe one day 
-                      -- with the state monad?
-                      where as = align (
-                                  udTree2adjustedSentence t1,
-                                  udTree2adjustedSentence t2
                                   )
+
+pruneError :: Error -> Error
+pruneError (RTree n1 t1s,RTree n2 t2s) = 
+  (RTree n1 [t1 | t1 <- t1s, udTree2udPattern t1 `notElem` map udTree2udPattern t2s],
+   RTree n2 [t2 | t2 <- t2s, udTree2udPattern t2 `notElem` map udTree2udPattern t1s])
