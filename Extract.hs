@@ -12,7 +12,7 @@ import Utils
 -- The input is the list of alignments obtained for a single L1-L2 sentence,
 -- the output is a list of errors
 extract :: [Alignment] -> [Error]
-extract = map pruneError . minimal . morphosynErrors
+extract as = (map (pruneError as) . minimal . morphosynErrors) as
   where 
     morphosynErrors = filter (not . morphosynCorrect)
     patterns = map (\(t1,t2) -> (udTree2udPattern t1, udTree2udPattern t2))
@@ -41,9 +41,8 @@ coreArgs = ["nsubj", "obj", "iobj", "csubj", "ccomp", "xcomp"]
 isCoreArg :: UDTree -> Bool
 isCoreArg (RTree n ts) = udDEPREL n `elem` coreArgs
 
-                                  )
-
-pruneError :: Error -> Error
-pruneError (RTree n1 t1s,RTree n2 t2s) = 
-  (RTree n1 [t1 | t1 <- t1s, udTree2udPattern t1 `notElem` map udTree2udPattern t2s],
-   RTree n2 [t2 | t2 <- t2s, udTree2udPattern t2 `notElem` map udTree2udPattern t1s])
+pruneError :: [Alignment] -> Error -> Error
+pruneError as (RTree n1 t1s,RTree n2 t2s) = 
+  (RTree n1 [t1 | t1 <- t1s, udTree2udPattern t1 `notElem` map udTree2udPattern t2s'],
+   RTree n2 [t2 | t2 <- t2s, udTree2udPattern t2 `notElem` map udTree2udPattern t1s'])
+   where (t1s',t2s') = unzip [pruneError as (t1,t2) | t1 <- t1s, t2 <- t2s, (t1,t2) `elem` as]
