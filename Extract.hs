@@ -1,12 +1,16 @@
+{-|
+Module      : Extract
+Description : Functions for error pattern extraction from L1-L2 treebanks.
+Stability   : experimental
+-}
+
 module Extract where
 
-import Data.List
-import RTree
 import UDConcepts
-import UDPatterns
 import Align
 import Errors
 import Utils
+import UDPatternManipulations
 
 -- | Top-level pattern extraction function used in the main.
 -- The input is the list of alignments obtained for a single L1-L2 sentence,
@@ -18,6 +22,7 @@ extract as = (map (pruneError as) . minimal . morphosynErrors) as
     patterns = map (\(t1,t2) -> (udTree2udPattern t1, udTree2udPattern t2))
 
 -- | Check if an alignment contains any discrepancy, i.e. an error of any kind
+-- (aka check if an alignment is in fact an Error)
 correct :: Alignment -> Bool 
 correct (s1,s2) = prUDTreeString s1 == prUDTreeString s2
 
@@ -32,17 +37,3 @@ correct (s1,s2) = prUDTreeString s1 == prUDTreeString s2
 morphosynCorrect :: Alignment -> Bool 
 morphosynCorrect (s1,s2) = morphosynUDPattern t1 == morphosynUDPattern t2
   where (t1,t2) = (udTree2udPattern s1,udTree2udPattern s2)
-
-coreArgs :: [Label]
-coreArgs = ["nsubj", "obj", "iobj", "csubj", "ccomp", "xcomp"]
-
--- | Check whether a UD subtree is a core argument, as defined in
--- https://universaldependencies.org/u/dep/index.html
-isCoreArg :: UDTree -> Bool
-isCoreArg (RTree n ts) = udDEPREL n `elem` coreArgs
-
-pruneError :: [Alignment] -> Error -> Error
-pruneError as (RTree n1 t1s,RTree n2 t2s) = 
-  (RTree n1 [t1 | t1 <- t1s, udTree2udPattern t1 `notElem` map udTree2udPattern t2s'],
-   RTree n2 [t2 | t2 <- t2s, udTree2udPattern t2 `notElem` map udTree2udPattern t1s'])
-   where (t1s',t2s') = unzip [pruneError as (t1,t2) | t1 <- t1s, t2 <- t2s, (t1,t2) `elem` as]

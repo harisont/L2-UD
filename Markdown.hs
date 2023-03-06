@@ -1,6 +1,11 @@
+{-|
+Module      : Markdown
+Description : Very simple Markdown markup generation.
+Stability   : stable
+-}
+
 module Markdown where
 
-import Data.List
 import Data.List.Extra
 
 bold :: String -> String

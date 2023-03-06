@@ -1,3 +1,10 @@
+{-|
+Module      : Match
+Description : Functions for error pattern matching (aka querying) from L1-L2 
+              treebanks.
+Stability   : experimental
+-}
+
 module Match where 
 
 import Data.Maybe
@@ -10,11 +17,11 @@ import Data.Bifunctor
 import qualified Text.Regex.Posix as R
 import RTree
 import UDConcepts hiding (strip)
-import UDPatterns
-import ConceptAlignment (udSimpleDEPREL)
+import UDPatterns hiding (matchesUDPattern)
 import Align
 import Errors
 import Utils
+import UD
 
 -- | Top-level pattern matching function used in the main
 match :: M.Map Field [Value] -> [String] -> [Alignment] -> [Error]
@@ -24,13 +31,13 @@ match vals qs as = minimal $ concatMap (\a -> concatMap (matches a as) ps) as
     ps = rmDuplicates $ concatMap (parseQuery vals) qs
 
 -- | Given a pair of aligned subtrees, a list of all other alignments that
--- have been extracted for the sentece the alignment belongs to and an error 
+-- have been extracted for the sentence the alignment belongs to and an error 
 -- patten, return any matches found for that subtree pair
 matches :: Alignment -> [Alignment] -> ErrorPattern -> [Error]
 matches (t1,t2) as e@(e1,e2) = 
-  [pruneAlignment e as (m1,m2) | m1 <- m1s, m2 <- m2s, m1 `aligns` m2]
+  [pruneErrorByPattern e as (m1,m2) | m1 <- m1s, m2 <- m2s, m1 `aligns` m2]
   where 
-    (m1s,m2s) = (matchesUDPattern' e1 t1,matchesUDPattern' e2 t2)
+    (m1s,m2s) = (matchesUDPattern e1 t1,matchesUDPattern e2 t2)
 
     -- | Check, based on the previously found alignments, whether two subtrees
     -- that have been found to match a certain error pattern actually align
@@ -59,59 +66,11 @@ matches (t1,t2) as e@(e1,e2) =
 
 -- | Custom (nonrecursive) version of GF-UD's matchesUDPattern
 -- (cf. https://github.com/GrammaticalFramework/gf-ud/blob/1a4a8c1ac08c02895fa886ca20e5e7a706f484e2/UDPatterns.hs#L23-L27)
-matchesUDPattern' :: UDPattern -> UDTree -> [UDTree]
-matchesUDPattern' p tree@(RTree node subtrees) = case p of
+matchesUDPattern :: UDPattern -> UDTree -> [UDTree]
+matchesUDPattern p tree@(RTree node subtrees) = case p of
   SEQUENCE ps -> maybe [] return $ findMatchingUDSequence True ps tree
   SEQUENCE_ ps -> maybe [] return $ findMatchingUDSequence False ps tree
   _ -> [tree | ifMatchUDPattern p tree]
-
--- | Prune an alignment that matches a certain error pattern, i.e. prune each
--- UDTree based on the corresponding UDPattern and then discard all subtrees 
--- that are not involved in any alignment 
-pruneAlignment :: ErrorPattern -> [Alignment] -> Alignment -> Error
-pruneAlignment (p1,p2) as (t1,t2) = (RTree n1 t1s', RTree n2 t2s')
-  where 
-    (RTree n1 t1s,RTree n2 t2s) = 
-      (pruneUDTree p1 t1,pruneUDTree p2 t2)
-    (t1s',t2s') = unzip [(t1,t2) | t1 <- t1s, t2 <- t2s,
-                                   n1 /= n2 || t1 /= t2,
-                                   (root t1,root t2) `elem` as']
-      where as' = map (bimap root root) as
-
--- | Remove the parts of a tree not described by a certain UDPattern 
-pruneUDTree :: UDPattern -> UDTree -> UDTree
-pruneUDTree p t = case p of
-  (FORM _) -> pruneSingleTokenPattern t p
-  (LEMMA _) -> pruneSingleTokenPattern t p 
-  (POS _) -> pruneSingleTokenPattern t p
-  (DEPREL _) -> pruneSingleTokenPattern t p
-  (DEPREL_ _) -> pruneSingleTokenPattern t p 
-  (FEATS _) -> pruneSingleTokenPattern t p
-  (FEATS_ _) -> pruneSingleTokenPattern t p
-  (NOT _) -> t -- NOTE: return t rn, cause idk how to define pruning for NOTs
-  -- is it OK that AND and OR behave identically?
-  (AND ps) -> mergeUDTrees $ map (`pruneUDTree` t) ps
-  (OR ps) -> mergeUDTrees $ map (`pruneUDTree` t) ps
-  (ARG _ _) -> pruneUDTree (arg2and p) t
-  (TREE p ps) -> pruneSubtrees (filterSubtrees t p ps) ps
-  (TREE_ p ps) -> pruneSubtrees (filterSubtrees t p ps) ps
-  -- pruning is hacky and not optimal for sequence patterns, but the 
-  -- alternative is complicated (returning lists of UDTrees) and 
-  -- computationally expensive 
-  (SEQUENCE ps) -> pruneSubtrees (filterSubtrees t TRUE ps) ps
-  (SEQUENCE_ ps) -> pruneSubtrees (filterSubtrees t TRUE ps) ps
-  _ -> t
-  where
-    pruneSingleTokenPattern :: UDTree -> UDPattern -> UDTree
-    pruneSingleTokenPattern t p = 
-      fst $ replacementsWithUDPattern (PRUNE p 0) t
-    filterSubtrees :: UDTree -> UDPattern -> [UDPattern] -> UDTree
-    filterSubtrees t p ps = 
-      fst $ replacementsWithUDPattern (FILTER_SUBTREES p (OR ps)) t
-    pruneSubtrees :: UDTree -> [UDPattern] -> UDTree
-    pruneSubtrees t [] = t
-    pruneSubtrees (RTree n ts) (p:ps) = 
-      pruneSubtrees (RTree n (map (pruneUDTree p) ts)) ps
 
 -- | Parses a query string into a list of error patterns, expanding variables
 -- and splitting any {X->Y} shorthand. 

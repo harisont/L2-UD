@@ -1,6 +1,13 @@
-module Align where -- ConceptAlignment wrapper
+{-|
+Module      : Align
+Description : Wrapper for the ConceptAlignment library, defining 
+              domain-specific criteria and offering simpler data types 
+              to work with.
+Stability   : experimental
+-}
 
-import Data.List
+module Align where
+
 import Data.Map (toList, empty)
 import Data.Set (singleton, fromList)
 import RTree
@@ -58,16 +65,3 @@ t1 `posEquiv` t2 = (not . null) ct1 && (ct1 == ct2)
 align :: (UDSentence,UDSentence) -> [Alignment]
 align ss = map (\a -> (sl a,tl a)) as
   where as = toList $ alignSent empty criteria Nothing False False False ss
-
--- | Linearize matches, aka pairs of aligned UD (sub)sentences 
-linearizeAlignment :: Alignment -> String
-linearizeAlignment (s1,s2) = prUDTreeString s1 ++ " - " ++ prUDTreeString s2
-  
--- | Only keep minimal alignments
-minimal :: [Alignment] -> [Alignment]
-minimal as = 
-  filter 
-    (\a@(t1,t2) -> let as' = as \\ [a] in
-      not $ any (\(t1',t2') -> t1' `isSubRTree` t1 && t2' `isSubRTree` t2) as' 
-    )
-    as

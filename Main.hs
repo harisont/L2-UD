@@ -13,6 +13,7 @@ import Match
 import Errors
 import Utils
 import Output
+import UD
 
 main = do
   argv <- getArgs
@@ -71,9 +72,6 @@ type Arg = String
 
 data Flag = Help | Markdown | CoNNLU String deriving Eq
 
-conlluOutDir :: Maybe String -> Flag
-conlluOutDir = CoNNLU . fromMaybe "." -- default = current folder
-
 -- | List of available commands (first arg)
 cmds :: [Arg]
 cmds = ["extract", "match"]
@@ -92,12 +90,13 @@ opts = [
     (OptArg conlluOutDir "DIR") 
     "path to the directory for the output conllu files"
   ]
+  where conlluOutDir = CoNNLU . fromMaybe "." -- default = current folder
 
 usage :: String
 usage = concat [
   "\nUsage:\n",
-  "stack run -- extract L1-TREEBANK L2-TREEBANK [--markdown], or\n",
-  "stack run -- match L1-TREEBANK L2-TREEBANK PATTERNS [--markdown]"]
+  "l2-ud extract L1-TREEBANK L2-TREEBANK [OPTIONS], or\n",
+  "l2-ud match L1-TREEBANK L2-TREEBANK PATTERNS [OPTIONS]"]
 
 parseArgv :: [String] -> String -> [OptDescr Flag] -> ([Flag],[Arg])
 parseArgv argv usage opts = case getOpt Permute opts argv of

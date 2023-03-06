@@ -14,7 +14,16 @@ cabal-version: >= 1.10
 
 executable l2-ud
     main-is: Main.hs
-    other-modules: Errors, Align, Extract, Match, Utils, Markdown, Output
+    other-modules: 
+        Errors, 
+        Align, 
+        Extract, 
+        Match, 
+        Utils, 
+        Markdown, 
+        Output,
+        UDPatternManipulations,
+        UD
     build-depends:
         base,
         extra,

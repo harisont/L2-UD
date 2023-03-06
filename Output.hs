@@ -1,3 +1,9 @@
+{-|
+Module      : Output
+Description : Misc output functions used in the main.
+Stability   : experimental
+-}
+
 module Output where
 
 import UDConcepts
@@ -5,19 +11,12 @@ import Align
 import Errors
 import Markdown
 import Utils
+import UD
 
 -- | Show the ID(s) of two parallel sentences
 showIds :: (UDSentence,UDSentence) -> String
 showIds (s1,s2) = if i1 == i2 then i1 else i1 ++ "-" ++ i2
   where (i1,i2) = (sentId s1,sentId s2)
-
--- | Linearize a sentence highlighting its tokens that belong to a subsentence
-highlin :: UDSentence -> UDSentence -> String
-highlin s s' = 
-  unwords $ map (\w -> if w `elem` wss then bold (udFORM w) else udFORM w) ws
-  where 
-    ws = udWords s
-    wss = udWords s'
     
 -- | Render extracted errors/patterns as markdown
 extractedErrs2md :: ((UDSentence,UDSentence),[Error]) -> String
@@ -46,13 +45,23 @@ sentMatches2md (s12@(s1,s2),as) = unlines [
       as)
   ]
 
+-- | Helper function that linearizes a sentence highlighting its tokens that 
+-- belong to a subsentence
+highlin :: UDSentence -> UDSentence -> String
+highlin s s' = 
+  unwords $ map (\w -> if w `elem` wss then bold (udFORM w) else udFORM w) ws
+  where 
+    ws = udWords s
+    wss = udWords s'
+
 -- | Return the string to write in the CoNNL-U file corresponding to a list of 
 -- UD trees 
 conlluText :: [UDTree] -> String
 conlluText ts = unlines $ 
   zipWith (curry showUDSentence) [1..] (map udTree2adjustedSentence ts)
 
--- | Print a UD sentences with metadata. i is the sent_id. Very similar to
+-- | Helper function: print a UD sentences with metadata. i is the sent_id. 
+-- Very similar to
 -- https://github.com/GrammaticalFramework/gf-ud/blob/1a4a8c1ac08c02895fa886ca20e5e7a706f484e2/UDConcepts.hs#L172-L180
 showUDSentence :: (Int,UDSentence) -> String
 showUDSentence (i,s) = (prt . addMeta i) s
