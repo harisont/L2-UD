@@ -13,17 +13,18 @@ extra-source-files: README.md
 cabal-version: >= 1.10 
 
 executable l2-ud
+    hs-source-dirs: src
     main-is: Main.hs
     other-modules: 
         Errors, 
         Align, 
         Extract, 
         Match, 
-        Utils, 
-        Markdown, 
-        Output,
-        UDPatternManipulations,
-        UD
+        Utils.Misc, 
+        Utils.Markdown, 
+        Utils.Output,
+        Utils.UDPatterns,
+        Utils.UDConcepts
     build-depends:
         base,
         extra,

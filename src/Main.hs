@@ -11,9 +11,9 @@ import Align
 import Extract
 import Match
 import Errors
-import Utils
-import Output
-import UD
+import Utils.Misc
+import Utils.Output
+import Utils.UDConcepts
 
 main = do
   argv <- getArgs

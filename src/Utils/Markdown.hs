@@ -1,10 +1,10 @@
 {-|
-Module      : Markdown
+Module      : Utils.Markdown
 Description : Very simple Markdown markup generation.
 Stability   : stable
 -}
 
-module Markdown where
+module Utils.Markdown where
 
 import Data.List.Extra
 

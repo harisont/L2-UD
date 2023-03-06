@@ -9,8 +9,8 @@ module Extract where
 import UDConcepts
 import Align
 import Errors
-import Utils
-import UDPatternManipulations
+import Utils.Misc
+import Utils.UDPatterns
 
 -- | Top-level pattern extraction function used in the main.
 -- The input is the list of alignments obtained for a single L1-L2 sentence,

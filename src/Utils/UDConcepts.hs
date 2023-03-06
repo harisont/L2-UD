@@ -1,11 +1,11 @@
 {-|
-Module      : UD
+Module      : Utils.UD
 Description : Boring UD-specific stuff, including some shorthands for things
               implemented in gf-ud's UDConcepts module.
 Stability   : experimental
 -}
 
-module UD where
+module Utils.UDConcepts where
 
 import Data.List
 import qualified Data.Map as M

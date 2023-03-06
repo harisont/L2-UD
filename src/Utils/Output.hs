@@ -1,17 +1,17 @@
 {-|
-Module      : Output
-Description : Misc output functions used in the main.
+Module      : Utils.Output
+Description : Output functions used in the main.
 Stability   : experimental
 -}
 
-module Output where
+module Utils.Output where
 
 import UDConcepts
 import Align
 import Errors
-import Markdown
-import Utils
-import UD
+import Utils.Markdown
+import Utils.Misc
+import Utils.UDConcepts
 
 -- | Show the ID(s) of two parallel sentences
 showIds :: (UDSentence,UDSentence) -> String

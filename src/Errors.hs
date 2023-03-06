@@ -11,9 +11,9 @@ import Data.Bifunctor
 import RTree
 import UDConcepts
 import UDPatterns
-import Utils
+import Utils.Misc
 import Align
-import UDPatternManipulations
+import Utils.UDPatterns
 
 -- | An error (or error-correction pair) is a pair of aligned (sub)trees,  
 -- pruned based on the error pattern they match

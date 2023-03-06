@@ -20,8 +20,8 @@ import UDConcepts hiding (strip)
 import UDPatterns hiding (matchesUDPattern)
 import Align
 import Errors
-import Utils
-import UD
+import Utils.Misc
+import Utils.UDConcepts
 
 -- | Top-level pattern matching function used in the main
 match :: M.Map Field [Value] -> [String] -> [Alignment] -> [Error]

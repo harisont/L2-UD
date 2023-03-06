@@ -8,6 +8,7 @@ Stability   : experimental
 
 module Align where
 
+import Data.List
 import Data.Map (toList, empty)
 import Data.Set (singleton, fromList)
 import RTree
@@ -65,3 +66,12 @@ t1 `posEquiv` t2 = (not . null) ct1 && (ct1 == ct2)
 align :: (UDSentence,UDSentence) -> [Alignment]
 align ss = map (\a -> (sl a,tl a)) as
   where as = toList $ alignSent empty criteria Nothing False False False ss
+
+-- | Only keep minimal alignments
+minimal :: [Alignment] -> [Alignment]
+minimal as = 
+  filter 
+    (\a@(t1,t2) -> let as' = as \\ [a] in
+      not $ any (\(t1',t2') -> t1' `isSubRTree` t1 && t2' `isSubRTree` t2) as' 
+    )
+    as

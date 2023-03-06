@@ -1,17 +1,17 @@
 {-|
-Module      : UDPatterns
+Module      : Utils.UDPatterns
 Description : UD patterns manipulations (aka "things that might as well be 
               part of gf-ud's UDPatterns but why would anyone else need them")
 Stability   : experimental
 -}
-module UDPatternManipulations where
+module Utils.UDPatterns where
 
 import Data.Maybe
 import Data.List
 import RTree
 import UDConcepts
 import UDPatterns
-import UD
+import Utils.UDConcepts
 
 -- | Convert a UD tree into a UD pattern
 udTree2udPattern :: UDTree -> UDPattern
