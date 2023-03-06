@@ -46,7 +46,8 @@ mergeUDTrees (t1:t2:ts) = mergeUDTrees ((t1 `merge` t2):ts)
           else error "Trying to merge UD trees with nonmatching roots!"
 
 
--- | Names of CoNNL-U "columns" or morphological feature
+-- | Names of CoNNL-U "columns" or morphological feature 
+-- (morpho features are called e.g. FEATS_Gender)
 type Field = String 
 
 -- | Values of the various "fields" of a CoNLL-U file
