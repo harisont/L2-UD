@@ -54,8 +54,8 @@ type Field = String
 type Value = String 
 
 --  | Morphosyntax-relevant columns
-morphosynColumns :: [Field]
-morphosynColumns = ["POS", "XPOS", "FEATS", "DEPREL"]
+morphosynFields :: [Field]
+morphosynFields = ["POS", "XPOS", "FEATS", "DEPREL"]
 
 -- | Check whether a UD subtree is a core argument, as defined in
 -- https://universaldependencies.org/u/dep/index.html

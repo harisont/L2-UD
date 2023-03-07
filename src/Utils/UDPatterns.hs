@@ -75,12 +75,12 @@ simplifyUDPattern fs p = case p of
 -- | Shorthand for getting the morphosyntactic (POS + XPOS + FEATS + DEPREL)  
 -- UD pattern corresponding to a "full" UD pattern
 morphosynUDPattern :: UDPattern -> UDPattern
-morphosynUDPattern = simplifyUDPattern morphosynColumns
+morphosynUDPattern = simplifyUDPattern morphosynFields
 
 -- | Shorthand for getting the "universal" morphosyntactic (POS + FEATS +   
 -- DEPREL) UD pattern corresponding to a "full" UD pattern
 uniMorphosynUDPattern :: UDPattern -> UDPattern
-uniMorphosynUDPattern = simplifyUDPattern (morphosynColumns \\ ["XPOS"])
+uniMorphosynUDPattern = simplifyUDPattern (morphosynFields \\ ["XPOS"])
 
 -- | Remove the parts of a tree not described by a certain UDPattern 
 pruneUDTree :: UDPattern -> UDTree -> UDTree
@@ -121,3 +121,41 @@ pruneUDTree p t = case p of
 arg2and :: UDPattern -> UDPattern
 arg2and (ARG p d) = AND [POS p, DEPREL d]
 arg2and _ = error "Attempt to desugar non-ARG pattern!"
+
+-- | CoNNL-U fields that appear in UD patterns
+patternFields :: [Field]
+patternFields = [
+  "FORM", 
+  "LEMMA", 
+  "POS", 
+  "XPOS", 
+  "MISC", 
+  "FEATS", 
+  "FEATS_",
+  "FEATS_PronType",
+  "FEATS_Gender",
+  "FEATS_VerbForm",
+  "FEATS_NumType",
+  "FEATS_Animacy",
+  "FEATS_Mood",
+  "FEATS_Poss",
+  "FEATS_NounClass",
+  "FEATS_Tense",
+  "FEATS_Reflex",
+  "FEATS_Number",
+  "FEATS_Aspect",
+  "FEATS_Foreign",
+  "FEATS_Case",
+  "FEATS_Voice",
+  "FEATS_Abbr",
+  "FEATS_Definite",
+  "FEATS_Evident",
+  "FEATS_Typo",
+  "FEATS_Degree",
+  "FEATS_Polarity",
+  "FEATS_Person",
+  "FEATS_Polite",
+  "FEATS_Clusivity", 
+  "DEPREL", 
+  "DEPREL_"
+  ]

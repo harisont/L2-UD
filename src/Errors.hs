@@ -7,6 +7,7 @@ Stability   : experimental
 
 module Errors where
 
+import Data.List
 import Data.Bifunctor
 import RTree
 import UDConcepts
@@ -29,6 +30,17 @@ type ErrorPattern = (UDPattern,UDPattern)
 -- | Shorthand to convert errors to error patterns
 error2Pattern :: Error -> ErrorPattern
 error2Pattern (e1,e2) = (udTree2udPattern e1,udTree2udPattern e2)
+
+-- | Shorthand to convert errors to morphosyntactic error patterns
+error2morphosynPattern :: Error -> ErrorPattern
+error2morphosynPattern e = (morphosynUDPattern p1,morphosynUDPattern p2)
+  where (p1,p2) = error2Pattern e
+
+-- | Shorthand to convert errors to universal morphosyntactic error patterns
+error2uniMorphosynPattern :: Error -> ErrorPattern
+error2uniMorphosynPattern e = 
+  (uniMorphosynUDPattern p1,uniMorphosynUDPattern p2)
+  where (p1,p2) = error2Pattern e
 
 -- | Show an error pattern as a single "L1-L2" pattern ({A -> B} syntax)
 showErrorPattern :: ErrorPattern -> String
@@ -60,3 +72,13 @@ pruneErrorByPattern (p1,p2) as (t1,t2) = (RTree n1 t1s', RTree n2 t2s')
                                    n1 /= n2 || t1 /= t2,
                                    (root t1,root t2) `elem` as']
       where as' = map (bimap root root) as
+
+-- | Simplify an error pattern removing fields that do not present any 
+-- variation between the L1 and L2 component
+simplifyErrorPattern :: ErrorPattern -> ErrorPattern
+simplifyErrorPattern (p1,p2) = 
+  (simplifyUDPattern fs p1,simplifyUDPattern fs p2)
+  where fs = filter 
+              (\f -> simplifyUDPattern [f] p1 /= simplifyUDPattern [f] p2)
+              -- simplify by single feats 
+              (patternFields \\ ["FEATS", "FEATS_"]) 

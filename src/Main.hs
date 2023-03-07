@@ -57,7 +57,9 @@ main = do
               let es = filter (not . null . snd) (s12s `zip` ess)
               mapM_ (putStrLn . extractedErrs2md) es
             else do
-              let ps = rmDuplicates $ map error2Pattern (concat ess)
+              let ps = rmDuplicates $ map 
+                        (simplifyErrorPattern . error2uniMorphosynPattern) 
+                        (concat ess)
               mapM_ (putStrLn . showErrorPattern) ps
           case [f | f@CoNNLU {} <- flags] of
             [CoNNLU path] -> do

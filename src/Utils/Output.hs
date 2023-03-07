@@ -28,7 +28,9 @@ extractedErrs2md (s12@(s1,s2),es) = unlines [
       (\e@(t1,t2) -> [
         highlin s1 (udTree2sentence t1), 
         highlin s2 (udTree2sentence t2), 
-        code $ showErrorPattern $ error2Pattern e]) 
+        code $ 
+          showErrorPattern $ 
+            simplifyErrorPattern $ error2uniMorphosynPattern e]) 
       es)
   ] 
 
