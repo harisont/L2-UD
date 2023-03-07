@@ -8,6 +8,7 @@ module Utils.UDPatterns where
 
 import Data.Maybe
 import Data.List
+import Data.List.Split
 import RTree
 import UDConcepts
 import UDPatterns
@@ -34,17 +35,18 @@ udTree2udPattern (RTree n ts) = AND [
 -- | Discard UD columns from an HST pattern, excepts those explicitly listed
 simplifyUDPattern :: [Field] -> UDPattern -> UDPattern
 simplifyUDPattern fs p = case p of
-  -- TODO: repetition could be avoided using head $ words $ show P
+  -- repetition could be avoided using head $ words $ show p
   (FORM _) -> if "FORM" `elem` fs then p else TRUE
   (LEMMA _) -> if "LEMMA" `elem` fs then p else TRUE
   (POS _) -> if "POS" `elem` fs then p else TRUE
   (XPOS _) -> if "XPOS" `elem` fs then p else TRUE
   (MISC _ _) -> if "MISC" `elem` fs then p else TRUE
-  -- TODO: simplify FEATS further
-  (FEATS _) -> if "FEATS" `elem` fs then p else TRUE
-  (FEATS_ _) -> if "FEATS_" `elem` fs then p else TRUE
-  (DEPREL s) -> if "DEPREL" `elem` fs then p else TRUE
-  (DEPREL_ s) -> if "DEPREL_" `elem` fs then p else TRUE
+  (FEATS s) -> if null s' then TRUE else FEATS s' 
+    where s' = simplifyFEATS fs s
+  (FEATS_ s) -> if null s' then TRUE else FEATS_ s' 
+    where s' = simplifyFEATS fs s
+  (DEPREL _) -> if "DEPREL" `elem` fs then p else TRUE
+  (DEPREL_ _) -> if "DEPREL_" `elem` fs then p else TRUE
   (AND ps) -> AND $ filter notTRUE (map (simplifyUDPattern fs) ps)
   (OR ps) -> OR $ filter notTRUE (map (simplifyUDPattern fs) ps)
   (NOT p) -> NOT $ simplifyUDPattern fs p
@@ -55,8 +57,20 @@ simplifyUDPattern fs p = case p of
   p@(ARG _ _) -> simplifyUDPattern fs (arg2and p)  
   p -> p
   where 
+    notTRUE :: UDPattern -> Bool
     notTRUE TRUE = False
     notTRUE _ = True 
+    simplifyFEATS :: [Field] -> String -> String
+    simplifyFEATS fs s 
+      | "FEATS" `elem` fs || "FEATS_" `elem` fs = s
+      | (not . null) fs' = intercalate 
+                    "|" 
+                    (concatMap (\f -> filter (\kv -> k kv == f) ss) fs')
+      | otherwise = ""
+      where 
+        fs' = map (drop 6) (filter (\f -> "FEATS_" `isPrefixOf` f) fs)
+        k = head . splitOn "="
+        ss = splitOn "|" s
 
 -- | Shorthand for getting the morphosyntactic (POS + XPOS + FEATS + DEPREL)  
 -- UD pattern corresponding to a "full" UD pattern
