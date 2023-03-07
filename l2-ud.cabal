@@ -21,7 +21,6 @@ executable l2-ud
         Extract, 
         Match, 
         Utils.Misc, 
-        Utils.Markdown, 
         Utils.Output,
         Utils.UDPatterns,
         Utils.UDConcepts
@@ -36,5 +35,6 @@ executable l2-ud
         split,
         directory,
         filepath,
-        MissingH
+        MissingH,
+        hs-md
     default-language: Haskell2010

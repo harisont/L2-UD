@@ -9,7 +9,7 @@ module Utils.Output where
 import UDConcepts
 import Align
 import Errors
-import Utils.Markdown
+import Markdown
 import Utils.Misc
 import Utils.UDConcepts
 
