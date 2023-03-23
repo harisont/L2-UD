@@ -5,3 +5,8 @@ out/*data/
 data/
 
 out/*
+
+# Stuff that should stay in dev
+results/*
+eval.py
+experiments.sh
