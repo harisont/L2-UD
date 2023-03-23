@@ -115,4 +115,18 @@ For attributes with many possible values, like `POS`, querying can become very s
 
 For more examples, check the [saved queries folder](queries).
 
+## Citation
+If you use this software in your research, you are welcome to cite
+
+```
+@inproceedings{
+masciolini2023a,
+title={A query engine for L1-L2 parallel dependency treebanks},
+author={Arianna Masciolini},
+booktitle={The 24rd Nordic Conference on Computational Linguistics},
+year={2023},
+url={https://openreview.net/forum?id=ngh-uZ2ivH}
+}
+```
+
 [^1]: The syntax of `gf-ud`'s pattern matching language is described extensively [here](https://github.com/GrammaticalFramework/gf-ud/blob/master/doc/patterns.md).
