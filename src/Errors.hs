@@ -71,7 +71,6 @@ pruneErrorByPattern (p1,p2) as (t1,t2) = (RTree n1 t1s', RTree n2 t2s')
     (t1s',t2s') = unzip [(t1',t2') | t1' <- t1s, t2' <- t2s,
                                    n1 /= n2 || t1' /= t2',
                                    (t1',t2') `elem` as]
-      where as' = map (bimap root root) as
 
 -- | Simplify an error pattern removing fields that do not present any 
 -- variation between the L1 and L2 component
