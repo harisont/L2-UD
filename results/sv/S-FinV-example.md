@@ -13,7 +13,7 @@ L1 sentence | L2 sentence
 
 L1 sentence | L2 sentence
 --- | ---
- **Tyvärr**   **har**   **någonting**   **hänt**   **som**   **gör**  att  **jag**   **inte**   **kan**   **gå**  på kursen och  **jag**   **önskar**  att  **få**  pengarna tillbaka . |  **Tyvärr**   **någonting**   **har**   **hänt**   **som**   **gör**  att  **jag**   **inte**   **kan**   **gå**  på kursen och  **jag**   **önskar**  att  **få**  pengarna tillbaka .
+ **Tyvärr**   **har**   **någonting**   **hänt**  som gör att jag inte kan gå på kursen och jag önskar att få pengarna tillbaka . |  **Tyvärr**   **någonting**   **har**   **hänt**  som gör att jag inte kan gå på kursen och jag önskar att få pengarna tillbaka .
 
 
 
@@ -58,7 +58,7 @@ Lyckligtvis kan du spela piano , och  **där**  kan  **du**   **lära**  känna 
 
 L1 sentence | L2 sentence
 --- | ---
- **Ibland**   **brukar**   **man**   **säga**  att  **kärleken**   **har**  ingen gräns och det är sant . |  **Ibland**   **man**   **brukar**   **säga**  att  **kärleken**   **har**  ingen gräns och det är sant .
+ **Ibland**   **brukar**   **man**  säga att kärleken har ingen gräns och det är sant . |  **Ibland**   **man**   **brukar**  säga att kärleken har ingen gräns och det är sant .
 
 
 
