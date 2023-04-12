@@ -75,8 +75,8 @@ main = do
           s1 <- annotate (args !! 3) lang
           s2 <- annotate (args !! 4) lang
           when (Verbose `elem` flags)
-            $ do putStrLn $ showUDSentence (1, s1)
-                 putStrLn $ showUDSentence (2, s2)
+            $ do putStrLn $ showUDSentence (1,s1)
+                 putStrLn $ showUDSentence (2,s2)
           -- extract error patterns
           let es = extract (align (s1,s2))
           let ps = rmDuplicates $ 

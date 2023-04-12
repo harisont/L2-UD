@@ -51,7 +51,7 @@ Available `OPTIONS`:
 - `--markdown`, `-m`: rather than sentence IDs, output a markdown report showing the sentences with errors highlighted in bold next to the error patterns that were detected
 - `--conllu=DIR`, `-cDIR`: on top of printing the error patterns to the standard output, extract the pairs of subtrees where the errors were found and write them to an `L1.conllu` and an `L2.conllu` file in the given `DIR`ectory (if no directory is specified, files are created in the current folder)
 
-## Retrieving similar examples (__CURRENTLY UNDER DEVELOPMENT__)
+### Retrieving similar examples (__CURRENTLY UNDER DEVELOPMENT__)
 Given an L1-L2 sentence pair, return simila examples from an L1-L2 treebank, by:
 
 1. annotating the sentences in UD using UDPipe2 (requires an internet connection)
