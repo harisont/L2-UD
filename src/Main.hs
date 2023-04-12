@@ -31,18 +31,18 @@ main = do
       let as = map align s12s 
       case head args of
         "match" -> do
-          -- read query from text file or command line
+          -- read query strings from text file or command line
           isFile <- doesFileExist $ args !! 3
           qs <- if length args == 4 && isFile
             then do
               content <- readFile $ args !! 3
               return $ lines content
             else return $ drop 3 args
+          -- convert query strings into error patterns
+          let ps = rmDuplicates $ concatMap (parseQuery fieldVals) qs
           -- get matches, i.e. pairs of 
           -- (l1-l2 sentences, nonempty list of aligned matching subtrees)
-          let ms = filter 
-                    (not . null . snd) 
-                    (s12s `zip` map (match fieldVals qs) as)
+          let ms = filter (not . null . snd) (s12s `zip` map (match ps) as)
           if Markdown `elem` flags
             then mapM_ (putStrLn . sentMatches2md) ms
             else mapM_ ((putStrLn . showIds) . fst) ms
@@ -83,9 +83,7 @@ main = do
                 map (simplifyErrorPattern . error2uniMorphosynPattern) es
           when (Verbose `elem` flags) $ mapM_ print ps
           -- query the treebank (TODO: optimize - no show-read needed)
-          let ms = filter 
-                    (not . null . snd) 
-                    (s12s `zip` map (match fieldVals (map show ps)) as)
+          let ms = filter (not . null . snd) (s12s `zip` map (match ps) as)
           mapM_ (putStrLn . sentMatches2md) ms
 
 -- COMMAND LINE OPTIONS PARSING
