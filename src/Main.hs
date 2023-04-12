@@ -5,6 +5,7 @@ import System.FilePath
 import System.Environment (getArgs)
 import System.Console.GetOpt
 import System.Directory
+import Control.Monad (when)
 import UDConcepts
 import UDPatterns
 import Align
@@ -73,19 +74,14 @@ main = do
           let lang = args !! 5 
           s1 <- annotate (args !! 3) lang
           s2 <- annotate (args !! 4) lang
-          if Verbose `elem` flags 
-            then do
-              putStrLn $ showUDSentence (1,s1)
-              putStrLn $ showUDSentence (2,s2)
-            else return ()
+          when (Verbose `elem` flags)
+            $ do putStrLn $ showUDSentence (1, s1)
+                 putStrLn $ showUDSentence (2, s2)
           -- extract error patterns
           let es = extract (align (s1,s2))
           let ps = rmDuplicates $ 
                 map (simplifyErrorPattern . error2uniMorphosynPattern) es
-          if Verbose `elem` flags
-            then
-              mapM_ (putStrLn . show) ps
-            else return ()
+          when (Verbose `elem` flags) $ mapM_ print ps
           -- query the treebank (TODO: optimize - no show-read needed)
           let ms = filter 
                     (not . null . snd) 
