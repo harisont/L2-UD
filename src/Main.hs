@@ -11,6 +11,7 @@ import Align
 import Extract
 import Match
 import Errors
+import Annotate
 import Utils.Misc
 import Utils.Output
 import Utils.UDConcepts
@@ -67,16 +68,39 @@ main = do
               writeFile (path </> "L1.conllu") (conlluText (map fst es))
               writeFile (path </> "L2.conllu") (conlluText (map snd es))
             _ -> return ()
+        "example" -> do
+          -- annotate
+          let lang = args !! 5 
+          s1 <- annotate (args !! 3) lang
+          s2 <- annotate (args !! 4) lang
+          if Verbose `elem` flags 
+            then do
+              putStrLn $ showUDSentence (1,s1)
+              putStrLn $ showUDSentence (2,s2)
+            else return ()
+          -- extract error patterns
+          let es = extract (align (s1,s2))
+          let ps = rmDuplicates $ 
+                map (simplifyErrorPattern . error2uniMorphosynPattern) es
+          if Verbose `elem` flags
+            then
+              mapM_ (putStrLn . show) ps
+            else return ()
+          -- query the treebank (TODO: optimize - no show-read needed)
+          let ms = filter 
+                    (not . null . snd) 
+                    (s12s `zip` map (match fieldVals (map show ps)) as)
+          mapM_ (putStrLn . sentMatches2md) ms
 
 -- COMMAND LINE OPTIONS PARSING
 
 type Arg = String
 
-data Flag = Help | Markdown | CoNNLU String deriving Eq
+data Flag = Help | Markdown | CoNNLU String | Verbose deriving Eq
 
 -- | List of available commands (first arg)
 cmds :: [Arg]
-cmds = ["extract", "match"]
+cmds = ["extract", "match", "example"]
 
 opts :: [OptDescr Flag]
 opts = [
@@ -90,15 +114,21 @@ opts = [
     ['c'] 
     ["conllu"] 
     (OptArg conlluOutDir "DIR") 
-    "path to the directory for the output conllu files"
+    "path to the directory for the output conllu files",
+  Option
+    ['v']
+    ["verbose"]
+    (NoArg Verbose)
+    "show intermediate results"
   ]
   where conlluOutDir = CoNNLU . fromMaybe "." -- default = current folder
 
 usage :: String
 usage = concat [
   "\nUsage:\n",
+  "l2-ud match L1-TREEBANK L2-TREEBANK PATTERNS [OPTIONS], or\n",
   "l2-ud extract L1-TREEBANK L2-TREEBANK [OPTIONS], or\n",
-  "l2-ud match L1-TREEBANK L2-TREEBANK PATTERNS [OPTIONS]"]
+  "l2-ud example L1-TREEBANK L2-TREEBANK L1-SENTENCE L2-SENTENCE LANGUAGE [OPTIONS]"]
 
 parseArgv :: [String] -> String -> [OptDescr Flag] -> ([Flag],[Arg])
 parseArgv argv usage opts = case getOpt Permute opts argv of
