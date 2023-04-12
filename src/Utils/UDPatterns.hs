@@ -41,7 +41,7 @@ simplifyUDPattern fs p = case p of
   (POS _) -> if "POS" `elem` fs then p else TRUE
   (XPOS _) -> if "XPOS" `elem` fs then p else TRUE
   (MISC _ _) -> if "MISC" `elem` fs then p else TRUE
-  (FEATS s) -> if null s' then TRUE else FEATS s' 
+  (FEATS s) -> if null s' then TRUE else FEATS_ s' -- _ crucial here too!
     where s' = simplifyFEATS fs s
   (FEATS_ s) -> if null s' then TRUE else FEATS_ s' 
     where s' = simplifyFEATS fs s

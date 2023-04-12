@@ -82,7 +82,7 @@ main = do
           let ps = rmDuplicates $ 
                 map (simplifyErrorPattern . error2uniMorphosynPattern) es
           when (Verbose `elem` flags) $ mapM_ print ps
-          -- query the treebank (TODO: optimize - no show-read needed)
+          -- query the treebank
           let ms = filter (not . null . snd) (s12s `zip` map (match ps) as)
           mapM_ (putStrLn . sentMatches2md) ms
 
