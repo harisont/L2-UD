@@ -63,14 +63,14 @@ pruneError as (RTree n1 t1s,RTree n2 t2s) =
 -- | Prune an error based on the pattern it matches, i.e. prune each UDTree
 -- based on the corresponding UDPattern and then discard all subtrees that are
 -- not involved in any alignment (used in Match) 
-pruneErrorByPattern :: ErrorPattern -> [Alignment] -> Alignment -> Error
+pruneErrorByPattern :: ErrorPattern -> [Alignment] -> Error -> Error
 pruneErrorByPattern (p1,p2) as (t1,t2) = (RTree n1 t1s', RTree n2 t2s')
   where 
     (RTree n1 t1s,RTree n2 t2s) = 
       (pruneUDTree p1 t1,pruneUDTree p2 t2)
     (t1s',t2s') = unzip [(t1',t2') | t1' <- t1s, t2' <- t2s,
-                                   n1 /= n2 || t1' /= t2',
-                                   (t1',t2') `elem` as]
+                                     n1 /= n2 || t1' /= t2',
+                                     (t1',t2') `elem` as]
 
 -- | Simplify an error pattern 
 simplifyErrorPattern :: ErrorPattern -> ErrorPattern
