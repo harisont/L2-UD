@@ -33,7 +33,7 @@ correct (s1,s2) = prUDTreeString s1 == prUDTreeString s2
 -- classified as O-Comp, are treated as morphosyntactical too. This is the
 -- case with, for instance, split compounds. 
 -- NOTE on implementation: the hacky way I implemented this is to compare the
--- corresponding simplified (cf. simplifyUDPattern) UD patterns in HST 
+-- corresponding simplified (cf. filterUDPattern) UD patterns in HST 
 morphosynCorrect :: Alignment -> Bool 
 morphosynCorrect (s1,s2) = uMorphosynUDPattern t1 == uMorphosynUDPattern t2
   where (t1,t2) = (udTree2udPattern s1,udTree2udPattern s2)

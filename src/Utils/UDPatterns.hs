@@ -13,6 +13,7 @@ import RTree
 import UDConcepts
 import UDPatterns
 import Utils.UDConcepts
+import Utils.Misc
 
 -- | Convert a UD tree into a UD pattern
 udTree2udPattern :: UDTree -> UDPattern
@@ -34,9 +35,30 @@ udTree2udPattern (RTree n ts) =
   -- ]
     where ns = sortBy (\n m -> compare (rootID n) (rootID m)) (RTree n []:ts)
 
--- | Discard UD columns from an HST pattern, excepts those explicitly listed
-simplifyUDPattern :: [Field] -> UDPattern -> UDPattern
-simplifyUDPattern fs p = case p of
+simplifyUDPattern :: UDPattern -> UDPattern
+simplifyUDPattern u = case u of
+  (AND ps) -> simplifyBinOp u (map simplifyUDPattern (rmDuplicates ps))
+  (OR ps) -> simplifyBinOp u (map simplifyUDPattern (rmDuplicates ps))
+  (TREE p ps) -> if null ps' then p' else (TREE p' ps')
+    where 
+      p' = simplifyUDPattern p
+      ps' = map simplifyUDPattern ps 
+  (TREE_ p ps) -> if null ps' then p' else (TREE p' ps')
+    where 
+      p' = simplifyUDPattern p
+      ps' = map simplifyUDPattern ps 
+  -- TODO: sequence patterns
+  (ARG _ _) -> simplifyUDPattern $ arg2and u
+  _ -> u
+  where 
+    simplifyBinOp u ps = case ps of
+                          [] -> TRUE
+                          [p] -> p
+                          ps -> u
+
+-- | Discard UD fields from an HST pattern, excepts those explicitly listed
+filterUDPattern :: [Field] -> UDPattern -> UDPattern
+filterUDPattern fs p = case p of
   -- repetition could be avoided using head $ words $ show p
   (FORM _) -> if "FORM" `elem` fs then p else TRUE
   (LEMMA _) -> if "LEMMA" `elem` fs then p else TRUE
@@ -49,14 +71,14 @@ simplifyUDPattern fs p = case p of
     where s' = simplifyFEATS fs s
   (DEPREL _) -> if "DEPREL" `elem` fs then p else TRUE
   (DEPREL_ _) -> if "DEPREL_" `elem` fs then p else TRUE
-  (AND ps) -> AND $ filter notTRUE (map (simplifyUDPattern fs) ps)
-  (OR ps) -> OR $ filter notTRUE (map (simplifyUDPattern fs) ps)
-  (NOT p) -> NOT $ simplifyUDPattern fs p
-  (SEQUENCE ps) -> SEQUENCE $ map (simplifyUDPattern fs) ps
-  (SEQUENCE_ ps) -> SEQUENCE_ $ map (simplifyUDPattern fs) ps
-  (TREE p ps) -> TREE (simplifyUDPattern fs p) (map (simplifyUDPattern fs) ps)  
-  (TREE_ p ps) -> TREE_ (simplifyUDPattern fs p) (map (simplifyUDPattern fs) ps)
-  p@(ARG _ _) -> simplifyUDPattern fs (arg2and p)  
+  (AND ps) -> AND $ filter notTRUE (map (filterUDPattern fs) ps)
+  (OR ps) -> OR $ filter notTRUE (map (filterUDPattern fs) ps)
+  (NOT p) -> NOT $ filterUDPattern fs p
+  (SEQUENCE ps) -> SEQUENCE $ map (filterUDPattern fs) ps
+  (SEQUENCE_ ps) -> SEQUENCE_ $ map (filterUDPattern fs) ps
+  (TREE p ps) -> TREE (filterUDPattern fs p) (map (filterUDPattern fs) ps)  
+  (TREE_ p ps) -> TREE_ (filterUDPattern fs p) (map (filterUDPattern fs) ps)
+  p@(ARG _ _) -> filterUDPattern fs (arg2and p)  
   p -> p
   where 
     notTRUE :: UDPattern -> Bool
@@ -77,12 +99,12 @@ simplifyUDPattern fs p = case p of
 -- | Shorthand for getting the morphosyntactic (POS + XPOS + FEATS + DEPREL)  
 -- UD pattern corresponding to a "full" UD pattern
 morphosynUDPattern :: UDPattern -> UDPattern
-morphosynUDPattern = simplifyUDPattern morphosynFields
+morphosynUDPattern = filterUDPattern morphosynFields
 
 -- | Shorthand for getting the "universal" morphosyntactic (POS + FEATS +   
 -- DEPREL) UD pattern corresponding to a "full" UD pattern
 uMorphosynUDPattern :: UDPattern -> UDPattern
-uMorphosynUDPattern = simplifyUDPattern (morphosynFields \\ ["XPOS"])
+uMorphosynUDPattern = filterUDPattern (morphosynFields \\ ["XPOS"])
 
 -- | Remove the parts of a tree not described by a certain UDPattern 
 pruneUDTree :: UDPattern -> UDTree -> UDTree

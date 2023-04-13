@@ -72,12 +72,27 @@ pruneErrorByPattern (p1,p2) as (t1,t2) = (RTree n1 t1s', RTree n2 t2s')
                                    n1 /= n2 || t1' /= t2',
                                    (t1',t2') `elem` as]
 
--- | Simplify an error pattern removing fields that do not present any 
--- variation between the L1 and L2 component
+-- | Simplify an error pattern 
 simplifyErrorPattern :: ErrorPattern -> ErrorPattern
-simplifyErrorPattern (p1,p2) = 
-  (simplifyUDPattern fs p1,simplifyUDPattern fs p2)
-  where fs = filter 
-              (\f -> simplifyUDPattern [f] p1 /= simplifyUDPattern [f] p2)
+simplifyErrorPattern = (bimap simplifyUDPattern simplifyUDPattern) 
+                        . rmIdenticalSubpatterns 
+                        . filterFields
+  where 
+    -- Filter away fields that do not vary anywhere in the L1 and L2 component
+    filterFields :: ErrorPattern -> ErrorPattern
+    filterFields (p1,p2) = (filterUDPattern fs p1,filterUDPattern fs p2)
+      where fs = filter 
+              (\f -> filterUDPattern [f] p1 /= filterUDPattern [f] p2)
               -- simplify by single feats 
               (patternFields \\ ["FEATS", "FEATS_"]) 
+    rmIdenticalSubpatterns :: ErrorPattern -> ErrorPattern
+    rmIdenticalSubpatterns ep = case ep of
+      (TREE p1 p1s,TREE p2 p2s) -> (TREE_ p1 p1s',TREE_ p2 p2s')
+        where (p1s',p2s') = filterSubpatterns p1s p2s 
+      (TREE_ p1 p1s,TREE_ p2 p2s) -> (TREE_ p1 p1s',TREE_ p2 p2s')
+        where (p1s',p2s') = filterSubpatterns p1s p2s 
+      ep -> ep
+      where 
+        filterSubpatterns p1s p2s = if length p1s == length p2s
+          then unzip $ filter (\(p1,p2) -> p1 /= p2) (p1s `zip` p2s)
+          else (p1s,p2s)
