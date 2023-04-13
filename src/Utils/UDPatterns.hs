@@ -26,10 +26,12 @@ udTree2udPattern (RTree n []) = AND [
   -- no MISC cause I dunno what the second string is supposed to be:
   -- https://github.com/GrammaticalFramework/gf-ud/blob/f2705537347b417e37f1ccd156708bf066e790d6/UDPatterns.hs#L49
   ]
-udTree2udPattern (RTree n ts) = AND [
-  TREE (udTree2udPattern (RTree n [])) (map udTree2udPattern ts),
-  SEQUENCE $ map udTree2udPattern ns
-  ]
+udTree2udPattern (RTree n ts) = 
+  TREE (udTree2udPattern (RTree n [])) (map udTree2udPattern ts)
+  -- AND [
+  --   TREE (udTree2udPattern (RTree n [])) (map udTree2udPattern ts),
+  --   SEQUENCE $ map udTree2udPattern ns
+  -- ]
     where ns = sortBy (\n m -> compare (rootID n) (rootID m)) (RTree n []:ts)
 
 -- | Discard UD columns from an HST pattern, excepts those explicitly listed
