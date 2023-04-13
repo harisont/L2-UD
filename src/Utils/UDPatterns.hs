@@ -79,8 +79,8 @@ morphosynUDPattern = simplifyUDPattern morphosynFields
 
 -- | Shorthand for getting the "universal" morphosyntactic (POS + FEATS +   
 -- DEPREL) UD pattern corresponding to a "full" UD pattern
-uniMorphosynUDPattern :: UDPattern -> UDPattern
-uniMorphosynUDPattern = simplifyUDPattern (morphosynFields \\ ["XPOS"])
+uMorphosynUDPattern :: UDPattern -> UDPattern
+uMorphosynUDPattern = simplifyUDPattern (morphosynFields \\ ["XPOS"])
 
 -- | Remove the parts of a tree not described by a certain UDPattern 
 pruneUDTree :: UDPattern -> UDTree -> UDTree

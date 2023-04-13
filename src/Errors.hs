@@ -39,7 +39,7 @@ error2morphosynPattern e = (morphosynUDPattern p1,morphosynUDPattern p2)
 -- | Shorthand to convert errors to universal morphosyntactic error patterns
 error2uniMorphosynPattern :: Error -> ErrorPattern
 error2uniMorphosynPattern e = 
-  (uniMorphosynUDPattern p1,uniMorphosynUDPattern p2)
+  (uMorphosynUDPattern p1,uMorphosynUDPattern p2)
   where (p1,p2) = error2Pattern e
 
 -- | Show an error pattern as a single "L1-L2" pattern ({A -> B} syntax)
