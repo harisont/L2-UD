@@ -96,3 +96,7 @@ simplifyErrorPattern = (bimap simplifyUDPattern simplifyUDPattern)
         filterSubpatterns p1s p2s = if length p1s == length p2s
           then unzip $ filter (\(p1,p2) -> p1 /= p2) (p1s `zip` p2s)
           else (p1s,p2s)
+
+error2simplifiedUniMorphosynPattern :: Error -> ErrorPattern
+error2simplifiedUniMorphosynPattern = 
+  simplifyErrorPattern . error2uniMorphosynPattern

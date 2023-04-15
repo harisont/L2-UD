@@ -19,19 +19,17 @@ showIds (s1,s2) = if i1 == i2 then i1 else i1 ++ "-" ++ i2
   where (i1,i2) = (sentId s1,sentId s2)
     
 -- | Render extracted errors/patterns as markdown
-extractedErrs2md :: ((UDSentence,UDSentence),[Error]) -> String
-extractedErrs2md (s12@(s1,s2),es) = unlines [
+extract2md :: ((UDSentence,UDSentence),[(Error,ErrorPattern)]) -> String
+extract2md (s12@(s1,s2),eps) = unlines [
   h2 $ "Sentence " ++ showIds s12 ++ ":",
   table 
     ["L1 sentence", "L2 sentence", "Error pattern"]
     (map 
-      (\e@(t1,t2) -> [
+      (\(e@(t1,t2),p) -> [
         highlin s1 (udTree2sentence t1), 
         highlin s2 (udTree2sentence t2), 
-        code $ 
-          showErrorPattern $ 
-            simplifyErrorPattern $ error2uniMorphosynPattern e]) 
-      es)
+        code $ showErrorPattern p])
+      eps)
   ] 
 
 -- | Render matches as markdown

@@ -56,15 +56,27 @@ main = do
           let ess = map extract as
           if Markdown `elem` flags
             then do
-              let es = filter (not . null . snd) (s12s `zip` ess)
-              mapM_ (putStrLn . extractedErrs2md) es
+              let ses = s12s `zip` ess
+              let seps = map 
+                    (\(s,es) -> 
+                      (s,(map 
+                            (\e -> (e,error2simplifiedUniMorphosynPattern e)) 
+                          es)
+                      )
+                    ) 
+                          ses
+              let seps' = filter 
+                    (not . null . snd) 
+                    (map 
+                      (\(s,eps) -> (s,filter (\(_,(p1,p2)) -> p1 /= p2) eps)) 
+                      seps
+                    )
+              mapM_ (putStrLn . extract2md) seps'
             else do
-              let ps = rmDuplicates $ map 
-                        (simplifyErrorPattern . error2uniMorphosynPattern) 
-                        (concat ess)
+              let ps = essentialPatterns (concat ess)
               mapM_ (putStrLn . showErrorPattern) ps
           case [f | f@CoNNLU {} <- flags] of
-            [CoNNLU path] -> do
+            [CoNNLU path] -> do -- no conversion to patterns
               let es = concat ess
               writeFile (path </> "L1.conllu") (conlluText (map fst es))
               writeFile (path </> "L2.conllu") (conlluText (map snd es))
@@ -79,12 +91,15 @@ main = do
                  putStrLn $ showUDSentence (2,s2)
           -- extract error patterns
           let es = extract (align (s1,s2))
-          let ps = rmDuplicates $ 
-                map (simplifyErrorPattern . error2uniMorphosynPattern) es
+          let ps = essentialPatterns es
           when (Verbose `elem` flags) $ mapM_ print ps
           -- query the treebank
           let ms = filter (not . null . snd) (s12s `zip` map (match ps) as)
           mapM_ (putStrLn . sentMatches2md) ms
+  where 
+    essentialPatterns es = rmDuplicates $ filter 
+      (\(p1,p2) -> p1 /= p2) 
+      (map error2simplifiedUniMorphosynPattern es)
 
 -- COMMAND LINE OPTIONS PARSING
 
