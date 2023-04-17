@@ -74,7 +74,7 @@ pruneErrorByPattern (p1,p2) as (t1,t2) = (RTree n1 t1s', RTree n2 t2s')
 
 -- | Simplify an error pattern 
 simplifyErrorPattern :: ErrorPattern -> ErrorPattern
-simplifyErrorPattern = (bimap simplifyUDPattern simplifyUDPattern) 
+simplifyErrorPattern = bimap simplifyUDPattern simplifyUDPattern
                         . rmIdenticalSubpatterns 
                         . filterFields
   where 
@@ -87,10 +87,14 @@ simplifyErrorPattern = (bimap simplifyUDPattern simplifyUDPattern)
               (patternFields \\ ["FEATS", "FEATS_"]) 
     rmIdenticalSubpatterns :: ErrorPattern -> ErrorPattern
     rmIdenticalSubpatterns ep = case ep of
-      (TREE p1 p1s,TREE p2 p2s) -> (TREE_ p1 p1s',TREE_ p2 p2s')
-        where (p1s',p2s') = filterSubpatterns p1s p2s 
+      (TREE p1 p1s,TREE p2 p2s) -> (TREE_ p1' p1s',TREE_ p2' p2s')
+        where 
+          (p1',p2') = if p1 == p2 then (TRUE,TRUE) else (p1,p2)
+          (p1s',p2s') = filterSubpatterns p1s p2s 
       (TREE_ p1 p1s,TREE_ p2 p2s) -> (TREE_ p1 p1s',TREE_ p2 p2s')
-        where (p1s',p2s') = filterSubpatterns p1s p2s 
+        where
+          (p1',p2') = if p1 == p2 then (TRUE,TRUE) else (p1,p2) 
+          (p1s',p2s') = filterSubpatterns p1s p2s 
       ep -> ep
       where 
         filterSubpatterns p1s p2s = if length p1s == length p2s
