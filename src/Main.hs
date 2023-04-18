@@ -17,6 +17,7 @@ import Annotate
 import Utils.Misc
 import Utils.Output
 import Utils.UDConcepts
+import Utils.UDPatterns
 
 main = do
   argv <- getArgs
@@ -71,7 +72,7 @@ main = do
                     )
               mapM_ (putStrLn . extract2md) seps'
             else do
-              let ps = essentialPatterns (concat ess)
+              let ps = simplerPatterns (concat ess)
               mapM_ (putStrLn . showErrorPattern) ps
           case [f | f@CoNNLU {} <- flags] of
             [CoNNLU path] -> do -- no conversion to patterns
@@ -89,16 +90,21 @@ main = do
                  putStrLn $ showUDSentence (2,s2)
           -- extract error patterns
           let es = extract (align (s1,s2))
-          let ps = essentialPatterns es
+          let ps = rmDuplicates $ filter 
+                (\(p1,p2) -> p1 /= p2) 
+                (patterns es ++ simplePatterns es ++ simplerPatterns es ++ simplestPatterns es)
           when (Verbose `elem` flags) $ mapM_ print ps
           -- query the treebank
           let ms = filter (not . null . snd) (s12s `zip` map (match ps) as)
-          mapM_ (putStrLn . sentMatches2md) ms
+          let mds = rmDuplicates (map sentMatches2md ms)
+          mapM_ putStrLn mds
   where 
-    essentialPatterns es = rmDuplicates $ filter 
-      (\(p1,p2) -> p1 /= p2) 
-      (map error2simplifiedUniMorphosynPattern es)
-
+    patterns = map error2Pattern
+    simplePatterns = map error2uniMorphosynPattern
+    simplerPatterns = map error2simplifiedUniMorphosynPattern
+    simplestPatterns es = map 
+      (\(p1,p2) -> ((filterUDPattern ["POS", "DEPREL"]) p1, (filterUDPattern ["POS", "DEPREL"]) p2))
+      (simplerPatterns es)
 -- COMMAND LINE OPTIONS PARSING
 
 type Arg = String
