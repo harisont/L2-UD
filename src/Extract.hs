@@ -16,8 +16,10 @@ import Utils.UDPatterns
 -- The input is the list of alignments obtained for a single L1-L2 sentence,
 -- the output is a list of errors
 extract :: [Alignment] -> [Error]
-extract as = (map (pruneError as) . morphosynErrors) as
-  where morphosynErrors = filter (not . morphosynCorrect)
+extract as = (map (pruneError as) . minimal . morphosynErrors) as
+  where 
+    morphosynErrors = filter (not . morphosynCorrect)
+    patterns = map (\(t1,t2) -> (udTree2udPattern t1, udTree2udPattern t2))
 
 -- | Check if an alignment contains any discrepancy, i.e. an error of any kind
 -- (aka check if an alignment is in fact an Error)
