@@ -39,11 +39,11 @@ simplifyUDPattern :: UDPattern -> UDPattern
 simplifyUDPattern u = case u of
   (AND ps) -> simplifyBinOp u (map simplifyUDPattern (rmDuplicates ps))
   (OR ps) -> simplifyBinOp u (map simplifyUDPattern (rmDuplicates ps))
-  (TREE p ps) -> if null ps' then p' else (TREE p' ps')
+  (TREE p ps) -> if null ps' then p' else TREE p' ps'
     where 
       p' = simplifyUDPattern p
       ps' = map simplifyUDPattern ps 
-  (TREE_ p ps) -> if null ps' then p' else (TREE p' ps')
+  (TREE_ p ps) -> if null ps' then p' else TREE p' ps'
     where 
       p' = simplifyUDPattern p
       ps' = map simplifyUDPattern ps 
