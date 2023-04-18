@@ -183,3 +183,25 @@ patternFields = [
   "DEPREL", 
   "DEPREL_"
   ]
+
+-- | Check whether a certain CoNNL-U field is contained in a UD pattern
+isFieldOf :: Field -> UDPattern -> Bool
+isFieldOf f p = case p of 
+  (FORM _) -> f == "FORM"
+  (LEMMA _) -> f == "LEMMA"
+  (POS _) -> f == "POS" 
+  (XPOS _) -> f == "XPOS"
+  (DEPREL _) -> f == "DEPREL"
+  (DEPREL_ _) -> f == "DEPREL"
+  (FEATS fs) -> drop 6 f `elem` keys fs
+  (FEATS_ fs) -> drop 6 f `elem` keys fs
+  (NOT p) -> isFieldOf f p
+  (AND ps) -> any (isFieldOf f) ps
+  (OR ps) -> any (isFieldOf f) ps
+  (ARG _ _) -> isFieldOf f (arg2and p)
+  (TREE p ps) -> isFieldOf f p || any (isFieldOf f) ps
+  (TREE_ p ps) -> isFieldOf f p || any (isFieldOf f) ps
+  (SEQUENCE ps) -> any (isFieldOf f) ps
+  (SEQUENCE_ ps) -> any (isFieldOf f) ps
+  _ -> False
+  where keys fs = map (udArg . prs) (splitOn "|" fs)
