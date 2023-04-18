@@ -1,6 +1,7 @@
 module Main where
 
 import Data.Maybe
+import Data.Bifunctor
 import System.FilePath
 import System.Environment (getArgs)
 import System.Console.GetOpt
@@ -58,17 +59,14 @@ main = do
             then do
               let ses = s12s `zip` ess
               let seps = map 
-                    (\(s,es) -> 
-                      (s,(map 
-                            (\e -> (e,error2simplifiedUniMorphosynPattern e)) 
-                          es)
-                      )
+                    (second 
+                      (map (\e -> (e, error2simplifiedUniMorphosynPattern e)))
                     ) 
-                          ses
+                    ses
               let seps' = filter 
                     (not . null . snd) 
                     (map 
-                      (\(s,eps) -> (s,filter (\(_,(p1,p2)) -> p1 /= p2) eps)) 
+                      (second (filter (\ (_, (p1, p2)) -> p1 /= p2))) 
                       seps
                     )
               mapM_ (putStrLn . extract2md) seps'
