@@ -43,12 +43,12 @@ main = do
         (\(e@(e1,e2),ps) -> do
             putStrLn $ h2 $ "Sentence " ++ showIds e 
             putStrLn $ h3 "Text"
-            putStrLn $ ulist 1 [
+            putStrLn $ ulist 0 [
                 "L1: " ++ lin e1, 
                 "L2: " ++ lin e2
                 ]
             putStrLn $ h3 "Patterns"
-            putStrLn $ ulist 1 (map (code . showErrorPattern) ps) 
+            putStrLn $ ulist 0 (map (code . showErrorPattern) ps) 
             let ms = filter 
                         (not . null . snd) 
                         (treebank `zip` map (match ps) alignments)
