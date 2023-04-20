@@ -25,6 +25,7 @@ main = do
   if Help `elem` flags || length args < 3 || head args `notElem` cmds
     then putStrLn $ usageInfo usage opts
     else do
+      -- TODO: refactor w/ parseUDtreebank
       s1s <- parseUDFile (args !! 1)
       s2s <- parseUDFile (args !! 2)
       let ids = map sentId s1s `zip` map sentId s2s
@@ -105,6 +106,7 @@ main = do
     simplestPatterns es = map 
       (\(p1,p2) -> ((filterUDPattern ["POS", "DEPREL"]) p1, (filterUDPattern ["POS", "DEPREL"]) p2))
       (simplerPatterns es)
+
 -- COMMAND LINE OPTIONS PARSING
 
 type Arg = String

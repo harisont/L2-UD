@@ -205,3 +205,9 @@ isFieldOf f p = case p of
   (SEQUENCE_ ps) -> any (isFieldOf f) ps
   _ -> False
   where keys fs = map (udArg . prs) (splitOn "|" fs)
+
+parseL1L2treebank :: (FilePath,FilePath) -> IO [(UDSentence,UDSentence)]
+parseL1L2treebank (p1,p2) = do
+  t1 <- parseUDFile p1
+  t2 <- parseUDFile p2
+  return $ zip t1 t2  

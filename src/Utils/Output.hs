@@ -35,7 +35,7 @@ extract2md (s12@(s1,s2),eps) = unlines [
 -- | Render matches as markdown
 sentMatches2md :: ((UDSentence,UDSentence),[Alignment]) -> String
 sentMatches2md (s12@(s1,s2),as) = unlines [
-  h2 $ "Sentence " ++ showIds s12 ++ ":",
+  h3 $ "Sentence " ++ showIds s12 ++ ":",
   table 
     ["L1 sentence", "L2 sentence"]
     (map 
@@ -43,6 +43,16 @@ sentMatches2md (s12@(s1,s2),as) = unlines [
         highlin s1 (udTree2sentence t1), 
         highlin s2 (udTree2sentence t2)]) 
       as)
+  ]
+
+-- | Render example sentence pair as markdown
+example2md :: ((UDSentence,UDSentence),[ErrorPattern]) -> String
+example2md (e@(s1,s2),ps) = unlines [
+  h2 $ "Sentence " ++ showIds e ++ ":",
+  ulist 1 [highlin s1 s1, highlin s2 s2],
+  "",
+  "Patterns: ",
+  ulist 1 (map (code . showErrorPattern) ps)
   ]
 
 -- | Helper function that linearizes a sentence highlighting its tokens that 
