@@ -38,11 +38,32 @@ main = do
                                         (\(p1,p2) -> p1 /= p2)
                                   . map error2simplifiedUniMorphosynPattern) 
                     errors
-    -- query the treebank with the examples
-    let matches = filter (not . null . snd) (treebank `zip` filter (not . null) (map (\ps -> filter (not . null) (map (match ps) alignments)) patterns))
-    -- output
+    -- query the treebank and show the results bc I'm a bad haskeller
     mapM_ 
-        (\(ex,ps,(s,ms)) -> 
-            putStrLn $ 
-                (example2md (ex,ps)) ++ (unlines $ rmDuplicates $ map (\m -> sentMatches2md (s,m)) ms)) 
-        (zip3 examples patterns matches)
+        (\(e@(e1,e2),ps) -> do
+            putStrLn $ h2 $ "Sentence " ++ showIds e 
+            putStrLn $ h3 "Text"
+            putStrLn $ ulist 1 [
+                "L1: " ++ lin e1, 
+                "L2: " ++ lin e2
+                ]
+            putStrLn $ h3 "Patterns"
+            putStrLn $ ulist 1 (map (code . showErrorPattern) ps) 
+            let ms = filter 
+                        (not . null . snd) 
+                        (treebank `zip` map (match ps) alignments)
+            putStrLn $ h3 "Similar examples"
+            if null ms 
+                then putStrLn "No matches."
+                else mapM_ putStrLn (rmDuplicates $ map match2md ms))
+        (examples `zip` patterns)
+    
+    
+    
+    --let matches = filter (not . null . snd) (treebank `zip` filter (not . null) (map (\ps -> filter (not . null) (map (match ps) alignments)) patterns))
+    ---- output
+    --mapM_ 
+    --    (\(ex,ps,(s,ms)) -> 
+    --        putStrLn $ 
+    --            (example2md (ex,ps)) ++ (unlines $ rmDuplicates $ map (\m -> match2md (s,m)) ms)) 
+    --    (zip3 examples patterns matches)

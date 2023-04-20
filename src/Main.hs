@@ -47,7 +47,7 @@ main = do
           -- (l1-l2 sentences, nonempty list of aligned matching subtrees)
           let ms = filter (not . null . snd) (s12s `zip` map (match ps) as)
           if Markdown `elem` flags
-            then mapM_ (putStrLn . sentMatches2md) ms
+            then mapM_ (putStrLn . match2md) ms
             else mapM_ ((putStrLn . showIds) . fst) ms
           case [f | f@CoNNLU {} <- flags] of
             [CoNNLU path] -> do
@@ -97,7 +97,7 @@ main = do
           when (Verbose `elem` flags) $ mapM_ print ps
           -- query the treebank
           let ms = filter (not . null . snd) (s12s `zip` map (match ps) as)
-          let mds = rmDuplicates (map sentMatches2md ms)
+          let mds = rmDuplicates (map match2md ms)
           mapM_ putStrLn mds
   where 
     patterns = map error2Pattern

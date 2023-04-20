@@ -21,7 +21,7 @@ showIds (s1,s2) = if i1 == i2 then i1 else i1 ++ "-" ++ i2
 -- | Render extracted errors/patterns as markdown
 extract2md :: ((UDSentence,UDSentence),[(Error,ErrorPattern)]) -> String
 extract2md (s12@(s1,s2),eps) = unlines [
-  h2 $ "Sentence " ++ showIds s12 ++ ":",
+  h4 $ "Sentence " ++ showIds s12 ++ ":",
   table 
     ["L1 sentence", "L2 sentence", "Error pattern"]
     (map 
@@ -33,9 +33,9 @@ extract2md (s12@(s1,s2),eps) = unlines [
   ] 
 
 -- | Render matches as markdown
-sentMatches2md :: ((UDSentence,UDSentence),[Alignment]) -> String
-sentMatches2md (s12@(s1,s2),as) = unlines [
-  h3 $ "Sentence " ++ showIds s12 ++ ":",
+match2md :: ((UDSentence,UDSentence),[Alignment]) -> String
+match2md (s12@(s1,s2),as) = unlines [
+  h4 $ "Sentence " ++ showIds s12,
   table 
     ["L1 sentence", "L2 sentence"]
     (map 
@@ -63,6 +63,9 @@ highlin s s' =
   where 
     ws = udWords s
     wss = udWords s'
+
+lin :: UDSentence -> String
+lin s = unwords $ map udFORM (udWords s)
 
 -- | Return the string to write in the CoNNL-U file corresponding to a list of 
 -- UD trees 
