@@ -15,9 +15,9 @@ import UDPatterns
 import Utils.UDConcepts
 import Utils.Misc
 
--- | Convert a UD tree into a UD pattern
-udTree2udPattern :: UDTree -> UDPattern
-udTree2udPattern (RTree n []) = AND [
+-- | Convert a UD tree into a tree pattern
+udTree2treePattern :: UDTree -> UDPattern
+udTree2treePattern (RTree n []) = AND [
   FORM (udFORM n), 
   LEMMA (udLEMMA n), 
   POS (udUPOS n), 
@@ -27,13 +27,13 @@ udTree2udPattern (RTree n []) = AND [
   -- no MISC cause I dunno what the second string is supposed to be:
   -- https://github.com/GrammaticalFramework/gf-ud/blob/f2705537347b417e37f1ccd156708bf066e790d6/UDPatterns.hs#L49
   ]
-udTree2udPattern (RTree n ts) = 
-  TREE (udTree2udPattern (RTree n [])) (map udTree2udPattern ts)
-  -- AND [
-  --   TREE (udTree2udPattern (RTree n [])) (map udTree2udPattern ts),
-  --   SEQUENCE $ map udTree2udPattern ns
-  -- ]
-    where ns = sortBy (\n m -> compare (rootID n) (rootID m)) (RTree n []:ts)
+udTree2treePattern (RTree n ts) = 
+  TREE (udTree2treePattern (RTree n [])) (map udTree2treePattern ts)
+
+-- | Convert UD tree into a sequence pattern
+udTree2sequencePattern :: UDTree -> UDPattern
+udTree2sequencePattern (RTree n ts) = SEQUENCE $ map udTree2treePattern ns
+  where ns = sortBy (\n m -> compare (rootID n) (rootID m)) (RTree n []:ts)
 
 simplifyUDPattern :: UDPattern -> UDPattern
 simplifyUDPattern u = case u of
@@ -118,8 +118,8 @@ pruneUDTree p t = case p of
   (FEATS_ _) -> pruneSingleTokenPattern t p
   (NOT _) -> t -- NOTE: return t rn, cause idk how to define pruning for NOTs
   -- is it OK that AND and OR behave identically?
-  (AND ps) -> mergeUDTrees $ map (`pruneUDTree` t) ps
-  (OR ps) -> mergeUDTrees $ map (`pruneUDTree` t) ps
+  (AND ps) -> if null ps then t else mergeUDTrees $ map (`pruneUDTree` t) ps
+  (OR ps) -> if null ps then t else mergeUDTrees $ map (`pruneUDTree` t) ps
   (ARG _ _) -> pruneUDTree (arg2and p) t
   (TREE p ps) -> pruneSubtrees (filterSubtrees t p ps) ps
   (TREE_ p ps) -> pruneSubtrees (filterSubtrees t p ps) ps

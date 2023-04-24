@@ -6,6 +6,7 @@ Stability   : experimental
 
 module Utils.Output where
 
+import Data.List
 import UDConcepts
 import Align
 import Errors
@@ -19,16 +20,16 @@ showIds (s1,s2) = if i1 == i2 then i1 else i1 ++ "-" ++ i2
   where (i1,i2) = (sentId s1,sentId s2)
     
 -- | Render extracted errors/patterns as markdown
-extract2md :: ((UDSentence,UDSentence),[(Error,ErrorPattern)]) -> String
+extract2md :: ((UDSentence,UDSentence),[(Error,[ErrorPattern])]) -> String
 extract2md (s12@(s1,s2),eps) = unlines [
   h4 $ "Sentence " ++ showIds s12 ++ ":",
   table 
-    ["L1 sentence", "L2 sentence", "Error pattern"]
+    ["L1 sentence", "L2 sentence", "Error patterns"]
     (map 
-      (\(e@(t1,t2),p) -> [
+      (\(e@(t1,t2),ps) -> [
         highlin s1 (udTree2sentence t1), 
         highlin s2 (udTree2sentence t2), 
-        code $ showErrorPattern p])
+        intercalate ", " (map (code . showErrorPattern) ps)])
       eps)
   ] 
 

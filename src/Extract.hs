@@ -33,5 +33,7 @@ correct (s1,s2) = prUDTreeString s1 == prUDTreeString s2
 -- NOTE on implementation: the hacky way I implemented this is to compare the
 -- corresponding simplified (cf. filterUDPattern) UD patterns in HST 
 morphosynCorrect :: Alignment -> Bool 
-morphosynCorrect (s1,s2) = uMorphosynUDPattern t1 == uMorphosynUDPattern t2
-  where (t1,t2) = (udTree2udPattern s1,udTree2udPattern s2)
+morphosynCorrect (s1,s2) = 
+  all ((\(p1,p2) -> p1 == p2) . morphosynErrorPattern) ps
+  where ps = [(udTree2treePattern s1,udTree2treePattern s2),
+              (udTree2sequencePattern s1,udTree2sequencePattern s2)]

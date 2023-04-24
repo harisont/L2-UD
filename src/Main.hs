@@ -62,18 +62,19 @@ main = do
               let ses = s12s `zip` ess
               let seps = map 
                     (second 
-                      (map (\e -> (e, error2simplifiedUniMorphosynPattern e)))
+                      (map (\e -> (e,map 
+                              simplifieduMorphosynErrorPattern 
+                              (error2patterns e))))
                     ) 
                     ses
-              let seps' = filter 
-                    (not . null . snd) 
+              let seps' = filter
+                    (not . null . snd)
                     (map 
-                      (second (filter (\ (_, (p1, p2)) -> p1 /= p2))) 
-                      seps
-                    )
+                      (second (map (second (filter (\(p1,p2) -> p1 /= p2))))) 
+                      seps)
               mapM_ (putStrLn . extract2md) seps'
             else do
-              let ps = simplerPatterns (concat ess)
+              let ps = simpler (concat ess)
               mapM_ (putStrLn . showErrorPattern) ps
           case [f | f@CoNNLU {} <- flags] of
             [CoNNLU path] -> do -- no conversion to patterns
@@ -93,19 +94,21 @@ main = do
           let es = extract (align (s1,s2))
           let ps = rmDuplicates $ filter 
                 (\(p1,p2) -> p1 /= p2) 
-                (patterns es ++ simplePatterns es ++ simplerPatterns es ++ simplestPatterns es)
+                (patterns es ++ simple es ++ simpler es ++ simplest es)
           when (Verbose `elem` flags) $ mapM_ print ps
           -- query the treebank
           let ms = filter (not . null . snd) (s12s `zip` map (match ps) as)
           let mds = rmDuplicates (map match2md ms)
           mapM_ putStrLn mds
   where 
-    patterns = map error2Pattern
-    simplePatterns = map error2uniMorphosynPattern
-    simplerPatterns = map error2simplifiedUniMorphosynPattern
-    simplestPatterns es = map 
-      (\(p1,p2) -> ((filterUDPattern ["POS", "DEPREL"]) p1, (filterUDPattern ["POS", "DEPREL"]) p2))
-      (simplerPatterns es)
+    patterns = concatMap error2patterns
+    simple es = map uMorphosynErrorPattern (patterns es)
+    simpler es = map simplifieduMorphosynErrorPattern (patterns es)
+    simplest es = map 
+      (\(p1,p2) -> (
+        (filterUDPattern ["POS", "DEPREL"]) p1, 
+        (filterUDPattern ["POS", "DEPREL"]) p2))
+      (simpler es)
 
 -- COMMAND LINE OPTIONS PARSING
 

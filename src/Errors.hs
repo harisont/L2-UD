@@ -27,20 +27,30 @@ linearizeError (t1,t2) = prUDTreeString t1 ++ " - " ++ prUDTreeString t2
 -- | An error pattern is a pair of UD patterns
 type ErrorPattern = (UDPattern,UDPattern)
 
--- | Shorthand to convert errors to error patterns
-error2Pattern :: Error -> ErrorPattern
-error2Pattern (e1,e2) = (udTree2udPattern e1,udTree2udPattern e2)
+-- | Shorthand to convert errors to tree error patterns
+error2treePattern :: Error -> ErrorPattern
+error2treePattern (e1,e2) = (udTree2treePattern e1,udTree2treePattern e2)
 
--- | Shorthand to convert errors to morphosyntactic error patterns
-error2morphosynPattern :: Error -> ErrorPattern
-error2morphosynPattern e = (morphosynUDPattern p1,morphosynUDPattern p2)
-  where (p1,p2) = error2Pattern e
+-- | Shorthand to convert errors to sequence error patterns
+error2sequencePattern :: Error -> ErrorPattern
+error2sequencePattern (e1,e2) = 
+  (udTree2sequencePattern e1,udTree2sequencePattern e2)
 
--- | Shorthand to convert errors to universal morphosyntactic error patterns
-error2uniMorphosynPattern :: Error -> ErrorPattern
-error2uniMorphosynPattern e = 
+-- | Shorthand to convert an error into a list of error patterns (as long as
+-- they always are a tree and a sequence patterns, this could become a record
+-- type)
+error2patterns :: Error -> [ErrorPattern]
+error2patterns e = [error2treePattern e, error2sequencePattern e]
+
+-- | Shorthand to reduce error patterns to morphosyntactic error patterns
+morphosynErrorPattern :: ErrorPattern -> ErrorPattern
+morphosynErrorPattern (p1,p2) = (morphosynUDPattern p1,morphosynUDPattern p2)
+
+-- | Shorthand to reduce error patterns to universal morphosyntactic error 
+-- patterns
+uMorphosynErrorPattern :: ErrorPattern -> ErrorPattern
+uMorphosynErrorPattern (p1,p2) = 
   (uMorphosynUDPattern p1,uMorphosynUDPattern p2)
-  where (p1,p2) = error2Pattern e
 
 -- | Show an error pattern as a single "L1-L2" pattern ({A -> B} syntax)
 showErrorPattern :: ErrorPattern -> String
@@ -53,10 +63,12 @@ pruneError :: [Alignment] -> Error -> Error
 pruneError as (RTree n1 t1s,RTree n2 t2s) = 
   (RTree 
     n1 
-    [t1 | t1 <- t1s, udTree2udPattern t1 `notElem` map udTree2udPattern t2s'],
+    [t1 | t1 <- t1s, 
+          udTree2treePattern t1 `notElem` map udTree2treePattern t2s'],
    RTree 
     n2 
-    [t2 | t2 <- t2s, udTree2udPattern t2 `notElem` map udTree2udPattern t1s'])
+    [t2 | t2 <- t2s, 
+          udTree2treePattern t2 `notElem` map udTree2treePattern t1s'])
    where (t1s',t2s') = unzip 
           [pruneError as (t1,t2) | t1 <- t1s, t2 <- t2s, (t1,t2) `elem` as]
 
@@ -108,6 +120,8 @@ simplifyErrorPattern =  bimap simplifyUDPattern simplifyUDPattern
           then unzip $ filter (\(p1,p2) -> p1 /= p2) (p1s `zip` p2s)
           else (p1s,p2s)
 
-error2simplifiedUniMorphosynPattern :: Error -> ErrorPattern
-error2simplifiedUniMorphosynPattern = 
-  simplifyErrorPattern . error2uniMorphosynPattern
+-- | Shorthand to convert into a Universal morphosyntactic pattern and 
+-- simplify 
+simplifieduMorphosynErrorPattern :: ErrorPattern -> ErrorPattern
+simplifieduMorphosynErrorPattern = 
+  simplifyErrorPattern . uMorphosynErrorPattern

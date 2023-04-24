@@ -36,7 +36,9 @@ main = do
     let patterns = map 
                     (rmDuplicates . filter 
                                         (\(p1,p2) -> p1 /= p2)
-                                  . map error2simplifiedUniMorphosynPattern) 
+                                  . concatMap (
+                                         map simplifieduMorphosynErrorPattern 
+                                         . error2patterns)) 
                     errors
     -- query the treebank and show the results bc I'm a bad haskeller
     mapM_ 
