@@ -37,8 +37,8 @@ udTree2sequencePattern (RTree n ts) = SEQUENCE $ map udTree2treePattern ns
 
 simplifyUDPattern :: UDPattern -> UDPattern
 simplifyUDPattern u = case u of
-  (AND ps) -> simplifyBinOp u (map simplifyUDPattern (rmDuplicates ps))
-  (OR ps) -> simplifyBinOp u (map simplifyUDPattern (rmDuplicates ps))
+  (AND ps) -> simplifySeq AND (map simplifyUDPattern (rmDuplicates ps))
+  (OR ps) -> simplifySeq OR (map simplifyUDPattern (rmDuplicates ps))
   (TREE p ps) -> if null ps' then p' else TREE p' ps'
     where 
       p' = simplifyUDPattern p
@@ -47,14 +47,15 @@ simplifyUDPattern u = case u of
     where 
       p' = simplifyUDPattern p
       ps' = map simplifyUDPattern ps 
-  -- TODO: sequence patterns
+  (SEQUENCE ps) -> simplifySeq SEQUENCE (map simplifyUDPattern ps)
+  (SEQUENCE_ ps) -> simplifySeq SEQUENCE_ (map simplifyUDPattern ps)
   (ARG _ _) -> simplifyUDPattern $ arg2and u
   _ -> u
   where 
-    simplifyBinOp u ps = case ps of
+    simplifySeq u ps = case ps of
                           [] -> TRUE
                           [p] -> p
-                          ps -> u
+                          ps -> u ps
 
 -- | Discard UD fields from an HST pattern, excepts those explicitly listed
 filterUDPattern :: [Field] -> UDPattern -> UDPattern
