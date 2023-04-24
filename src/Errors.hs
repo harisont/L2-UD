@@ -114,6 +114,12 @@ simplifyErrorPattern =  bimap simplifyUDPattern simplifyUDPattern
         where
           (p1',p2') = if p1 == p2 then (TRUE,TRUE) else (p1,p2) 
           (p1s',p2s') = filterSubpatterns p1s p2s 
+      -- simplification of sequence patterns only works if there is only one 
+      -- error, like in DaLAJ sentences
+      (SEQUENCE p1s,SEQUENCE p2s) -> (SEQUENCE p1s',SEQUENCE p2s')
+        where (p1s',p2s') = unzip $ rmCommonPost $ rmCommonPre $ p1s `zip` p2s
+      (SEQUENCE_ p1s,SEQUENCE_ p2s) -> (SEQUENCE_ p1s',SEQUENCE_ p2s')
+        where (p1s',p2s') = unzip $ rmCommonPost $ rmCommonPre $ p1s `zip` p2s
       ep -> ep
       where 
         filterSubpatterns p1s p2s = if length p1s == length p2s
