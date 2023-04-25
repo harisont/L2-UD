@@ -74,7 +74,7 @@ Available `OPTIONS`:
 
 - `--help`, `-h`: show usage instructions
 - `--verbose`, `-v`: show intermediate results (UD-annotated example sentences and extracted patterns)
-- TODO:
+- `--markdown`, `-m`: rather than sentence IDs, show similar examples found in the treebank a markdown report. 
 
 ## L1-L2 patterns
 An L1-L2 error pattern is a "parallel" [`gf-ud`](https://github.com/GrammaticalFramework/gf-ud) pattern[^1], i.e. essentially a pair of UD patterns.
