@@ -32,7 +32,9 @@ match ps as = minimal $ concatMap (\a -> concatMap (matches a as) ps) as
 -- have been extracted for the sentence the alignment belongs to and an error 
 -- patten, return any matches found for that subtree pair
 matches :: Alignment -> [Alignment] -> ErrorPattern -> [Error]
-matches (t1,t2) as e@(e1,e2) = 
+matches (t1,t2) as e@(e1,e2) = filter -- still have to match after pruning!
+  (\(m1,m2) -> (not $ null $ matchesUDPattern e1 m1) && 
+               (not $ null $ matchesUDPattern e1 m1))
   [pruneErrorByPattern e as (m1,m2) | m1 <- m1s, m2 <- m2s, m1 `aligns` m2]
   where 
     (m1s,m2s) = (matchesUDPattern e1 t1,matchesUDPattern e2 t2)
