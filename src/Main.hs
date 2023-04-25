@@ -120,11 +120,7 @@ main = do
     patterns = concatMap error2patterns
     simple es = map uMorphosynErrorPattern (patterns es)
     simpler es = map simplifieduMorphosynErrorPattern (patterns es)
-    simplest es = map 
-      (\(p1,p2) -> (
-        (filterUDPattern ["POS", "DEPREL"]) p1, 
-        (filterUDPattern ["POS", "DEPREL"]) p2))
-      (simpler es)
+    simplest es = map uSynErrorPattern (simpler es)
 
 -- COMMAND LINE OPTIONS PARSING
 

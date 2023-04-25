@@ -58,5 +58,8 @@ main = do
             if null ms 
                 then putStrLn "No matches."
                 else mapM_ putStrLn (rmDuplicates $ map match2md ms))
-        (examples `zip` patterns)
+        (examples `zip` map (
+            \ps -> rmDuplicates $ ps ++ map uSynErrorPattern ps) 
+            patterns
+        )
     

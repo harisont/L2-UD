@@ -107,6 +107,11 @@ morphosynUDPattern = filterUDPattern morphosynFields
 uMorphosynUDPattern :: UDPattern -> UDPattern
 uMorphosynUDPattern = filterUDPattern (morphosynFields \\ ["XPOS"])
 
+-- | Shorthand for getting the "universal" syntactic (POS + DEPREL) UD pattern
+-- corresponding to a "full" UD pattern
+uSynUDPattern :: UDPattern -> UDPattern
+uSynUDPattern = filterUDPattern ["DEPREL", "POS"]
+
 -- | Remove the parts of a tree not described by a certain UDPattern 
 pruneUDTree :: UDPattern -> UDTree -> UDTree
 pruneUDTree p t = case p of
