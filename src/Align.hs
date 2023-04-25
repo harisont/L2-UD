@@ -30,12 +30,12 @@ ud = C sameDeprel (singleton UD) False False
 pos = C posEquiv (singleton POS) False False 
 lemma = C lemmaEquiv (singleton LEMMA) False False
 udpos = 
-  C (\t u -> sameDeprel t u && posEquiv t u) (fromList [UD,POS]) False True
+  C (\t u -> sameDeprel t u && posEquiv t u) (fromList [UD,POS]) False False
 udposlemma = C 
   (\t u -> sameDeprel t u && posEquiv t u && lemmaEquiv t u) 
   (fromList [UD,POS, LEMMA]) 
   False 
-  True
+  False
 
 -- | Same word from
 sameForm :: UDTree -> UDTree -> Bool
