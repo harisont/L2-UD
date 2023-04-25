@@ -43,7 +43,7 @@ simplifyUDPattern u = case u of
     where 
       p' = simplifyUDPattern p
       ps' = map simplifyUDPattern ps 
-  (TREE_ p ps) -> if null ps' then p' else TREE p' ps'
+  (TREE_ p ps) -> if null ps' then p' else TREE_ p' ps'
     where 
       p' = simplifyUDPattern p
       ps' = map simplifyUDPattern ps 

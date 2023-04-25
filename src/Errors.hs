@@ -108,11 +108,15 @@ simplifyErrorPattern =  bimap simplifyUDPattern simplifyUDPattern
     rmIdenticalSubpatterns ep = case ep of
       (TREE p1 p1s,TREE p2 p2s) -> (TREE_ p1' p1s',TREE_ p2' p2s')
         where 
-          (p1',p2') = if p1 == p2 then (TRUE,TRUE) else (p1,p2)
+          (p1',p2') = if p1 == p2 && p1s' == p2s' 
+                        then (TRUE,TRUE) 
+                        else (p1,p2)
           (p1s',p2s') = filterSubpatterns p1s p2s 
       (TREE_ p1 p1s,TREE_ p2 p2s) -> (TREE_ p1 p1s',TREE_ p2 p2s')
         where
-          (p1',p2') = if p1 == p2 then (TRUE,TRUE) else (p1,p2) 
+          (p1',p2') = if p1 == p2 && p1s' == p2s' 
+                        then (TRUE,TRUE) 
+                        else (p1,p2) 
           (p1s',p2s') = filterSubpatterns p1s p2s 
       -- simplification of sequence patterns only works if there is only one 
       -- error, like in DaLAJ sentences
