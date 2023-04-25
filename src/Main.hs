@@ -7,6 +7,7 @@ import System.Environment (getArgs)
 import System.Console.GetOpt
 import System.Directory
 import Control.Monad (when)
+import Markdown
 import UDConcepts
 import UDPatterns
 import Align
@@ -88,18 +89,35 @@ main = do
           s1 <- annotate (args !! 3) lang
           s2 <- annotate (args !! 4) lang
           when (Verbose `elem` flags)
-            $ do putStrLn $ showUDSentence (1,s1)
-                 putStrLn $ showUDSentence (2,s2)
+            $ do let (ss1,ss2) = (showUDSentence (1,s1),showUDSentence (2,s2))
+                 if Markdown `elem` flags
+                 then do putStrLn $ h2 "UD parses"
+                         putStrLn $ codeblock "" ss1
+                         putStrLn $ codeblock "" ss2
+                 else do putStrLn ss1
+                         putStrLn ss2
+                         putStrLn ""
           -- extract error patterns
           let es = extract (align (s1,s2))
           let ps = rmDuplicates $ filter 
                 (\(p1,p2) -> p1 /= p2) 
                 (patterns es ++ simple es ++ simpler es ++ simplest es)
-          when (Verbose `elem` flags) $ mapM_ print ps -- TODO: why does it not print?
+          when (Verbose `elem` flags) 
+            $ if Markdown `elem` flags
+                then do
+                  putStrLn $ h2 "Extracted patterns"
+                  putStrLn $ ulist 0 (map (code . showErrorPattern) ps)
+                else do 
+                  mapM_ (putStrLn . showErrorPattern) ps
+                  putStrLn ""
           -- query the treebank
+          -- TODO: somehow here not all patterns are matched, some work with
+          -- the match command but not when extracted from examples
           let ms = filter (not . null . snd) (s12s `zip` map (match ps) as)
           let mds = rmDuplicates (map match2md ms)
-          mapM_ putStrLn mds
+          if Markdown `elem` flags
+            then mapM_ putStrLn mds
+            else mapM_ ((putStrLn . showIds) . fst) ms
   where 
     patterns = concatMap error2patterns
     simple es = map uMorphosynErrorPattern (patterns es)
