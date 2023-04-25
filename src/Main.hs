@@ -111,8 +111,6 @@ main = do
                   mapM_ (putStrLn . showErrorPattern) ps
                   putStrLn ""
           -- query the treebank
-          -- TODO: somehow here not all patterns are matched, some work with
-          -- the match command but not when extracted from examples
           let ms = filter (not . null . snd) (s12s `zip` map (match ps) as)
           let mds = rmDuplicates (map match2md ms)
           if Markdown `elem` flags

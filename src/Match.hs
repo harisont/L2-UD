@@ -25,8 +25,7 @@ import Utils.UDConcepts
 
 -- | Top-level pattern matching function used in the main
 match :: [ErrorPattern] -> [Alignment] -> [Error]
--- TODO: is minimal really necessary at this point?
-match ps as = minimal $ concatMap (\a -> concatMap (matches a as) ps) as 
+match ps as = concatMap (\a -> concatMap (matches a as) ps) as 
 
 -- | Given a pair of aligned subtrees, a list of all other alignments that
 -- have been extracted for the sentence the alignment belongs to and an error 
