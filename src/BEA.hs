@@ -60,12 +60,3 @@ main = do
                 else mapM_ putStrLn (rmDuplicates $ map match2md ms))
         (examples `zip` patterns)
     
-    
-    
-    --let matches = filter (not . null . snd) (treebank `zip` filter (not . null) (map (\ps -> filter (not . null) (map (match ps) alignments)) patterns))
-    ---- output
-    --mapM_ 
-    --    (\(ex,ps,(s,ms)) -> 
-    --        putStrLn $ 
-    --            (example2md (ex,ps)) ++ (unlines $ rmDuplicates $ map (\m -> match2md (s,m)) ms)) 
-    --    (zip3 examples patterns matches)

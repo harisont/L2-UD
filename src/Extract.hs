@@ -32,6 +32,7 @@ correct (s1,s2) = prUDTreeString s1 == prUDTreeString s2
 -- case with, for instance, split compounds. 
 -- NOTE on implementation: the hacky way I implemented this is to compare the
 -- corresponding simplified (cf. filterUDPattern) UD patterns in HST 
+-- TODO: create and use U-version
 morphosynCorrect :: Alignment -> Bool 
 morphosynCorrect (s1,s2) = 
   all ((\(p1,p2) -> p1 == p2) . morphosynErrorPattern) ps

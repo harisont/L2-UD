@@ -95,7 +95,7 @@ main = do
           let ps = rmDuplicates $ filter 
                 (\(p1,p2) -> p1 /= p2) 
                 (patterns es ++ simple es ++ simpler es ++ simplest es)
-          when (Verbose `elem` flags) $ mapM_ print ps
+          when (Verbose `elem` flags) $ mapM_ print ps -- TODO: why does it not print?
           -- query the treebank
           let ms = filter (not . null . snd) (s12s `zip` map (match ps) as)
           let mds = rmDuplicates (map match2md ms)

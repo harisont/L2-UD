@@ -24,3 +24,7 @@ rmCommonPre = dropWhile (\(p1,p2) -> p1 == p2)
 -- | Remove the common postfix of a zipped list
 rmCommonPost :: Eq a => [(a,a)] -> [(a,a)]
 rmCommonPost = reverse . rmCommonPre . reverse
+
+-- | Apply oth rmCommonPre and rmCommonPost to a zipped list
+rmCommonPrePost :: Eq a => [(a,a)] -> [(a,a)]
+rmCommonPrePost = rmCommonPost . rmCommonPre
