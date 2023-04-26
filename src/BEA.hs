@@ -20,13 +20,13 @@ import Utils.Output
 
 treebankPaths :: (FilePath,FilePath)
 treebankPaths = (
-  "/home/harisont/Repos/harisont/L1-L2-DaLAJ/bea_dev/dev_L1.conllu",
-  "/home/harisont/Repos/harisont/L1-L2-DaLAJ/bea_dev/dev_L2.conllu")
+  "/home/harisont/Repos/harisont/L1-L2-DaLAJ/M+S/bea/tb_L1.conllu",
+  "/home/harisont/Repos/harisont/L1-L2-DaLAJ/M+S/bea/tb_L2.conllu")
 
 examplesPaths :: (FilePath,FilePath)
 examplesPaths = (
-  "/home/harisont/Repos/harisont/L1-L2-DaLAJ/bea_test/test_L1.conllu",
-  "/home/harisont/Repos/harisont/L1-L2-DaLAJ/bea_test/test_L2.conllu")
+  "/home/harisont/Repos/harisont/L1-L2-DaLAJ/M+S/bea/ex_L1.conllu",
+  "/home/harisont/Repos/harisont/L1-L2-DaLAJ/M+S/bea/ex_L2.conllu")
 
 main = do
   argv <- getArgs
@@ -57,7 +57,7 @@ main = do
         putStrLn $ ulist 0 (map (code . showErrorPattern) ps) 
       let ms = filter 
             (not . null . snd) 
-            (treebank `zip` map (match ps) alignments)
+            (treebank `zip` (map (rmDuplicates . filter (\(m1,m2) -> m1 /= m2)) (map (match ps) alignments)))
       putStrLn $ h3 "Similar examples"
       if null ms 
         then putStrLn "No matches."

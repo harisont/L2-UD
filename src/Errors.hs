@@ -142,10 +142,10 @@ simplifyErrorPattern =  bimap simplifyUDPattern simplifyUDPattern
           -- missing token (assuming only one token is missing for now)
           | length p1s < length p2s = 
               let i = fromJust $ elemIndex (head (p2s \\ p1s)) p2s
-              in (slice (i - 1) (i) p1s, slice (i - 1) (i + 1) p2s)
+              in (slice (i - 1) i p1s, slice (i - 1) (i + 1) p2s)
           | length p1s > length p2s = 
               let i = fromJust $ elemIndex (head (p1s \\ p2s)) p1s
-              in (slice (i - 1) (i + 1) p1s, slice (i - 1) (i) p2s)
+              in (slice (i - 1) (i + 1) p1s, slice (i - 1) i p2s)
           -- redundant token (assuming only one token is redundant for now)
 
 
