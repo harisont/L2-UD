@@ -44,18 +44,18 @@ main = do
   -- query the treebank and show the results bc I'm a bad haskeller
   mapM_ 
     (\(e@(e1,e2),ps) -> do
-      putStrLn $ h1 $ "Sentence " ++ showIds e 
-      putStrLn $ h2 "Text"
+      putStrLn $ h2 $ "Sentence " ++ showIds e 
+      putStrLn $ h3 "Text"
       putStrLn $ ulist 0 [
         "L1: " ++ lin e1, 
         "L2: " ++ lin e2
         ]
-      putStrLn $ h2 "Patterns"
+      putStrLn $ h3 "Patterns"
       putStrLn $ ulist 0 (map (code . showErrorPattern) ps) 
       let ms = filter 
             (not . null . snd) 
             (treebank `zip` map (match ps) alignments)
-      putStrLn $ h2 "Similar examples"
+      putStrLn $ h3 "Similar examples"
       if null ms 
         then putStrLn "No matches."
         else mapM_ putStrLn (rmDuplicates $ map match2md ms))
