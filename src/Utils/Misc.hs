@@ -28,3 +28,7 @@ rmCommonPost = reverse . rmCommonPre . reverse
 -- | Apply oth rmCommonPre and rmCommonPost to a zipped list
 rmCommonPrePost :: Eq a => [(a,a)] -> [(a,a)]
 rmCommonPrePost = rmCommonPost . rmCommonPre
+
+-- | List slices
+slice :: Int -> Int -> [a] -> [a]
+slice from to xs = take (to - from + 1) (drop from xs)

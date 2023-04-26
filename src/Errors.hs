@@ -8,6 +8,7 @@ Stability   : experimental
 module Errors where
 
 import Data.List
+import Data.Maybe
 import Data.Bifunctor
 import RTree
 import UDConcepts
@@ -125,14 +126,26 @@ simplifyErrorPattern =  bimap simplifyUDPattern simplifyUDPattern
       -- simplification of sequence patterns only works if there is only one 
       -- error, like in DaLAJ sentences
       (SEQUENCE p1s,SEQUENCE p2s) -> (SEQUENCE p1s',SEQUENCE p2s')
-        where (p1s',p2s') = unzip $ rmCommonPrePost $ p1s `zip` p2s
+        where (p1s',p2s') = simplifySeqs p1s p2s
       (SEQUENCE_ p1s,SEQUENCE_ p2s) -> (SEQUENCE_ p1s',SEQUENCE_ p2s')
-        where (p1s',p2s') = unzip $ rmCommonPrePost $ p1s `zip` p2s
+        where (p1s',p2s') = simplifySeqs p1s p2s
       ep -> ep
       where 
         filterSubpatterns p1s p2s = if length p1s == length p2s
           then unzip $ filter (\(p1,p2) -> p1 /= p2) (p1s `zip` p2s)
           else (p1s,p2s)
+        simplifySeqs p1s p2s
+          -- word order error
+          | length p1s == length p2s = unzip $ rmCommonPrePost $ p1s `zip` p2s
+          -- missing token (assuming only one token is missing for now)
+          | length p1s < length p2s = 
+              let i = fromJust $ elemIndex (head (p2s \\ p1s)) p2s
+              in (slice (i - 1) (i) p1s, slice (i - 1) (i + 1) p2s)
+          | length p1s > length p2s = 
+              let i = fromJust $ elemIndex (head (p1s \\ p2s)) p1s
+              in (slice (i - 1) (i + 1) p1s, slice (i - 1) (i) p2s)
+          -- redundant token (assuming only one token is redundant for now)
+
 
 -- | Shorthand to convert into a Universal morphosyntactic pattern and 
 -- simplify 
