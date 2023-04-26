@@ -6,6 +6,8 @@ Stability   : experimental
 
 module BEA where
 
+import System.Environment (getArgs)
+import Control.Monad (when)
 import Markdown
 import Errors
 import Align
@@ -27,6 +29,7 @@ examplesPaths = (
   "/home/harisont/Repos/harisont/L1-L2-DaLAJ/bea_test/test_L2.conllu")
 
 main = do
+  argv <- getArgs
   -- align treebank
   treebank <- parseL1L2treebank treebankPaths
   let alignments = map align treebank 
@@ -44,14 +47,14 @@ main = do
   -- query the treebank and show the results bc I'm a bad haskeller
   mapM_ 
     (\(e@(e1,e2),ps) -> do
-      putStrLn $ h2 $ "Sentence " ++ showIds e 
-      putStrLn $ h3 "Text"
+      putStrLn $ h2 $ "Input sentence (" ++ showIds e ++ ")" 
       putStrLn $ ulist 0 [
         "L1: " ++ lin e1, 
         "L2: " ++ lin e2
         ]
-      putStrLn $ h3 "Patterns"
-      putStrLn $ ulist 0 (map (code . showErrorPattern) ps) 
+      when (argv == ["debug"]) $ do
+        putStrLn $ h3 "Patterns"
+        putStrLn $ ulist 0 (map (code . showErrorPattern) ps) 
       let ms = filter 
             (not . null . snd) 
             (treebank `zip` map (match ps) alignments)
