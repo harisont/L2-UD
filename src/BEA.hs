@@ -1,14 +1,19 @@
 {-|
 Module      : BEA
-Description : Script to run incorrect example retrieval experiments for BEA
+Description : Script to run incorrect example retrieval experiments for BEA.
+              Usage: bea-exeperiments | bea-experiments md | 
+              bea-experiments md-debug
 Stability   : experimental
 -}
 
 module BEA where
 
+import Data.List
+import Data.Bifunctor
 import System.Environment (getArgs)
 import Control.Monad (when)
 import Markdown
+import UDConcepts
 import Errors
 import Align
 import Extract
@@ -47,20 +52,28 @@ main = do
   -- query the treebank and show the results bc I'm a bad haskeller
   mapM_ 
     (\(e@(e1,e2),ps) -> do
-      putStrLn $ h2 $ "Input sentence (" ++ showIds e ++ ")" 
-      putStrLn $ ulist 0 [
-        "L1: " ++ lin e1, 
-        "L2: " ++ lin e2
-        ]
-      when (argv == ["debug"]) $ do
-        putStrLn $ h3 "Patterns"
-        putStrLn $ ulist 0 (map (code . showErrorPattern) ps) 
+      if null argv 
+        then putStr $ showIds e ++ "\t"
+        else do -- produce markdown report
+          putStrLn $ h2 $ "Input sentence (" ++ showIds e ++ ")" 
+          putStrLn $ ulist 0 [
+            "L1: " ++ lin e1, 
+            "L2: " ++ lin e2
+            ]
+          when (argv == ["md-debug"]) $ do
+            putStrLn $ h3 "Patterns"
+            putStrLn $ ulist 0 (map (code . showErrorPattern) ps) 
       let ms = filter 
             (not . null . snd) 
-            (treebank `zip` (map (rmDuplicates . filter (\(m1,m2) -> m1 /= m2)) (map (match ps) alignments)))
-      putStrLn $ h3 "Similar examples"
-      if null ms 
-        then putStrLn "No matches."
-        else mapM_ putStrLn (rmDuplicates $ map match2md ms))
+            (treebank `zip` (map 
+                              (rmDuplicates . filter (\(m1,m2) -> m1 /= m2)) 
+                              (map (match ps) alignments)))
+      if null argv
+        then putStrLn $ concat $ intersperse "," $ rmDuplicates $ map (showIds . fst) ms
+        else do -- produce markdown report
+          putStrLn $ h3 "Similar examples"
+          if null ms 
+            then putStrLn "No matches."
+            else mapM_ putStrLn (rmDuplicates $ map match2md ms))
     (examples `zip` patterns)
   
