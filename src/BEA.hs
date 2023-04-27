@@ -11,7 +11,7 @@ module BEA where
 import Data.List
 import Data.Bifunctor
 import System.Environment (getArgs)
-import Control.Monad (when)
+import Control.Monad (when, unless)
 import Markdown
 import UDConcepts
 import Errors
@@ -52,24 +52,26 @@ main = do
   -- query the treebank and show the results bc I'm a bad haskeller
   mapM_ 
     (\(e@(e1,e2),ps) -> do
-      if null argv 
-        then putStr $ showIds e ++ "\t"
-        else do -- produce markdown report
-          putStrLn $ h2 $ "Input sentence (" ++ showIds e ++ ")" 
-          putStrLn $ ulist 0 [
-            "L1: " ++ lin e1, 
-            "L2: " ++ lin e2
-            ]
-          when (argv == ["md-debug"]) $ do
-            putStrLn $ h3 "Patterns"
-            putStrLn $ ulist 0 (map (code . showErrorPattern) ps) 
+      unless (null argv) $ do -- produce markdown report
+        putStrLn $ h2 $ "Input sentence (" ++ showIds e ++ ")" 
+        putStrLn $ ulist 0 [
+          "L1: " ++ lin e1, 
+          "L2: " ++ lin e2
+          ]
+        when (argv == ["md-debug"]) $ do
+          putStrLn $ h3 "Patterns"
+          putStrLn $ ulist 0 (map (code . showErrorPattern) ps) 
       let ms = filter 
             (not . null . snd) 
             (treebank `zip` (map 
                               (rmDuplicates . filter (\(m1,m2) -> m1 /= m2)) 
                               (map (match ps) alignments)))
       if null argv
-        then putStrLn $ concat $ intersperse "," $ rmDuplicates $ map (showIds . fst) ms
+        then do
+          let e' = (udSentence2tree e1,udSentence2tree e2)
+          let ms' = rmDuplicates $ map ((\s@(s1,s2) -> (showIds s,(udSentence2tree s1,udSentence2tree s2))) . fst) ms
+          mapM_ (putStrLn . (\m -> intercalate "\t" [showIds e, linearizeError e', fst m, linearizeError $ snd m])) ms'
+          putStrLn ""
         else do -- produce markdown report
           putStrLn $ h3 "Similar examples"
           if null ms 

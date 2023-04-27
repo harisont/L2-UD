@@ -23,7 +23,7 @@ type Error = (UDTree,UDTree)
 
 -- | Linearize the two trees errors are composed of
 linearizeError :: Error -> String
-linearizeError (t1,t2) = prUDTreeString t1 ++ " - " ++ prUDTreeString t2
+linearizeError (t1,t2) = prUDTreeString t1 ++ "\t" ++ prUDTreeString t2
 
 -- | An error pattern is a pair of UD patterns
 type ErrorPattern = (UDPattern,UDPattern)
