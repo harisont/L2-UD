@@ -46,9 +46,10 @@ main = do
           (concatMap (map simplifieduMorphosynErrorPattern . error2patterns)) 
           errors
   let spatterns = map (map uSynErrorPattern) mspatterns
+  let ppatterns = map (map uPOSErrorPattern) mspatterns
   let patterns = map 
                   (rmDuplicates . filter (\(p1,p2) -> p1 /= p2))
-                  (zipWith (++) mspatterns spatterns) 
+                  (zipWith (++) (zipWith (++) mspatterns spatterns) ppatterns) 
   -- query the treebank and show the results bc I'm a bad haskeller
   mapM_ 
     (\(e@(e1,e2),ps) -> do

@@ -57,6 +57,10 @@ uMorphosynErrorPattern (p1,p2) =
 uSynErrorPattern :: ErrorPattern -> ErrorPattern
 uSynErrorPattern (p1,p2) = (uSynUDPattern p1,uSynUDPattern p2)
 
+-- | Shorthand to reduce error patterns to universal POS-only error patterns
+uPOSErrorPattern :: ErrorPattern -> ErrorPattern
+uPOSErrorPattern (p1,p2) = (uPOSUDPattern p1,uPOSUDPattern p2)
+
 -- | Show an error pattern as a single "L1-L2" pattern ({A -> B} syntax)
 showErrorPattern :: ErrorPattern -> String
 showErrorPattern (p1,p2) = "{" ++ show p1 ++ " -> " ++ show p2 ++ "}"
