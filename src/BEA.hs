@@ -2,12 +2,13 @@
 Module      : BEA
 Description : Script to run incorrect example retrieval experiments for BEA.
               Usage: bea-exeperiments | bea-experiments md | 
-              bea-experiments md-debug
+              bea-experiments md-debug (the default output format is TSV)
 Stability   : experimental
 -}
 
 module BEA where
 
+import Data.Char
 import Data.List
 import Data.Bifunctor
 import System.Environment (getArgs)
@@ -25,13 +26,13 @@ import Utils.Output
 
 treebankPaths :: (FilePath,FilePath)
 treebankPaths = (
-  "/home/harisont/Repos/harisont/L1-L2-DaLAJ/M+S/bea/tb_L1.conllu",
-  "/home/harisont/Repos/harisont/L1-L2-DaLAJ/M+S/bea/tb_L2.conllu")
+  "/home/harisont/Repos/harisont/L1-L2-BLiMP/treebanks/ms/bea/tb_L1.conllu",
+  "/home/harisont/Repos/harisont/L1-L2-BLiMP/treebanks/ms/bea/tb_L2.conllu")
 
 examplesPaths :: (FilePath,FilePath)
 examplesPaths = (
-  "/home/harisont/Repos/harisont/L1-L2-DaLAJ/M+S/bea/ex_L1.conllu",
-  "/home/harisont/Repos/harisont/L1-L2-DaLAJ/M+S/bea/ex_L2.conllu")
+  "/home/harisont/Repos/harisont/L1-L2-BLiMP/treebanks/ms/bea/ex_L1.conllu",
+  "/home/harisont/Repos/harisont/L1-L2-BLiMP/treebanks/ms/bea/ex_L2.conllu")
 
 main = do
   argv <- getArgs
@@ -73,6 +74,8 @@ main = do
           let ms' = rmDuplicates $ map ((\s@(s1,s2) -> (showIds s,(udSentence2tree s1,udSentence2tree s2))) . fst) ms
           mapM_ (putStrLn . (\m -> intercalate "\t" [showIds e, linearizeError e', fst m, linearizeError $ snd m])) ms'
           putStrLn ""
+          -- to find cases where all matches are surely incorrect
+          --unless (null ms || any (\(s,xs) -> filter isAlpha (showIds s) == filter isAlpha (showIds e)) ms) $ putStrLn $ showIds e
         else do -- produce markdown report
           putStrLn $ h3 "Similar examples"
           if null ms 
