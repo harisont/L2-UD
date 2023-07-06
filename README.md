@@ -51,6 +51,31 @@ Available `OPTIONS`:
 - `--markdown`, `-m`: rather than sentence IDs, output a markdown report showing the sentences with errors highlighted in bold next to the error patterns that were detected
 - `--conllu=DIR`, `-cDIR`: on top of printing the error patterns to the standard output, extract the pairs of subtrees where the errors were found and write them to an `L1.conllu` and an `L2.conllu` file in the given `DIR`ectory (if no directory is specified, files are created in the current folder)
 
+### Retrieving similar examples (__CURRENTLY UNDER DEVELOPMENT__)
+Given an L1-L2 sentence pair, return simila examples from an L1-L2 treebank, by:
+
+1. annotating the sentences in UD using UDPipe2 (requires an internet connection)
+2. extracting error patterns from them (analogous to [`l2-ud extract`](#extracting-error-patterns-currently-under-development))
+3. querying the treebank with such error patterns (analogous to [`l2-ud match`](#querying-parallel-l1-l2-treebanks))
+
+```
+l2-ud example L1-TREEBANK L2-TREEBANK L1-SENTENCE L2-SENTENCE LANGUAGE [OPTIONS]
+```
+
+Where:
+
+- `L1-TREEBANK` is the CoNNL-U file containing correction hypotheses
+- `L2-TREEBANK` is the CoNNL-U file containing original learner sentences
+- `L1-SENTENCE` is a correct sentence
+- `L2-SENTENCE` is a sentence containing 1+ grammatical errors
+- `LANGUAGE` is the name of the [UDPipe 2 model](https://ufal.mff.cuni.cz/udpipe/2/models) to be used for annotating the sentences. The default model for each language is called the English name of the language, lowercased, e.g. `swedish`   
+
+Available `OPTIONS`:
+
+- `--help`, `-h`: show usage instructions
+- `--verbose`, `-v`: show intermediate results (UD-annotated example sentences and extracted patterns)
+- `--markdown`, `-m`: rather than sentence IDs, show similar examples found in the treebank a markdown report. 
+
 ## L1-L2 patterns
 An L1-L2 error pattern is a "parallel" [`gf-ud`](https://github.com/GrammaticalFramework/gf-ud) pattern[^1], i.e. essentially a pair of UD patterns.
 For conciseness, instead of writing full pairs of patterns, L1-L2 patterns are written as single UD patterns with discrepancies enclosed in curly braces. For instance, the pattern

@@ -13,10 +13,11 @@ import RTree
 import UDConcepts
 import UDPatterns
 import Utils.UDConcepts
+import Utils.Misc
 
--- | Convert a UD tree into a UD pattern
-udTree2udPattern :: UDTree -> UDPattern
-udTree2udPattern (RTree n []) = AND [
+-- | Convert a UD tree into a tree pattern
+udTree2treePattern :: UDTree -> UDPattern
+udTree2treePattern (RTree n []) = AND [
   FORM (udFORM n), 
   LEMMA (udLEMMA n), 
   POS (udUPOS n), 
@@ -26,35 +27,59 @@ udTree2udPattern (RTree n []) = AND [
   -- no MISC cause I dunno what the second string is supposed to be:
   -- https://github.com/GrammaticalFramework/gf-ud/blob/f2705537347b417e37f1ccd156708bf066e790d6/UDPatterns.hs#L49
   ]
-udTree2udPattern (RTree n ts) = AND [
-  TREE (udTree2udPattern (RTree n [])) (map udTree2udPattern ts),
-  SEQUENCE $ map udTree2udPattern ns
-  ]
-    where ns = sortBy (\n m -> compare (rootID n) (rootID m)) (RTree n []:ts)
+udTree2treePattern (RTree n ts) = 
+  TREE (udTree2treePattern (RTree n [])) (map udTree2treePattern ts)
 
--- | Discard UD columns from an HST pattern, excepts those explicitly listed
-simplifyUDPattern :: [Field] -> UDPattern -> UDPattern
-simplifyUDPattern fs p = case p of
+-- | Convert UD tree into a sequence pattern
+udTree2sequencePattern :: UDTree -> UDPattern
+udTree2sequencePattern (RTree n ts) = SEQUENCE $ map udTree2treePattern ns
+  where ns = sortBy (\n m -> compare (rootID n) (rootID m)) (RTree n []:ts)
+
+simplifyUDPattern :: UDPattern -> UDPattern
+simplifyUDPattern u = case u of
+  (AND ps) -> simplifySeq AND (map simplifyUDPattern (rmDuplicates ps))
+  (OR ps) -> simplifySeq OR (map simplifyUDPattern (rmDuplicates ps))
+  (TREE p ps) -> if null ps' then p' else TREE p' ps'
+    where 
+      p' = simplifyUDPattern p
+      ps' = map simplifyUDPattern ps 
+  (TREE_ p ps) -> if null ps' then p' else TREE_ p' ps'
+    where 
+      p' = simplifyUDPattern p
+      ps' = map simplifyUDPattern ps 
+  (SEQUENCE ps) -> simplifySeq SEQUENCE (map simplifyUDPattern ps)
+  (SEQUENCE_ ps) -> simplifySeq SEQUENCE_ (map simplifyUDPattern ps)
+  (ARG _ _) -> simplifyUDPattern $ arg2and u
+  _ -> u
+  where 
+    simplifySeq u ps = case ps of
+                          [] -> TRUE
+                          [p] -> p
+                          ps -> u ps
+
+-- | Discard UD fields from an HST pattern, excepts those explicitly listed
+filterUDPattern :: [Field] -> UDPattern -> UDPattern
+filterUDPattern fs p = case p of
   -- repetition could be avoided using head $ words $ show p
   (FORM _) -> if "FORM" `elem` fs then p else TRUE
   (LEMMA _) -> if "LEMMA" `elem` fs then p else TRUE
   (POS _) -> if "POS" `elem` fs then p else TRUE
   (XPOS _) -> if "XPOS" `elem` fs then p else TRUE
   (MISC _ _) -> if "MISC" `elem` fs then p else TRUE
-  (FEATS s) -> if null s' then TRUE else FEATS s' 
+  (FEATS s) -> if null s' then TRUE else FEATS_ s' -- _ crucial here too!
     where s' = simplifyFEATS fs s
   (FEATS_ s) -> if null s' then TRUE else FEATS_ s' 
     where s' = simplifyFEATS fs s
   (DEPREL _) -> if "DEPREL" `elem` fs then p else TRUE
   (DEPREL_ _) -> if "DEPREL_" `elem` fs then p else TRUE
-  (AND ps) -> AND $ filter notTRUE (map (simplifyUDPattern fs) ps)
-  (OR ps) -> OR $ filter notTRUE (map (simplifyUDPattern fs) ps)
-  (NOT p) -> NOT $ simplifyUDPattern fs p
-  (SEQUENCE ps) -> SEQUENCE $ map (simplifyUDPattern fs) ps
-  (SEQUENCE_ ps) -> SEQUENCE_ $ map (simplifyUDPattern fs) ps
-  (TREE p ps) -> TREE (simplifyUDPattern fs p) (map (simplifyUDPattern fs) ps)  
-  (TREE_ p ps) -> TREE_ (simplifyUDPattern fs p) (map (simplifyUDPattern fs) ps)
-  p@(ARG _ _) -> simplifyUDPattern fs (arg2and p)  
+  (AND ps) -> AND $ filter notTRUE (map (filterUDPattern fs) ps)
+  (OR ps) -> OR $ filter notTRUE (map (filterUDPattern fs) ps)
+  (NOT p) -> NOT $ filterUDPattern fs p
+  (SEQUENCE ps) -> SEQUENCE $ map (filterUDPattern fs) ps
+  (SEQUENCE_ ps) -> SEQUENCE_ $ map (filterUDPattern fs) ps
+  (TREE p ps) -> TREE (filterUDPattern fs p) (map (filterUDPattern fs) ps)  
+  (TREE_ p ps) -> TREE_ (filterUDPattern fs p) (map (filterUDPattern fs) ps)
+  p@(ARG _ _) -> filterUDPattern fs (arg2and p)  
   p -> p
   where 
     notTRUE :: UDPattern -> Bool
@@ -75,12 +100,22 @@ simplifyUDPattern fs p = case p of
 -- | Shorthand for getting the morphosyntactic (POS + XPOS + FEATS + DEPREL)  
 -- UD pattern corresponding to a "full" UD pattern
 morphosynUDPattern :: UDPattern -> UDPattern
-morphosynUDPattern = simplifyUDPattern morphosynFields
+morphosynUDPattern = filterUDPattern morphosynFields
 
 -- | Shorthand for getting the "universal" morphosyntactic (POS + FEATS +   
 -- DEPREL) UD pattern corresponding to a "full" UD pattern
-uniMorphosynUDPattern :: UDPattern -> UDPattern
-uniMorphosynUDPattern = simplifyUDPattern (morphosynFields \\ ["XPOS"])
+uMorphosynUDPattern :: UDPattern -> UDPattern
+uMorphosynUDPattern = filterUDPattern (morphosynFields \\ ["XPOS"])
+
+-- | Shorthand for getting the "universal" syntactic (POS + DEPREL) UD pattern
+-- corresponding to a "full" UD pattern
+uSynUDPattern :: UDPattern -> UDPattern
+uSynUDPattern = filterUDPattern ["DEPREL", "POS"]
+
+-- | Shorthand for getting the "universal" syntactic (POS + DEPREL) UD pattern
+-- corresponding to a "full" UD pattern
+uPOSUDPattern :: UDPattern -> UDPattern
+uPOSUDPattern = filterUDPattern ["POS"]
 
 -- | Remove the parts of a tree not described by a certain UDPattern 
 pruneUDTree :: UDPattern -> UDTree -> UDTree
@@ -94,8 +129,8 @@ pruneUDTree p t = case p of
   (FEATS_ _) -> pruneSingleTokenPattern t p
   (NOT _) -> t -- NOTE: return t rn, cause idk how to define pruning for NOTs
   -- is it OK that AND and OR behave identically?
-  (AND ps) -> mergeUDTrees $ map (`pruneUDTree` t) ps
-  (OR ps) -> mergeUDTrees $ map (`pruneUDTree` t) ps
+  (AND ps) -> if null ps then t else mergeUDTrees $ map (`pruneUDTree` t) ps
+  (OR ps) -> if null ps then t else mergeUDTrees $ map (`pruneUDTree` t) ps
   (ARG _ _) -> pruneUDTree (arg2and p) t
   (TREE p ps) -> pruneSubtrees (filterSubtrees t p ps) ps
   (TREE_ p ps) -> pruneSubtrees (filterSubtrees t p ps) ps
@@ -159,3 +194,31 @@ patternFields = [
   "DEPREL", 
   "DEPREL_"
   ]
+
+-- | Check whether a certain CoNNL-U field is contained in a UD pattern
+isFieldOf :: Field -> UDPattern -> Bool
+isFieldOf f p = case p of 
+  (FORM _) -> f == "FORM"
+  (LEMMA _) -> f == "LEMMA"
+  (POS _) -> f == "POS" 
+  (XPOS _) -> f == "XPOS"
+  (DEPREL _) -> f == "DEPREL"
+  (DEPREL_ _) -> f == "DEPREL"
+  (FEATS fs) -> drop 6 f `elem` keys fs
+  (FEATS_ fs) -> drop 6 f `elem` keys fs
+  (NOT p) -> isFieldOf f p
+  (AND ps) -> any (isFieldOf f) ps
+  (OR ps) -> any (isFieldOf f) ps
+  (ARG _ _) -> isFieldOf f (arg2and p)
+  (TREE p ps) -> isFieldOf f p || any (isFieldOf f) ps
+  (TREE_ p ps) -> isFieldOf f p || any (isFieldOf f) ps
+  (SEQUENCE ps) -> any (isFieldOf f) ps
+  (SEQUENCE_ ps) -> any (isFieldOf f) ps
+  _ -> False
+  where keys fs = map (udArg . prs) (splitOn "|" fs)
+
+parseL1L2treebank :: (FilePath,FilePath) -> IO [(UDSentence,UDSentence)]
+parseL1L2treebank (p1,p2) = do
+  t1 <- parseUDFile p1
+  t2 <- parseUDFile p2
+  return $ zip t1 t2  
