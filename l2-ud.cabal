@@ -2,8 +2,8 @@ name: l2-ud
 version: 0
 synopsis: tools for analyzing (L1-)L2 UD treebanks
 description: a set of tools for analyzing (parallel L1-)L2 UD treebanks
--- license: BSD2
--- license-file: LICENSE
+license: BSD2
+license-file: LICENSE
 author: Arianna Masciolini
 maintainer: arianna.masciolini@gu.se
 category: Language
