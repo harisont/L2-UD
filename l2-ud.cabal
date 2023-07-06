@@ -42,34 +42,3 @@ executable l2-ud
         aeson,
         utf8-string
     default-language: Haskell2010
-
-executable bea-experiments
-    hs-source-dirs: src
-    main-is: BEA.hs
-    other-modules: 
-        Extract,
-        Match,
-        Align,
-        Errors,
-        Utils.Misc,
-        Utils.UDConcepts,
-        Utils.UDPatterns,
-        Utils.Output
-    build-depends:
-        base,
-        extra,
-        containers,
-        data-ordlist,
-        gf-ud,
-        concept-alignment,
-        regex-posix,
-        split,
-        directory,
-        filepath,
-        MissingH,
-        hs-md,
-        curl,
-        aeson,
-        utf8-string
-    ghc-options: -main-is BEA
-    default-language: Haskell2010
