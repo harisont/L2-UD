@@ -26,7 +26,6 @@ main = do
   if Help `elem` flags || length args < 3 || head args `notElem` cmds
     then putStrLn $ usageInfo usage opts
     else do
-      -- TODO: refactor w/ parseUDtreebank
       s1s <- parseUDFile (args !! 1)
       s2s <- parseUDFile (args !! 2)
       let ids = map sentId s1s `zip` map sentId s2s
@@ -34,6 +33,7 @@ main = do
       -- align sentences
       let as = map align s12s 
       case head args of
+
         "match" -> do
           -- read query strings from text file or command line
           isFile <- doesFileExist $ args !! 3
@@ -56,6 +56,7 @@ main = do
               writeFile (path </> "L1.conllu") (conlluText (map fst as))
               writeFile (path </> "L2.conllu") (conlluText (map snd as))
             _ -> return ()
+
         "extract" -> do
           let ess = map extract as
           if Markdown `elem` flags
@@ -83,6 +84,7 @@ main = do
               writeFile (path </> "L1.conllu") (conlluText (map fst es))
               writeFile (path </> "L2.conllu") (conlluText (map snd es))
             _ -> return ()
+
         "example" -> do
           -- annotate
           let lang = args !! 5 
@@ -122,16 +124,18 @@ main = do
     simpler es = map simplifieduMorphosynErrorPattern (patterns es)
     simplest es = map uSynErrorPattern (simpler es)
 
--- COMMAND LINE OPTIONS PARSING
 
+-- | Command-line arguments
 type Arg = String
 
+-- | Flags
 data Flag = Help | Markdown | CoNNLU String | Verbose deriving Eq
 
 -- | List of available commands (first arg)
 cmds :: [Arg]
 cmds = ["extract", "match", "example"]
 
+-- | Command-line options with descriptions
 opts :: [OptDescr Flag]
 opts = [
   Option ['h'] ["help"] (NoArg Help) "show this help message and exit",
@@ -156,9 +160,9 @@ opts = [
 usage :: String
 usage = concat [
   "\nUsage:\n",
-  "l2-ud match L1-TREEBANK L2-TREEBANK PATTERNS [OPTIONS], or\n",
-  "l2-ud extract L1-TREEBANK L2-TREEBANK [OPTIONS], or\n",
-  "l2-ud example L1-TREEBANK L2-TREEBANK L1-SENTENCE L2-SENTENCE LANGUAGE [OPTIONS]"]
+  "l2-ud match L1-TB L2-TB PATTERNS [OPTS], or\n",
+  "l2-ud extract L1-TB L2-TB [OPTS], or\n",
+  "l2-ud example L1-TB L2-TB L1-SENT L2-SENT LANG [OPTS]"]
 
 parseArgv :: [String] -> String -> [OptDescr Flag] -> ([Flag],[Arg])
 parseArgv argv usage opts = case getOpt Permute opts argv of

@@ -16,18 +16,18 @@ Tools for working with [L1-L2 parallel UD treebanks](https://aclanthology.org/W1
 To return the set of parallel L1-L2 sentences matching an error pattern, run
 
 ```
-l2-ud match L1-TREEBANK L2-TREEBANK PATTERNS [OPTIONS]
+l2-ud match L1-TB L2-TB PATTERNS [OPTS]
 ```
 
 where:
 
-- `L1-TREEBANK` is the CoNNL-U file containing correction hypotheses
-- `L2-TREEBANK` is the CoNNL-U file containing original learner sentences
+- `L1-TB` is the CoNNL-U file containing correction hypotheses
+- `L2-TB` is the CoNNL-U file containing original learner sentences
 - `PATTERNS` is a list of space-separated [L1-L2 patterns](l1-l2-patterns) or the path to a file containing an L1-L2 pattern per line (see the [saved queries folder](queries) for examples).
 
 By default, the `match` command prints the list of sentence IDs of the sentences matching the pattern.
 
-Available `OPTIONS`:
+Available `OPTS`:
 
 - `--help`, `-h`: show usage instructions
 - `--markdown`, `-m`: rather than sentence IDs, output a markdown report showing the sentences with matches highlighted in bold, like [this one](results/sv/S-FinV-example.md)
@@ -37,40 +37,40 @@ Available `OPTIONS`:
 Return the [error patterns](#l1-l2-patterns) contained in an L1-L2 treebank.
 
 ```
-l2-ud extract L1-TREEBANK L2-TREEBANK [OPTIONS]
+l2-ud extract L1-TB L2-TB [OPTS]
 ```
 
 Where:
 
-- `L1-TREEBANK` is the CoNNL-U file containing correction hypotheses
-- `L2-TREEBANK` is the CoNNL-U file containing original learner sentences
+- `L1-TB` is the CoNNL-U file containing correction hypotheses
+- `L2-TB` is the CoNNL-U file containing original learner sentences
 
-Available `OPTIONS`:
+Available `OPTS`:
 
 - `--help`, `-h`: show usage instructions
 - `--markdown`, `-m`: rather than sentence IDs, output a markdown report showing the sentences with errors highlighted in bold next to the error patterns that were detected
 - `--conllu=DIR`, `-cDIR`: on top of printing the error patterns to the standard output, extract the pairs of subtrees where the errors were found and write them to an `L1.conllu` and an `L2.conllu` file in the given `DIR`ectory (if no directory is specified, files are created in the current folder)
 
-### Retrieving similar examples (__CURRENTLY UNDER DEVELOPMENT__)
-Given an L1-L2 sentence pair, return simila examples from an L1-L2 treebank, by:
+### Retrieving similar examples
+Given an L1-L2 sentence pair, return similar examples from an L1-L2 treebank, by:
 
 1. annotating the sentences in UD using UDPipe2 (requires an internet connection)
 2. extracting error patterns from them (analogous to [`l2-ud extract`](#extracting-error-patterns-currently-under-development))
 3. querying the treebank with such error patterns (analogous to [`l2-ud match`](#querying-parallel-l1-l2-treebanks))
 
 ```
-l2-ud example L1-TREEBANK L2-TREEBANK L1-SENTENCE L2-SENTENCE LANGUAGE [OPTIONS]
+l2-ud example L1-TB L2-TB L1-SENTENCE L2-SENTENCE LANG [OPTS]
 ```
 
 Where:
 
-- `L1-TREEBANK` is the CoNNL-U file containing correction hypotheses
-- `L2-TREEBANK` is the CoNNL-U file containing original learner sentences
+- `L1-TB` is the CoNNL-U file containing correction hypotheses
+- `L2-TB` is the CoNNL-U file containing original learner sentences
 - `L1-SENTENCE` is a correct sentence
 - `L2-SENTENCE` is a sentence containing 1+ grammatical errors
-- `LANGUAGE` is the name of the [UDPipe 2 model](https://ufal.mff.cuni.cz/udpipe/2/models) to be used for annotating the sentences. The default model for each language is called the English name of the language, lowercased, e.g. `swedish`   
+- `LANG` is the name of the [UDPipe 2 model](https://ufal.mff.cuni.cz/udpipe/2/models) to be used for annotating the sentences. The default model for each language is called the English name of the language, lowercased, e.g. `swedish`   
 
-Available `OPTIONS`:
+Available `OPTS`:
 
 - `--help`, `-h`: show usage instructions
 - `--verbose`, `-v`: show intermediate results (UD-annotated example sentences and extracted patterns)
@@ -144,13 +144,17 @@ For more examples, check the [saved queries folder](queries).
 If you use this software in your research, you are welcome to cite
 
 ```
-@inproceedings{
-masciolini2023a,
-title={A query engine for L1-L2 parallel dependency treebanks},
-author={Arianna Masciolini},
-booktitle={The 24rd Nordic Conference on Computational Linguistics},
-year={2023},
-url={https://openreview.net/forum?id=ngh-uZ2ivH}
+@inproceedings{masciolini-2023-query,
+    title = "A query engine for {L}1-{L}2 parallel dependency treebanks",
+    author = "Masciolini, Arianna",
+    booktitle = "Proceedings of the 24th Nordic Conference on Computational Linguistics (NoDaLiDa)",
+    month = may,
+    year = "2023",
+    address = "T{\'o}rshavn, Faroe Islands",
+    publisher = "University of Tartu Library",
+    url = "https://aclanthology.org/2023.nodalida-1.57",
+    pages = "574--587",
+    abstract = "L1-L2 parallel dependency treebanks are learner corpora with interoperability as their main design goal. They consist of sentences produced by learners of a second language (L2) paired with native-like (L1) correction hypotheses. Rather than explicitly labelled for errors, these are annotated following the Universal Dependencies standard. This implies relying on tree queries for error retrieval. Work in this direction is, however, limited. We present a query engine for L1-L2 treebanks and evaluate it on two corpora, one manually validated and one automatically parsed.",
 }
 ```
 

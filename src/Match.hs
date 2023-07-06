@@ -116,7 +116,8 @@ parseQuery vals q =
       where 
         replaceVars [] qs = qs
         replaceVars (e@(id,vs):es) qs = 
-          replaceVars es (zipWith (\v (q1,q2) -> (replace id v q1,replace id v q2)) vs qs)
+          replaceVars es (zipWith (\v (q1,q2) -> 
+            (replace id v q1,replace id v q2)) vs qs)
 
 -- | Find categorical variables ("$X") in the depths of a UD pattern
 variables :: M.Map Field [Value] -> UDPattern -> M.Map Field [Value]

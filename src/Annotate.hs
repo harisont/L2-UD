@@ -3,6 +3,7 @@ Module      : Annotate
 Description : UD annotation via the UDPipe2 REST API.
 Stability   : experimental
 -}
+
 {-# LANGUAGE DeriveGeneric #-}
 
 module Annotate where
