@@ -1,0 +1,3 @@
+FEATS_ "Tense=Fut"
+TREE_ (FEATS_ "Tense=Past|VerbForm=Par") [AND [FEATS_ "Tense=Fut", POS "AUX", DEPREL "aux", LEMMA "haber"]]
+TREE_ (LEMMA "ir") [TREE_ (FEATS_ "VerbForm=Inf") [AND [LEMMA "a", POS "ADP", DEPREL_ "adp"]]]
