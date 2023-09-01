@@ -159,4 +159,24 @@ If you use this software in your research, you are welcome to cite
 }
 ```
 
+and
+
+```
+@inproceedings{masciolini-etal-2023-towards,
+    title = "Towards automatically extracting morphosyntactical error patterns from {L}1-{L}2 parallel dependency treebanks",
+    author = "Masciolini, Arianna  and
+      Volodina, Elena  and
+      Dannlls, Dana",
+    booktitle = "Proceedings of the 18th Workshop on Innovative Use of NLP for Building Educational Applications (BEA 2023)",
+    month = jul,
+    year = "2023",
+    address = "Toronto, Canada",
+    publisher = "Association for Computational Linguistics",
+    url = "https://aclanthology.org/2023.bea-1.50",
+    doi = "10.18653/v1/2023.bea-1.50",
+    pages = "585--597",
+    abstract = "L1-L2 parallel dependency treebanks are UD-annotated corpora of learner sentences paired with correction hypotheses. Automatic morphosyntactical annotation has the potential to remove the need for explicit manual error tagging and improve interoperability, but makes it more challenging to locate grammatical errors in the resulting datasets. We therefore propose a novel method for automatically extracting morphosyntactical error patterns and perform a preliminary bilingual evaluation of its first implementation through a similar example retrieval task. The resulting pipeline is also available as a prototype CALL application.",
+}
+```
+
 [^1]: The syntax of `gf-ud`'s pattern matching language is described extensively [here](https://github.com/GrammaticalFramework/gf-ud/blob/master/doc/patterns.md).
