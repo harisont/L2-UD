@@ -70,8 +70,8 @@ lin s = unwords $ map udFORM (udWords s)
 
 -- | Return the string to write in the CoNNL-U file corresponding to a list of 
 -- UD trees 
-conlluText :: [UDTree] -> String
-conlluText ts = unlines $ 
+conlluTxt :: [UDTree] -> String
+conlluTxt ts = unlines $ 
   zipWith (curry showUDSentence) [1..] (map udTree2adjustedSentence ts)
 
 -- | Helper function: print a UD sentences with metadata. i is the sent_id. 

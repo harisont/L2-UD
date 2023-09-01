@@ -63,8 +63,12 @@ main = do
           case [f | f@CoNNLU {} <- flags] of
             [CoNNLU path] -> do
               let as = concatMap snd ms
-              writeFile (path </> "L1.conllu") (conlluText (map (fst . replacementsWithUDPattern r . fst) as))
-              writeFile (path </> "L2.conllu") (conlluText (map (fst . replacementsWithUDPattern r . snd) as))
+              writeFile 
+                (path </> "L1.conllu") 
+                (conlluTxt (map (fst . replacementsWithUDPattern r . fst) as))
+              writeFile 
+                (path </> "L2.conllu") 
+                (conlluTxt (map (fst . replacementsWithUDPattern r . snd) as))
             _ -> return ()
 
         "extract" -> do
@@ -91,8 +95,8 @@ main = do
           case [f | f@CoNNLU {} <- flags] of
             [CoNNLU path] -> do -- no conversion to patterns
               let es = concat ess
-              writeFile (path </> "L1.conllu") (conlluText (map fst es))
-              writeFile (path </> "L2.conllu") (conlluText (map snd es))
+              writeFile (path </> "L1.conllu") (conlluTxt (map fst es))
+              writeFile (path </> "L2.conllu") (conlluTxt (map snd es))
             _ -> return ()
 
         "example" -> do
