@@ -1,0 +1,1 @@
+FILTER_SUBTREES (DEPREL "root") (OR [DEPREL "aux", DEPREL "cop"])

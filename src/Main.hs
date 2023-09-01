@@ -23,6 +23,7 @@ import Utils.UDPatterns
 main = do
   argv <- getArgs
   let (flags,args) = parseArgv argv usage opts
+  let nullReplacement = CHANGES []
   if Help `elem` flags || length args < 3 || head args `notElem` cmds
     then putStrLn $ usageInfo usage opts
     else do
@@ -36,8 +37,8 @@ main = do
 
         "match" -> do
           -- read query strings from text file or command line
-          isFile <- doesFileExist $ args !! 3
-          qs <- if length args == 4 && isFile
+          isQueryFile <- doesFileExist $ args !! 3
+          qs <- if length args == 4 && isQueryFile
             then do
               content <- readFile $ args !! 3
               return $ lines content
@@ -46,6 +47,15 @@ main = do
           let ps = rmDuplicates $ concatMap (parseQuery fieldVals) qs
           -- get matches, i.e. pairs of 
           -- (l1-l2 sentences, nonempty list of aligned matching subtrees)
+          r <- case [f | f@Replacement {} <- flags] of
+            [Replacement rule] -> do
+              isFileReplacement <- doesFileExist rule
+              if isFileReplacement 
+                then do
+                  content <- readFile rule
+                  return $ read content
+                else return $ read rule  
+            _ -> return nullReplacement
           let ms = filter (not . null . snd) (s12s `zip` map (match ps) as)
           if Markdown `elem` flags
             then mapM_ (putStrLn . match2md) ms
@@ -53,8 +63,8 @@ main = do
           case [f | f@CoNNLU {} <- flags] of
             [CoNNLU path] -> do
               let as = concatMap snd ms
-              writeFile (path </> "L1.conllu") (conlluText (map fst as))
-              writeFile (path </> "L2.conllu") (conlluText (map snd as))
+              writeFile (path </> "L1.conllu") (conlluText (map (fst . replacementsWithUDPattern r . fst) as))
+              writeFile (path </> "L2.conllu") (conlluText (map (fst . replacementsWithUDPattern r . snd) as))
             _ -> return ()
 
         "extract" -> do
@@ -129,7 +139,13 @@ main = do
 type Arg = String
 
 -- | Flags
-data Flag = Help | Markdown | CoNNLU String | Verbose deriving Eq
+data Flag = 
+    Help
+  | Markdown
+  | CoNNLU String 
+  | Verbose 
+  | Replacement String 
+  deriving Eq
 
 -- | List of available commands (first arg)
 cmds :: [Arg]
@@ -153,7 +169,12 @@ opts = [
     ['v']
     ["verbose"]
     (NoArg Verbose)
-    "show intermediate results"
+    "show intermediate results",
+  Option
+    ['r']
+    ["replacement-rule"]
+    (ReqArg Replacement "RULE_OR_PATH")
+    "apply a custom replacement rule on all trees"
   ]
   where conlluOutDir = CoNNLU . fromMaybe "." -- default = current folder
 

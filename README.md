@@ -32,6 +32,7 @@ Available `OPTS`:
 - `--help`, `-h`: show usage instructions
 - `--markdown`, `-m`: rather than sentence IDs, output a markdown report showing the sentences with matches highlighted in bold, like [this one](results/sv/S-FinV-example.md)
 - `--conllu=DIR`, `-cDIR`: on top of printing sentence IDs to the standard output, extract the pairs of subtrees matching the pattern and write them to an `L1.conllu` and an `L2.conllu` file in the given `DIR`ectory (if no directory is specified, files are created in the current folder)
+- `--replacement-rules=RULE_OR_PATH`, `-rRULE_OR_PATH`: apply a custom [replacement rule](https://github.com/GrammaticalFramework/gf-ud/blob/master/doc/patterns.md#the-semantics-of-replacements) on all (L1 and L2) matches. This can be useful, for example, to prune trees ignoring certain branches. 
 
 ### Extracting error patterns (__CURRENTLY UNDER DEVELOPMENT__)
 Return the [error patterns](#l1-l2-patterns) contained in an L1-L2 treebank.
