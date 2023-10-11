@@ -19,19 +19,38 @@ setup :: Window -> UI ()
 setup w = do
   return w # set UI.title "L2-UD"
 
-  -- input field for query
-  qInput <- UI.input
-  element qInput # set
+  l1Input <- UI.input
+  element l1Input # set
+    (UI.attr "placeholder")
+    ("path to L1 treebank")
+  element l1Input # set (UI.attr "size") "50%"
+
+  l2Input <- UI.input
+  element l2Input # set
+    (UI.attr "placeholder")
+    ("path to L1 treebank")
+  element l2Input # set (UI.attr "size") "50%"
+
+  loadButton <- UI.button
+  element loadButton # set UI.text "load"
+
+  break <- UI.br
+
+  queryInput <- UI.input
+  element queryInput # set
     (UI.attr "placeholder")
     ("single-language or L1-L2 query")
-  element qInput # set (UI.attr "size") "60"
+  element queryInput # set (UI.attr "size") "100%"
 
-  -- create search button
-  sButton <- UI.button
-  element sButton # set UI.text "search"
+  searchButton <- UI.button
+  element searchButton # set UI.text "search"
 
-  -- add graphical elements to window body
-  getBody w #+ [element qInput, element sButton] 
+  getBody w #+ [element l1Input, 
+                element l2Input,
+                element loadButton,
+                element break, 
+                element queryInput, 
+                element searchButton] 
 
-  on UI.click sButton $ undefined
+  on UI.click searchButton $ undefined
     
