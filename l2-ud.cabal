@@ -46,8 +46,20 @@ executable l2-ud
 executable l2-ud-gui
     hs-source-dirs: src
     main-is: GUI.hs
+    other-modules:
+        Align,
+        Errors,
+        Utils.Output,
+        Utils.UDConcepts,
+        Utils.UDPatterns,
+        Utils.Misc
     build-depends:
         base, 
-        threepenny-gui
+        containers,
+        split,
+        threepenny-gui,
+        gf-ud,
+        concept-alignment,
+        hs-md
     default-language: Haskell2010
     ghc-options: -main-is GUI
