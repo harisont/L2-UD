@@ -1,6 +1,6 @@
 {-|
 Module      : GUI
-Description : A quick-and-dirty GUI for L2-UD.
+Description : A quick-and-dirty GUI for L2-UD, built with threepenny-gui.
 Stability   : experimental
 -}
 
