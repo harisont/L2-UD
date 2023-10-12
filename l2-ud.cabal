@@ -55,9 +55,12 @@ executable l2-ud-gui
         Utils.Misc
     build-depends:
         base, 
+        extra,
         containers,
         split,
         directory,
+        regex-posix,
+        MissingH,
         threepenny-gui,
         gf-ud,
         concept-alignment,

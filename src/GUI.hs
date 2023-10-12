@@ -9,7 +9,10 @@ import System.Directory
 import Graphics.UI.Threepenny.Core
 import qualified Graphics.UI.Threepenny as UI
 import UDConcepts
+import Utils.UDConcepts
 import Utils.Output (lin)
+import Align
+import Match
 
 main :: IO ()
 main = do
@@ -30,9 +33,6 @@ setup window = do
   element l2Input # set (UI.attr "placeholder") ("path to L1 treebank")
   element l2Input # set (UI.attr "size") "50%"
 
-  loadButton <- UI.button
-  element loadButton # set UI.text "load"
-
   break <- UI.br
 
   queryInput <- UI.input
@@ -47,37 +47,49 @@ setup window = do
   getBody window #+ [
                 element l1Input, 
                 element l2Input,
-                element loadButton,
                 element break, 
                 element queryInput, 
                 element searchButton] 
   
-  on UI.click loadButton $ do
-    const $ loadTreebank window l1Input l2Input
-  on UI.click searchButton $ undefined
+  on UI.click searchButton $ const $ do
+    l1Path <- get value l1Input 
+    l2Path <- get value l2Input
+    queryTxt <- get value queryInput
 
-loadTreebank :: Window -> Element -> Element -> UI Element
-loadTreebank window l1Input l2Input = do
+    l1Exists <- liftIO $ doesFileExist l1Path
+    l2Exists <- liftIO $ doesFileExist l2Path
+    let queryExists = not $ null queryTxt
 
-  l1Path <- get value l1Input 
-  l2Path <- get value l2Input
-
-  l1Exists <- liftIO $ doesFileExist l1Path
-  l2Exists <- liftIO $ doesFileExist l2Path
-
-  case (l1Exists,l2Exists) of
-    (False,True) -> markWrong l1Input
-    (True,False) -> markWrong l2Input
-    (False,False) -> do
-      markWrong l1Input
-      markWrong l2Input
-    (True,True) -> do
-      l1Sents <- liftIO $ parseUDFile l1Path
-      l2Sents <- liftIO $ parseUDFile l2Path 
-      table <- buildTable window (map lin l1Sents) (map lin l2Sents)
-      destroyTables window
-      getBody window #+ [element table]
-
+    case (l1Exists,l2Exists) of
+      (False,False) -> do
+        markWrong l1Input
+        markWrong l2Input
+      (False,True) -> markWrong l1Input
+      (True,False) -> markWrong l2Input
+      (True,True) -> do
+        l1Sents <- liftIO $ parseUDFile l1Path
+        l2Sents <- liftIO $ parseUDFile l2Path 
+        let treebank = l1Sents `zip` l2Sents 
+        let alignments = map align treebank
+        if queryExists 
+          then do 
+            let patterns = parseQuery fieldVals queryTxt
+            let matches = filter 
+                            (not . null . snd) 
+                            (treebank `zip` map (match patterns) alignments)
+            -- TODO: allow seeing only matching subtrees
+            let (matchingL1Sents,matchingL2Sents) = unzip (map fst matches) 
+            table <- buildTable 
+                      window 
+                      (map lin matchingL1Sents) 
+                      (map lin matchingL2Sents)
+            destroyTables window
+            getBody window #+ [element table]
+          else do
+            table <- buildTable window (map lin l1Sents) (map lin l2Sents)
+            destroyTables window
+            getBody window #+ [element table]
+    
 buildTable :: Window -> [String] -> [String] -> UI Element
 buildTable window l1Data l2Data = do 
   cells <- mapM 
