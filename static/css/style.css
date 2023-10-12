@@ -1,0 +1,33 @@
+body {
+    font-family: arial, sans-serif;
+}
+
+.table {
+    width: 100%;
+    table-layout:fixed;
+}
+  
+.table-cell {
+    text-align: left;
+    padding: 8px;
+}
+  
+.table-row:nth-child(even) {
+    background-color: #dddddd;
+}
+  
+.table-cell { 
+    white-space: pre-wrap 
+}
+
+input#query {
+    width: 90%;
+}
+
+input.path {
+    width: 49%;
+}
+
+button {
+    width: 8.5%
+}

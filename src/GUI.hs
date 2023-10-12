@@ -17,29 +17,32 @@ import Match
 main :: IO ()
 main = do
   startGUI defaultConfig
-    { jsPort       = Just 8023
-    , jsStatic     = Just "static"
+    { jsPort = Just 8023
+    , jsStatic = Just "static"
     } setup
 
 setup :: Window -> UI ()
 setup window = do
   return window # set UI.title "L2-UD"
+  UI.addStyleSheet window "style.css"
 
   l1Input <- UI.input
   element l1Input # set (UI.attr "placeholder") ("path to L1 treebank")
-  element l1Input # set (UI.attr "size") "50%"
+  element l1Input # set (UI.attr "class") "path"
+  markRight l1Input
 
   l2Input <- UI.input
-  element l2Input # set (UI.attr "placeholder") ("path to L1 treebank")
-  element l2Input # set (UI.attr "size") "50%"
-
-  break <- UI.br
+  element l2Input # set (UI.attr "placeholder") ("path to L2 treebank")
+  element l2Input # set (UI.attr "class") "path"
+  markRight l2Input
 
   queryInput <- UI.input
   element queryInput # set
     (UI.attr "placeholder")
     ("single-language or L1-L2 query")
-  element queryInput # set (UI.attr "size") "100%"
+  element queryInput # set (UI.attr "id") "query"
+  markRight queryInput
+
 
   searchButton <- UI.button
   element searchButton # set UI.text "search"
@@ -47,7 +50,6 @@ setup window = do
   getBody window #+ [
                 element l1Input, 
                 element l2Input,
-                element break, 
                 element queryInput, 
                 element searchButton] 
   
@@ -64,9 +66,15 @@ setup window = do
       (False,False) -> do
         markWrong l1Input
         markWrong l2Input
-      (False,True) -> markWrong l1Input
-      (True,False) -> markWrong l2Input
+      (False,True) -> do
+        markWrong l1Input
+        markRight l2Input
+      (True,False) -> do
+        markWrong l2Input
+        markRight l1Input
       (True,True) -> do
+        markRight l1Input
+        markRight l2Input
         l1Sents <- liftIO $ parseUDFile l1Path
         l2Sents <- liftIO $ parseUDFile l2Path 
         let treebank = l1Sents `zip` l2Sents 
@@ -77,7 +85,7 @@ setup window = do
             let matches = filter 
                             (not . null . snd) 
                             (treebank `zip` map (match patterns) alignments)
-            -- TODO: allow seeing only matching subtrees
+            -- TODO: discard less info to allow seeing only matching subtrees
             let (matchingL1Sents,matchingL2Sents) = unzip (map fst matches) 
             table <- buildTable 
                       window 
@@ -103,6 +111,10 @@ destroyTables window = do
   tables <- getElementsByClassName window "table"
   mapM_ delete tables 
 
--- | TODO: find out why this only works with DarkReader enabled
+-- TODO: find out why these only work with DarkReader 
+-- enabled
 markWrong :: Element -> UI Element
-markWrong input = element input # set (UI.attr "background") ("red")
+markWrong input = element input # set (UI.attr "bgcolor") ("red")
+
+markRight :: Element -> UI Element
+markRight input = element input # set (UI.attr "bgcolor") ("white")
