@@ -57,6 +57,7 @@ executable l2-ud-gui
         base, 
         containers,
         split,
+        directory,
         threepenny-gui,
         gf-ud,
         concept-alignment,
