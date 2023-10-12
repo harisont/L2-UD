@@ -5,6 +5,8 @@ Stability   : experimental
 -}
 
 module GUI where 
+
+import Control.Exception
 import System.Directory
 import Graphics.UI.Threepenny.Core
 import qualified Graphics.UI.Threepenny as UI
@@ -13,6 +15,7 @@ import Utils.UDConcepts
 import Utils.Output (lin)
 import Align
 import Match
+import Errors
 
 main :: IO ()
 main = do
@@ -80,19 +83,22 @@ setup window = do
         let treebank = l1Sents `zip` l2Sents 
         let alignments = map align treebank
         if queryExists 
-          then do 
-            let patterns = parseQuery fieldVals queryTxt
-            let matches = filter 
-                            (not . null . snd) 
-                            (treebank `zip` map (match patterns) alignments)
-            -- TODO: discard less info to allow seeing only matching subtrees
-            let (matchingL1Sents,matchingL2Sents) = unzip (map fst matches) 
-            table <- buildTable 
-                      window 
-                      (map lin matchingL1Sents) 
-                      (map lin matchingL2Sents)
-            destroyTables window
-            getBody window #+ [element table]
+          then do
+            tried <- liftIO $ (try (return $ parseQuery fieldVals queryTxt) :: IO (Either MyException [ErrorPattern])) 
+            case tried of
+              (Left _) -> markWrong queryInput
+              (Right patterns) -> do
+                let matches = filter 
+                                (not . null . snd) 
+                                (treebank `zip` map (match patterns) alignments)
+                -- TODO: discard less info to allow seeing only matching subtrees
+                let (matchingL1Sents,matchingL2Sents) = unzip (map fst matches) 
+                table <- buildTable 
+                          window 
+                          (map lin matchingL1Sents) 
+                          (map lin matchingL2Sents)
+                destroyTables window
+                getBody window #+ [element table]
           else do
             table <- buildTable window (map lin l1Sents) (map lin l2Sents)
             destroyTables window
@@ -118,3 +124,8 @@ markWrong input = element input # set (UI.attr "bgcolor") ("red")
 
 markRight :: Element -> UI Element
 markRight input = element input # set (UI.attr "bgcolor") ("white")
+
+data MyException = ThisException | ThatException
+    deriving Show
+
+instance Exception MyException
