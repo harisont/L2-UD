@@ -48,6 +48,7 @@ executable l2-ud-gui
     main-is: GUI.hs
     other-modules:
         Align,
+        Match,
         Errors,
         Utils.Output,
         Utils.UDConcepts,
