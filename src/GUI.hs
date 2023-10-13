@@ -5,6 +5,7 @@ Stability   : experimental
 -}
 
 module GUI where 
+import Data.Maybe
 import System.Directory
 import Graphics.UI.Threepenny.Core
 import qualified Graphics.UI.Threepenny as UI
@@ -15,6 +16,8 @@ import Utils.Output
 import Align
 import Match
 import Errors
+
+data Mode = Text | CoNNLU deriving (Eq, Show)
 
 main :: IO ()
 main = do
@@ -42,18 +45,30 @@ setup window = do
                         "additional replacement rule (optional)"
                         "replacement"
 
+  modeSpan <- string "Mode: "
+  
+  textMode <- buildMode "text" True
+  conlluMode <- buildMode "CoNNL-U" False
+
   getBody window #+ [
-                element l1Input, 
-                element l2Input,
-                element queryInput, 
-                element searchButton,
-                element replacementInput] 
+                element l1Input
+              , element l2Input
+              , element queryInput 
+              , element replacementInput
+              , element modeSpan
+              , element textMode
+              , element conlluMode
+              , element searchButton
+                ] 
   
   on UI.click searchButton $ const $ do
     l1Path <- get value l1Input 
     l2Path <- get value l2Input
     queryTxt <- get value queryInput
     replacementTxt <- get value replacementInput
+    textModeButton <- getElementById window "text"
+    textModeValue <- get UI.checked (fromJust $ textModeButton)
+    let mode = if textModeValue then Text else CoNNLU
 
     l1Exists <- liftIO $ doesFileExist l1Path
     l2Exists <- liftIO $ doesFileExist l2Path
@@ -89,7 +104,21 @@ setup window = do
                             (\(s,es) -> 
                               (s,map (applyReplacement replacement) es))
                             matches
-            let (l1Col,l2Col) = unzip $ concatMap (\((s1,s2),ms) -> map (\(m1,m2) -> (highlin s1 (udTree2sentence m1) HTML, highlin s2 (udTree2sentence m2) HTML)) ms) matches'
+            let (l1Col,l2Col) = unzip $ concatMap 
+                  (\((s1,s2),ms) -> 
+                    map 
+                      (\(m1,m2) -> 
+                        let m1' = udTree2sentence (adjustRootAndPositions m1)
+                            m2' = udTree2sentence (adjustRootAndPositions m2)
+                        in ((if mode == Text 
+                            then highlin s1 (udTree2sentence m1) HTML
+                            else prReducedUDSentence "xxxxxxxx" m1', 
+                          if mode == Text 
+                            then highlin s2 (udTree2sentence m2) HTML
+                            else prReducedUDSentence "xxxxxxxx" m2')
+                        )) 
+                      ms) 
+                  matches'
             table <- buildTable window l1Col l2Col 
             destroyTables window
             getBody window #+ [element table]
@@ -111,7 +140,22 @@ buildTextInput p c = do
   element input # set (UI.attr "class") c
   markRight input
   return input
-    
+
+buildMode :: String -> Bool -> UI Element
+buildMode mode checked = do
+  span <- UI.span
+  radioButton <- UI.input
+  label <- UI.label
+  element radioButton # set UI.type_ "radio"
+  element radioButton # set UI.name "mode"
+  element radioButton # set UI.id_ mode
+  element radioButton # set UI.checked checked
+  element label # set UI.type_ "label"
+  element label # set UI.text mode
+  element label # set UI.for mode
+  element span # set children [radioButton, label]
+  return span
+      
 buildTable :: Window -> [String] -> [String] -> UI Element
 buildTable window l1Data l2Data = do 
   cells <- mapM 

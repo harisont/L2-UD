@@ -20,18 +20,14 @@ body {
     white-space: pre-wrap 
 }
 
-input.query {
-    width: 90%;
-}
-
-input.replacement {
-    width: 98.5%;
+input.query, input.replacement {
+    width: 99.5%;
 }
 
 input.path {
-    width: 49%;
+    width: 49.4%;
 }
 
 button {
-    width: 8.5%
+    margin: 1%;
 }
