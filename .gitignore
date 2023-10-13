@@ -4,7 +4,9 @@ stack.yaml.lock
 out/*data/
 data/
 
+# Project-specific stuff
 out/*
+*.tmp
 
 # Stuff that should stay in dev
 results/*
