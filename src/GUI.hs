@@ -10,7 +10,7 @@ import Graphics.UI.Threepenny.Core
 import qualified Graphics.UI.Threepenny as UI
 import UDConcepts
 import Utils.UDConcepts
-import Utils.Output (lin)
+import Utils.Output
 import Align
 import Match
 
@@ -85,12 +85,8 @@ setup window = do
             let matches = filter 
                             (not . null . snd) 
                             (treebank `zip` map (match patterns) alignments)
-            -- TODO: discard less info to allow seeing only matching subtrees
-            let (matchingL1Sents,matchingL2Sents) = unzip (map fst matches) 
-            table <- buildTable 
-                      window 
-                      (map lin matchingL1Sents) 
-                      (map lin matchingL2Sents)
+            let (l1Col,l2Col) = unzip $ concatMap (\((s1,s2),ms) -> map (\(m1,m2) -> (highlin s1 (udTree2sentence m1) HTML, highlin s2 (udTree2sentence m2) HTML)) ms) matches
+            table <- buildTable window l1Col l2Col 
             destroyTables window
             getBody window #+ [element table]
           else do
@@ -101,7 +97,10 @@ setup window = do
 buildTable :: Window -> [String] -> [String] -> UI Element
 buildTable window l1Data l2Data = do 
   cells <- mapM 
-            (mapM (return . string)) 
+            (mapM (return . (\htmlText -> do
+              div <- UI.div
+              element div # set html htmlText
+              return div)))
             (zipWith (\s1 s2 -> [s1,s2]) l1Data l2Data)
   table <- UI.grid cells
   return table
@@ -111,8 +110,6 @@ destroyTables window = do
   tables <- getElementsByClassName window "table"
   mapM_ delete tables 
 
--- TODO: find out why these only work with DarkReader 
--- enabled
 markWrong :: Element -> UI Element
 markWrong input = element input # set (UI.attr "bgcolor") ("red")
 
