@@ -24,6 +24,10 @@ input#query {
     width: 90%;
 }
 
+input#replacement {
+    width: 98.5%;
+}
+
 input.path {
     width: 49%;
 }

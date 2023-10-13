@@ -9,10 +9,12 @@ import System.Directory
 import Graphics.UI.Threepenny.Core
 import qualified Graphics.UI.Threepenny as UI
 import UDConcepts
+import UDPatterns
 import Utils.UDConcepts
 import Utils.Output
 import Align
 import Match
+import Errors
 
 main :: IO ()
 main = do
@@ -39,28 +41,39 @@ setup window = do
   queryInput <- UI.input
   element queryInput # set
     (UI.attr "placeholder")
-    ("single-language or L1-L2 query")
+    ("L1-L2 or single-language (matched on L2) query")
   element queryInput # set (UI.attr "id") "query"
   markRight queryInput
 
-
   searchButton <- UI.button
   element searchButton # set UI.text "search"
+
+  replacementInput <- UI.input
+  element replacementInput # set
+    (UI.attr "placeholder")
+    ("additional replacement rule (optional)")
+  element replacementInput # set (UI.attr "id") "replacement"
+  markRight replacementInput
 
   getBody window #+ [
                 element l1Input, 
                 element l2Input,
                 element queryInput, 
-                element searchButton] 
+                element searchButton,
+                element replacementInput] 
   
   on UI.click searchButton $ const $ do
     l1Path <- get value l1Input 
     l2Path <- get value l2Input
     queryTxt <- get value queryInput
+    replacementTxt <- get value replacementInput
 
     l1Exists <- liftIO $ doesFileExist l1Path
     l2Exists <- liftIO $ doesFileExist l2Path
     let queryExists = not $ null queryTxt
+    let replacement = if null replacementTxt 
+                        then CHANGES [] 
+                        else read replacementTxt
 
     case (l1Exists,l2Exists) of
       (False,False) -> do
@@ -85,7 +98,11 @@ setup window = do
             let matches = filter 
                             (not . null . snd) 
                             (treebank `zip` map (match patterns) alignments)
-            let (l1Col,l2Col) = unzip $ concatMap (\((s1,s2),ms) -> map (\(m1,m2) -> (highlin s1 (udTree2sentence m1) HTML, highlin s2 (udTree2sentence m2) HTML)) ms) matches
+            let matches' = map 
+                            (\(s,es) -> 
+                              (s,map (applyReplacement replacement) es))
+                            matches
+            let (l1Col,l2Col) = unzip $ concatMap (\((s1,s2),ms) -> map (\(m1,m2) -> (highlin s1 (udTree2sentence m1) HTML, highlin s2 (udTree2sentence m2) HTML)) ms) matches'
             table <- buildTable window l1Col l2Col 
             destroyTables window
             getBody window #+ [element table]
@@ -93,6 +110,9 @@ setup window = do
             table <- buildTable window (map lin l1Sents) (map lin l2Sents)
             destroyTables window
             getBody window #+ [element table]
+  where applyReplacement r (e1,e2) = 
+          (fst $ replacementsWithUDPattern r e1,
+           fst $ replacementsWithUDPattern r e2)
     
 buildTable :: Window -> [String] -> [String] -> UI Element
 buildTable window l1Data l2Data = do 
