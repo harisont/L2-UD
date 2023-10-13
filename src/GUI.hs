@@ -28,32 +28,19 @@ setup window = do
   return window # set UI.title "L2-UD"
   UI.addStyleSheet window "style.css"
 
-  l1Input <- UI.input
-  element l1Input # set (UI.attr "placeholder") ("path to L1 treebank")
-  element l1Input # set (UI.attr "class") "path"
-  markRight l1Input
+  l1Input <- buildTextInput "path to L1 treebank" "path"
+  l2Input <- buildTextInput "path to L2 treebank" "path"
 
-  l2Input <- UI.input
-  element l2Input # set (UI.attr "placeholder") ("path to L2 treebank")
-  element l2Input # set (UI.attr "class") "path"
-  markRight l2Input
-
-  queryInput <- UI.input
-  element queryInput # set
-    (UI.attr "placeholder")
-    ("L1-L2 or single-language (matched on L2) query")
-  element queryInput # set (UI.attr "id") "query"
-  markRight queryInput
+  queryInput <- buildTextInput
+                  "L1-L2 or single-language (matched on L2) query"
+                  "query"
 
   searchButton <- UI.button
   element searchButton # set UI.text "search"
 
-  replacementInput <- UI.input
-  element replacementInput # set
-    (UI.attr "placeholder")
-    ("additional replacement rule (optional)")
-  element replacementInput # set (UI.attr "id") "replacement"
-  markRight replacementInput
+  replacementInput <- buildTextInput 
+                        "additional replacement rule (optional)"
+                        "replacement"
 
   getBody window #+ [
                 element l1Input, 
@@ -113,6 +100,17 @@ setup window = do
   where applyReplacement r (e1,e2) = 
           (fst $ replacementsWithUDPattern r e1,
            fst $ replacementsWithUDPattern r e2)
+
+type Placeholder = String
+type Class = String
+
+buildTextInput :: Placeholder -> Class -> UI Element
+buildTextInput p c = do
+  input <- UI.input
+  element input # set (UI.attr "placeholder") p
+  element input # set (UI.attr "class") c
+  markRight input
+  return input
     
 buildTable :: Window -> [String] -> [String] -> UI Element
 buildTable window l1Data l2Data = do 

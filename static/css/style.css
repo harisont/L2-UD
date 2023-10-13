@@ -20,11 +20,11 @@ body {
     white-space: pre-wrap 
 }
 
-input#query {
+input.query {
     width: 90%;
 }
 
-input#replacement {
+input.replacement {
     width: 98.5%;
 }
 
