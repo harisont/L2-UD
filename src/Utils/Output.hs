@@ -1,6 +1,6 @@
 {-|
 Module      : Utils.Output
-Description : Output functions used in the main.
+Description : Output functions used in both the CLI and graphical mains.
 Stability   : experimental
 -}
 
@@ -13,6 +13,8 @@ import Errors
 import Markdown
 import Utils.Misc
 import Utils.UDConcepts
+
+data Markup = MD | HTML
 
 -- | Show the ID(s) of two parallel sentences
 showIds :: (UDSentence,UDSentence) -> String
@@ -27,8 +29,8 @@ extract2md (s12@(s1,s2),eps) = unlines [
     ["L1 sentence", "L2 sentence", "Error patterns"]
     (map 
       (\(e@(t1,t2),ps) -> [
-        highlin s1 (udTree2sentence t1), 
-        highlin s2 (udTree2sentence t2), 
+        highlin s1 (udTree2sentence t1) MD, 
+        highlin s2 (udTree2sentence t2) MD, 
         intercalate ", " (map (code . showErrorPattern) ps)])
       eps)
   ] 
@@ -41,8 +43,8 @@ match2md (s12@(s1,s2),as) = unlines [
     ["L1 sentence", "L2 sentence"]
     (map 
       (\(t1,t2) -> [
-        highlin s1 (udTree2sentence t1), 
-        highlin s2 (udTree2sentence t2)]) 
+        highlin s1 (udTree2sentence t1) MD, 
+        highlin s2 (udTree2sentence t2) MD]) 
       as)
   ]
 
@@ -50,23 +52,25 @@ match2md (s12@(s1,s2),as) = unlines [
 example2md :: ((UDSentence,UDSentence),[ErrorPattern]) -> String
 example2md (e@(s1,s2),ps) = unlines [
   h2 $ "Sentence " ++ showIds e ++ ":",
-  ulist 1 [highlin s1 s1, highlin s2 s2],
+  ulist 1 [highlin s1 s1 MD, highlin s2 s2 MD],
   "",
   "Patterns: ",
   ulist 1 (map (code . showErrorPattern) ps)
   ]
 
--- | Helper function that linearizes a sentence highlighting its tokens that 
--- belong to a subsentence
-highlin :: UDSentence -> UDSentence -> String
-highlin s s' = 
-  unwords $ map (\w -> if w `elem` wss then bold (udFORM w) else udFORM w) ws
-  where 
-    ws = udWords s
-    wss = udWords s'
-
+-- | Linearize a sentences (ignoring all issues related to contractions etc.)
 lin :: UDSentence -> String
 lin s = unwords $ map udFORM (udWords s)
+
+-- | Linearize a sentence highlighting its tokens that belong to a subsentence
+highlin :: UDSentence -> UDSentence -> Markup -> String
+highlin s s' m = unwords $ map 
+  (\w -> if w `elem` udWords s' 
+          then case m of 
+            MD -> bold (udFORM w)
+            HTML -> "<b>" ++ udFORM w ++ "</b>" 
+          else udFORM w) 
+  (udWords s)
 
 -- | Return the string to write in the CoNNL-U file corresponding to a list of 
 -- UD trees 
