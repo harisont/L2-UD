@@ -5,12 +5,14 @@ Tools for working with [L1-L2 parallel UD treebanks](https://aclanthology.org/W1
 (requires [the Haskell Tool Stack](https://docs.haskellstack.org/en/stable/))
 
 1. clone this repository
-2. move inside the corresponding folder and run
+2. move inside the corresponding folder and run[^1]
    ```
    stack install
    ```
-
-If you are trying to install L2-UD on Windows and the latter does not work, try following [these instructions](win.md).
+   This will install two executables: the complete CLI program, `l2-ud`, and a GUI for the match command, `l2-ud-gui`
+3. (optional) create a shortcut to start the GUI in one click:
+   - on Linux, copy [the desktop file](l2-ud-gui.desktop) wherever you have your desktop files (`~/.local/share/applications/` maybe?)
+   - on Windows, I guess we'll find out
 
 ## Usage
 
@@ -80,7 +82,7 @@ Available `OPTS`:
 - `--markdown`, `-m`: rather than sentence IDs, show similar examples found in the treebank a markdown report. 
 
 ## L1-L2 patterns
-An L1-L2 error pattern is a "parallel" [`gf-ud`](https://github.com/GrammaticalFramework/gf-ud) pattern[^1], i.e. essentially a pair of UD patterns.
+An L1-L2 error pattern is a "parallel" [`gf-ud`](https://github.com/GrammaticalFramework/gf-ud) pattern[^2], i.e. essentially a pair of UD patterns.
 For conciseness, instead of writing full pairs of patterns, L1-L2 patterns are written as single UD patterns with discrepancies enclosed in curly braces. For instance, the pattern
 
 ```
@@ -180,5 +182,5 @@ and
     abstract = "L1-L2 parallel dependency treebanks are UD-annotated corpora of learner sentences paired with correction hypotheses. Automatic morphosyntactical annotation has the potential to remove the need for explicit manual error tagging and improve interoperability, but makes it more challenging to locate grammatical errors in the resulting datasets. We therefore propose a novel method for automatically extracting morphosyntactical error patterns and perform a preliminary bilingual evaluation of its first implementation through a similar example retrieval task. The resulting pipeline is also available as a prototype CALL application.",
 }
 ```
-
-[^1]: The syntax of `gf-ud`'s pattern matching language is described extensively [here](https://github.com/GrammaticalFramework/gf-ud/blob/master/doc/patterns.md).
+[^1]: If you are on Windows and `stack install` does not work, it might be because of an external dependency, `curl`. Try following [these instructions](win.md).
+[^2]: The syntax of `gf-ud`'s pattern matching language is described extensively [here](https://github.com/GrammaticalFramework/gf-ud/blob/master/doc/patterns.md).
