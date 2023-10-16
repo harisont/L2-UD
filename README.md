@@ -10,6 +10,8 @@ Tools for working with [L1-L2 parallel UD treebanks](https://aclanthology.org/W1
    stack install
    ```
 
+If you are trying to install L2-UD on Windows and the latter does not work, try following [these instructions](win.md).
+
 ## Usage
 
 ### Querying parallel L1-L2 treebanks
