@@ -176,7 +176,9 @@ buildTable window l1Data l2Data = do
                     ("text-align", "left")
                   , ("padding", "8px")
                   , ("white-space", "pre-wrap")
-                  , ("background-color", if even n then "#dddddd" else "#ffffff")
+                  , ("background-color", if even n 
+                                          then "#dddddd" 
+                                          else "#ffffff")
                   ]
                 return div))
               row)
@@ -195,7 +197,8 @@ destroyTables window = do
   mapM_ delete tables 
 
 markWrong :: Element -> UI Element
-markWrong input = element input # set (UI.attr "bgcolor") ("red")
+markWrong input = element input # set UI.style [("background-color", red)]
+  where red = "#FF7E7E"
 
 markRight :: Element -> UI Element
-markRight input = element input # set (UI.attr "bgcolor") ("white")
+markRight input = element input # set UI.style [("background-color","white")]
