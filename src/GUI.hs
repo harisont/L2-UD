@@ -5,6 +5,8 @@ Stability   : experimental
 -}
 
 module GUI where 
+
+import Text.Read (readMaybe)
 import Data.Maybe
 import System.Directory
 import Graphics.UI.Threepenny.Core
@@ -79,60 +81,58 @@ setup window = do
 
     l1Exists <- liftIO $ doesFileExist l1Path
     l2Exists <- liftIO $ doesFileExist l2Path
-    let queryExists = not $ null queryTxt
-    let replacement = if null replacementTxt 
-                        then CHANGES [] 
-                        else read replacementTxt
+    let patterns = if null queryTxt
+                  then [(DEPREL_ "root",DEPREL_ "root")]
+                  else parseQuery fieldVals queryTxt
+    let mreplacement = if null replacementTxt 
+                        then Just $ CHANGES [] 
+                        else readMaybe replacementTxt
+    let validReplacement = isJust mreplacement
+    let validQuery = not $ null patterns
 
-    case (l1Exists,l2Exists) of
-      (False,False) -> do
-        markWrong l1Input
-        markWrong l2Input
-      (False,True) -> do
-        markWrong l1Input
-        markRight l2Input
-      (True,False) -> do
-        markWrong l2Input
-        markRight l1Input
-      (True,True) -> do
+    if and [l1Exists, l2Exists, validReplacement, validQuery]
+      then do
         markRight l1Input
         markRight l2Input
+        markRight queryInput
+        markRight replacementInput
         l1Sents <- liftIO $ parseUDFile l1Path
         l2Sents <- liftIO $ parseUDFile l2Path 
         let treebank = l1Sents `zip` l2Sents 
         let alignments = map align treebank
-        if queryExists 
-          then do 
-            let patterns = parseQuery fieldVals queryTxt
-            let matches = filter 
-                            (not . null . snd) 
-                            (treebank `zip` map (match patterns) alignments)
-            let matches' = map 
-                            (\(s,es) -> 
-                              (s,map (applyReplacement replacement) es))
-                            matches
-            let (l1Col,l2Col) = unzip $ concatMap 
-                  (\((s1,s2),ms) -> 
-                    map 
-                      (\(m1,m2) -> 
-                        let m1' = udTree2sentence (adjustRootAndPositions m1)
-                            m2' = udTree2sentence (adjustRootAndPositions m2)
-                        in ((if mode == Text 
-                            then highlin s1 (udTree2sentence m1) HTML
-                            else prReducedUDSentence "xxxxxxxx" m1', 
-                          if mode == Text 
-                            then highlin s2 (udTree2sentence m2) HTML
-                            else prReducedUDSentence "xxxxxxxx" m2')
-                        )) 
-                      ms) 
-                  matches'
-            table <- buildTable window l1Col l2Col 
-            destroyTables window
-            getBody window #+ [element table]
-          else do
-            table <- buildTable window (map lin l1Sents) (map lin l2Sents)
-            destroyTables window
-            getBody window #+ [element table]
+        let matches = filter 
+                        (not . null . snd) 
+                        (treebank `zip` map (match patterns) alignments)
+        let matches' = 
+              map 
+                (\(s,es) -> 
+                  (s,map (applyReplacement (fromJust $ mreplacement)) es)) 
+                matches
+        let (l1Col,l2Col) = unzip $ concatMap 
+              (\((s1,s2),ms) -> 
+                map 
+                  (\(m1,m2) -> 
+                    let m1' = udTree2sentence (adjustRootAndPositions m1)
+                        m2' = udTree2sentence (adjustRootAndPositions m2)
+                    in ((if mode == Text 
+                        then highlin s1 (udTree2sentence m1) HTML
+                        else prReducedUDSentence "xxxxxxxx" m1', 
+                      if mode == Text 
+                        then highlin s2 (udTree2sentence m2) HTML
+                        else prReducedUDSentence "xxxxxxxx" m2')
+                    )) 
+                  ms) 
+              matches'
+        table <- buildTable window l1Col l2Col 
+        destroyTables window
+        getBody window #+ [element table]
+      else do
+        if l1Exists then markRight l1Input else markWrong l1Input
+        if l2Exists then markRight l2Input else markWrong l2Input
+        if validQuery then markRight queryInput else markWrong queryInput
+        if validReplacement 
+          then markRight replacementInput 
+          else markWrong replacementInput
   where applyReplacement r (e1,e2) = 
           (fst $ replacementsWithUDPattern r e1,
            fst $ replacementsWithUDPattern r e2)
