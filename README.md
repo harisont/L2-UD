@@ -12,7 +12,7 @@ Tools for working with [L1-L2 parallel UD treebanks](https://aclanthology.org/W1
    This will install two executables: the complete CLI program, `l2-ud`, and a GUI for the match command, `l2-ud-gui`
 3. (optional) create a shortcut to start the GUI in one click:
    - on Linux, copy [the desktop file](l2-ud-gui.desktop) wherever you have your desktop files (`~/.local/share/applications/` maybe?)
-   - on Windows, I guess we'll find out
+   - on Windows, create a Desktop shortcut to [l2-ud-gui.ps1](l2-ud-gui.ps1), right click on it and make it exectuable on click by setting `Properties > Target` to `powershell.exe -ExecutionPolicy Bypass -File "WHATEVER-PATH-WAS-ALREADY-THERE"` (mind the quotes)
 
 ## Usage
 
