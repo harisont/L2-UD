@@ -5,6 +5,7 @@ packages:
 
 extra-deps:
 - multiset-0.3.4.3
+- MissingH-1.6.0.1
 - github: GrammaticalFramework/gf-core
   commit: 810640822dc3047af8fd9d7988e3f2423595c7b2
 - github: GrammaticalFramework/gf-ud
