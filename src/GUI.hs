@@ -127,7 +127,7 @@ setup window = do
                     )) 
                   ms) 
               matches'
-        table <- buildTable window l1Col l2Col 
+        table <- buildTable window l1Col l2Col mode
         destroyTables window
         getBody window #+ [element table]
       else do
@@ -167,8 +167,8 @@ buildMode mode checked = do
   element span # set children [radioButton, label]
   return span
       
-buildTable :: Window -> [String] -> [String] -> UI Element
-buildTable window l1Data l2Data = do 
+buildTable :: Window -> [String] -> [String] -> Mode -> UI Element
+buildTable window l1Data l2Data mode = do 
   cells <- mapM (mapM 
                   (return . (\htmlText -> do
                     div <- UI.div
@@ -177,6 +177,9 @@ buildTable window l1Data l2Data = do
                         ("text-align", "left")
                       , ("padding", "8px")
                       , ("white-space", "pre-wrap")
+                      , ("font-family", if mode == CoNNLU 
+                                          then "monospace, monospace"
+                                          else "inherit")
                       ]
                     return div)))
             (zipWith (\s1 s2 -> [s1,s2]) l1Data l2Data)
