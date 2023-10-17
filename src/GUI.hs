@@ -31,6 +31,12 @@ main = do
 setup :: Window -> UI ()
 setup window = do
   return window # set UI.title "L2-UD"
+  
+  globalStyle <- mkElement "style"
+  element globalStyle # 
+    set text (unlines [
+                ".table-row:nth-child(even) {background-color: #dddddd}"
+              , "body {font-family: arial, sans-serif}"])
 
   l1Input <- buildTextInput "path to L1 treebank" "path"
   element l1Input # set UI.style [("width","49.4%")]
@@ -44,10 +50,7 @@ setup window = do
 
   searchButton <- UI.button
   element searchButton # set UI.text "search"
-  element searchButton # set UI.style [
-      ("margin","1%")
-    , ("font-family", "arial, sans-serif")
-    ]
+  element searchButton # set UI.style [("margin","1%")]
 
   replacementInput <- buildTextInput 
                         "additional replacement rule (optional)"
@@ -60,7 +63,8 @@ setup window = do
   conlluMode <- buildMode "CoNNL-U" False
 
   getBody window #+ [
-                element l1Input
+                element globalStyle
+              , element l1Input
               , element l2Input
               , element queryInput 
               , element replacementInput
@@ -145,7 +149,6 @@ buildTextInput p c = do
   input <- UI.input
   element input # set (UI.attr "placeholder") p
   element input # set (UI.attr "class") c
-  element input # set UI.style [("font-family", "arial, sans-serif")]
   markRight input
   return input
 
@@ -162,33 +165,23 @@ buildMode mode checked = do
   element label # set UI.text mode
   element label # set UI.for mode
   element span # set children [radioButton, label]
-  element span # set UI.style [("font-family", "arial, sans-serif")]
   return span
       
 buildTable :: Window -> [String] -> [String] -> UI Element
 buildTable window l1Data l2Data = do 
-  cells <- mapM 
-            (\(n,row) -> mapM 
-              (return . (\htmlText -> do
-                div <- UI.div
-                element div # set html htmlText
-                element div # set UI.style [
-                    ("text-align", "left")
-                  , ("padding", "8px")
-                  , ("white-space", "pre-wrap")
-                  , ("background-color", if even n 
-                                          then "#dddddd" 
-                                          else "#ffffff")
-                  ]
-                return div))
-              row)
-            ([1..] `zip` zipWith (\s1 s2 -> [s1,s2]) l1Data l2Data)
+  cells <- mapM (mapM 
+                  (return . (\htmlText -> do
+                    div <- UI.div
+                    element div # set html htmlText
+                    element div # set UI.style [
+                        ("text-align", "left")
+                      , ("padding", "8px")
+                      , ("white-space", "pre-wrap")
+                      ]
+                    return div)))
+            (zipWith (\s1 s2 -> [s1,s2]) l1Data l2Data)
   table <- UI.grid cells
-  element table # set UI.style [
-      ("width","100%")
-    , ("table-layout","fixed")
-    , ("font-family", "arial, sans-serif")
-    ]
+  element table # set UI.style [("width","100%"), ("table-layout","fixed")]
   return table
 
 destroyTables :: Window -> UI ()
