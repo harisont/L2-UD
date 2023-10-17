@@ -48,9 +48,9 @@ setup window = do
                   "query"
   element queryInput # set UI.style [("width","99.2%")]
 
-  searchButton <- UI.button
-  element searchButton # set UI.text "search"
-  element searchButton # set UI.style [("margin","1%")]
+  searchButton <- buildButton "search"
+  exportButton <- buildButton "export"
+  hide exportButton
 
   replacementInput <- buildTextInput 
                         "additional replacement rule (optional)"
@@ -72,9 +72,11 @@ setup window = do
               , element textMode
               , element conlluMode
               , element searchButton
+              , element exportButton
                 ] 
   
   on UI.click searchButton $ const $ do
+    hide exportButton
     l1Path <- get value l1Input 
     l2Path <- get value l2Input
     queryTxt <- get value queryInput
@@ -127,8 +129,9 @@ setup window = do
                     )) 
                   ms) 
               matches'
-        table <- buildTable window l1Col l2Col mode
         destroyTables window
+        table <- buildTable window l1Col l2Col mode
+        unhide exportButton
         getBody window #+ [element table]
       else do
         if l1Exists then markRight l1Input else markWrong l1Input
@@ -151,6 +154,14 @@ buildTextInput p c = do
   element input # set (UI.attr "class") c
   markRight input
   return input
+
+buildButton :: String -> UI Element
+buildButton txt = do  
+  button <- UI.button
+  element button # set UI.text txt
+  element button # set UI.style [("margin","1%")]
+  element button # set UI.id_ txt
+  return button
 
 buildMode :: String -> Bool -> UI Element
 buildMode mode checked = do
@@ -198,3 +209,9 @@ markWrong input = element input # set UI.style [("background-color", red)]
 
 markRight :: Element -> UI Element
 markRight input = element input # set UI.style [("background-color","white")]
+
+hide :: Element -> UI Element
+hide el = element el # set UI.style [("visibility", "hidden")]
+
+unhide :: Element -> UI Element
+unhide el = element el # set UI.style [("visibility", "visible")]
