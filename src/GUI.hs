@@ -53,8 +53,8 @@ setup window = do
   element queryInput # set UI.style [("width","99.2%")]
 
   searchButton <- buildButton "search"
-  exportButton <- buildButton "export"
-  hide exportButton
+  --exportButton <- buildButton "export"
+  --hide exportButton
 
   replacementInput <- buildTextInput 
                         "additional replacement rule (optional)"
@@ -76,11 +76,11 @@ setup window = do
               , element textMode
               , element conlluMode
               , element searchButton
-              , element exportButton
+              --, element exportButton
                 ] 
   
   on UI.click searchButton $ const $ do
-    hide exportButton
+    --hide exportButton
     l1Path <- get value l1Input 
     l2Path <- get value l2Input
     queryTxt <- get value queryInput
@@ -138,7 +138,7 @@ setup window = do
               matches'
         destroyTables window
         table <- buildTable window l1Col l2Col mode
-        unhide exportButton
+        --unhide exportButton
         getBody window #+ [element table]
       else do
         if l1Exists then markRight l1Input else markWrong l1Input
