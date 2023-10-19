@@ -40,7 +40,14 @@ setup window = do
   element globalStyle # 
     set text (unlines [
                 ".table-row:nth-child(even) {background-color: #dddddd}"
-              , "body {font-family: arial, sans-serif}"])
+              , "body {font-family: arial, sans-serif}"
+              , ".unselectable {"
+              , "  -webkit-touch-callout: none;"
+              , "  -webkit-user-select: none;"
+              , "  -khtml-user-select: none;"
+              , "  -moz-user-select: none;"
+              , "  -ms-user-select: none;"
+              , "  user-select: none;}"])
 
   l1Input <- buildTextInput "path to L1 treebank" "path"
   element l1Input # set UI.style [("width","49.4%")]
@@ -62,6 +69,7 @@ setup window = do
   element replacementInput # set UI.style [("width","99.2%")]
 
   modeSpan <- string "Mode: "
+  element modeSpan # set UI.class_ "unselectable"
   
   textMode <- buildMode "text" True
   conlluMode <- buildMode "CoNNL-U" False
@@ -129,10 +137,10 @@ setup window = do
                         m2' = udTree2sentence (adjustRootAndPositions m2)
                     in ((if mode == Text 
                         then highlin s1 (udTree2sentence m1) HTML
-                        else prt m1', 
+                        else (prt m1') ++ "\n", 
                       if mode == Text 
                         then highlin s2 (udTree2sentence m2) HTML
-                        else prt m2')
+                        else (prt m2') ++ "\n")
                     )) 
                   ms) 
               matches'
@@ -183,6 +191,7 @@ buildMode mode checked = do
   element label # set UI.text mode
   element label # set UI.for mode
   element span # set children [radioButton, label]
+  element span # set UI.class_ "unselectable"
   return span
       
 buildTable :: Window -> [String] -> [String] -> Mode -> UI Element
