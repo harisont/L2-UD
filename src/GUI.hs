@@ -129,10 +129,10 @@ setup window = do
                         m2' = udTree2sentence (adjustRootAndPositions m2)
                     in ((if mode == Text 
                         then highlin s1 (udTree2sentence m1) HTML
-                        else prReducedUDSentence "xxxxxxxx" m1', 
+                        else prt m1', 
                       if mode == Text 
                         then highlin s2 (udTree2sentence m2) HTML
-                        else prReducedUDSentence "xxxxxxxx" m2')
+                        else prt m2')
                     )) 
                   ms) 
               matches'
