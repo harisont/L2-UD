@@ -1,5 +1,9 @@
 module Main where
 
+import Prelude hiding (readFile)
+import Data.ByteString (readFile)
+import Data.Text (unpack)
+import Data.Text.Encoding (decodeUtf8)
 import Data.Maybe
 import Data.Bifunctor
 import System.FilePath
@@ -27,8 +31,10 @@ main = do
   if Help `elem` flags || length args < 3 || head args `notElem` cmds
     then putStrLn $ usageInfo usage opts
     else do
-      s1s <- parseUDFile (args !! 1)
-      s2s <- parseUDFile (args !! 2)
+      t1 <- readFile (args !! 1)
+      t2 <- readFile (args !! 2)
+      let s1s = (parseUDText . unpack . decodeUtf8) t1
+      let s2s = (parseUDText . unpack . decodeUtf8) t2
       let ids = map sentId s1s `zip` map sentId s2s
       let s12s = s1s `zip` s2s
       -- align sentences
@@ -41,7 +47,7 @@ main = do
           qs <- if length args == 4 && isQueryFile
             then do
               content <- readFile $ args !! 3
-              return $ lines content
+              return $ (lines. unpack . decodeUtf8) content
             else return $ drop 3 args
           -- convert query strings into error patterns
           let ps = rmDuplicates $ concatMap (parseQuery fieldVals) qs
@@ -53,7 +59,7 @@ main = do
               if isFileReplacement 
                 then do
                   content <- readFile rule
-                  return $ read content
+                  return $ (read . unpack . decodeUtf8) content
                 else return $ read rule  
             _ -> return nullReplacement
           let ms = filter (not . null . snd) (s12s `zip` map (match ps) as)

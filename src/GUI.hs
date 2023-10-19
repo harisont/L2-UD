@@ -6,11 +6,11 @@ Stability   : experimental
 
 module GUI where 
 
-import Text.Read (readMaybe)
 import Prelude hiding (readFile)
 import Data.ByteString (readFile)
 import Data.Text (unpack)
-import Data.Text.Encoding
+import Data.Text.Encoding (decodeUtf8)
+import Text.Read (readMaybe)
 import Data.Maybe
 import System.Directory
 import Graphics.UI.Threepenny.Core
