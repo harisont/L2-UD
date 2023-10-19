@@ -7,6 +7,10 @@ Stability   : experimental
 module GUI where 
 
 import Text.Read (readMaybe)
+import Prelude hiding (readFile)
+import Data.ByteString (readFile)
+import Data.Text (unpack)
+import Data.Text.Encoding
 import Data.Maybe
 import System.Directory
 import Graphics.UI.Threepenny.Core
@@ -102,8 +106,11 @@ setup window = do
         markRight l2Input
         markRight queryInput
         markRight replacementInput
-        l1Sents <- liftIO $ parseUDFile l1Path
-        l2Sents <- liftIO $ parseUDFile l2Path 
+        l1Text <- liftIO $ readFile l1Path
+        l2Text <- liftIO $ readFile l2Path 
+        let l1Sents = (parseUDText . unpack . decodeUtf8) l1Text
+        let l2Sents = (parseUDText . unpack . decodeUtf8) l2Text
+
         let treebank = l1Sents `zip` l2Sents 
         let alignments = map align treebank
         let matches = filter 
@@ -202,6 +209,8 @@ destroyTables :: Window -> UI ()
 destroyTables window = do
   tables <- getElementsByClassName window "table"
   mapM_ delete tables 
+
+--  TODO: refactor (should be UI.Element -> UI Element)
 
 markWrong :: Element -> UI Element
 markWrong input = element input # set UI.style [("background-color", red)]

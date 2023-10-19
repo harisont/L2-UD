@@ -63,6 +63,8 @@ executable l2-ud-gui
         regex-posix,
         MissingH,
         threepenny-gui,
+        bytestring,
+        text,
         gf-ud,
         concept-alignment,
         hs-md
