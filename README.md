@@ -2,19 +2,20 @@
 Tools for working with [L1-L2 parallel UD treebanks](https://aclanthology.org/W17-6306.pdf).
 
 ## Installation
-(requires [the Haskell Tool Stack](https://docs.haskellstack.org/en/stable/))
+(requires [the Haskell Tool Stack](https://docs.haskellstack.org/en/stable/) and [libcurl](https://curl.se/libcurl/)).
 
 1. clone this repository
 2. move inside the corresponding folder and run[^1]
    ```
    stack install
    ```
-   This will install two executables: the complete CLI program, `l2-ud`, and a GUI for the match command, `l2-ud-gui`
+   This will compile and install two executables: the complete CLI program, `l2-ud`, and a GUI for the match command, `l2-ud-gui`
 3. (optional) create a shortcut to start the GUI in one click:
    - on Linux, copy [the desktop file](l2-ud-gui.desktop) wherever you have your desktop files (`~/.local/share/applications/` maybe?)
-   - on Windows, create a Desktop shortcut to [l2-ud-gui.ps1](l2-ud-gui.ps1), right click on it and make it exectuable on click by setting `Properties > Target` to `powershell.exe -ExecutionPolicy Bypass -File "WHATEVER-PATH-WAS-ALREADY-THERE"` (mind the quotes)
+   - on Windows, create a Desktop shortcut to [l2-ud-gui.ps1](l2-ud-gui.ps1), right click on it and make it executable on click by setting `Properties > Target` to `powershell.exe -ExecutionPolicy Bypass -File "WHATEVER-PATH-WAS-ALREADY-THERE"` (mind the quotes)
 
 ## Usage
+(these instructions are mostly for the L2-UD CLI tool. If you are looking into using the GUI for `l2-ud match`, a step-by-step tutorial is available [here](GUI.md))
 
 ### Querying parallel L1-L2 treebanks
 To return the set of parallel L1-L2 sentences matching an error pattern, run
