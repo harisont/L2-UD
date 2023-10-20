@@ -76,11 +76,11 @@ This produces the following results:
 ![bilingual query](img/bilingual_query.png)
 
 Note how the second hit here is a false positive, due to the fact that "are" in the clause "there are already..." is also a direct dependent of the main lexical verb "dropped".
-This is unfortunate, but unavoidable given how conjunctions are treated in UD.
+This is unfortunate, but difficult to avoid given how conjuncts are treated in UD.
 
 The basic query language ("UD patterns") is thoroughly described [here](https://github.com/GrammaticalFramework/gf-ud/blob/master/doc/patterns.md), while the extended version for parallel (bilingual) queries (`{X -> Y}` syntax) is documented [here](https://github.com/harisont/L2-UD#l1-l2-patterns).
 
-## Adding a replacement rule
+### Adding a replacement rule
 The last input field can be used to specify a _replacement rule_ to be applied identically to both languages.
 This is useful to better highlight the relevant part of each query result.
 
@@ -96,12 +96,12 @@ uses dependency relations to isolate verb constructions of max depth 2, thus pro
 
 ![replacement rule](img/replacement_rule.png)
 
-## CoNNL-U mode
+### CoNNL-U mode
 Switching to CoNNL-U mode allows to inspect the CoNNL-U (sub)trees __corresponding to bold text in the default text mode__:
 
 ![CoNNL-U mode](img/conllu.png)
 
-## Saving the search results
+### Saving the search results
 With most browsers, selecting the entire page and copying the selection to a text file produces a valid CoNNL-U (or text, in text mode) file[^1] where L1 and L2 trees are interleaved, as in:
 
 ```
@@ -134,5 +134,12 @@ The trees representend in such files can be visualized, for instance with [CoNNL
 - make it possible to download search results as two separate CoNNL-U files, to make it easy to use results as inputs for further querying
 - better file input, if I figure out how to use Electron
 - some kind of feedback when the query is valid but there are no results
+
+## What's happening under the hood?
+This is a GUI for [L2-UD's `match` command](https://github.com/harisont/L2-UD#querying-parallel-l1-l2-treebanks), which allows running parallel queries on UD treebanks by combining [UD-based subtree alignment](https://github.com/harisont/concept-alignment) with [UD tree pattern matching](https://github.com/GrammaticalFramework/gf-ud/blob/master/doc/patterns.md).
+
+It uses a slightly modified, 2L or "bilingual" version of the main L2-UD tool (where "L2" stands for "second language"), optimized for comparing different languages rather than learner language with correction hypotheses.
+
+The GUI is implemented [threepenny-gui](https://hackage.haskell.org/package/threepenny-gui) and will possibly evolve in a proper web application.
 
 [^1]: technical note: this works because all extracted subtrees are adjusted so that they have a root node and valid (sequential) IDs.   
