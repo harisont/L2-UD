@@ -167,6 +167,7 @@ buildTextInput p c = do
   input <- UI.input
   element input # set (UI.attr "placeholder") p
   element input # set (UI.attr "class") c
+  element input # set UI.class_ "unselectable"
   markRight input
   return input
 
@@ -176,6 +177,7 @@ buildButton txt = do
   element button # set UI.text txt
   element button # set UI.style [("margin","1%")]
   element button # set UI.id_ txt
+  element button # set UI.class_ "unselectable"
   return button
 
 buildMode :: String -> Bool -> UI Element
