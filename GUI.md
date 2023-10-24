@@ -62,8 +62,8 @@ TREE_ (FEATS_ "VerbForm=Sup") [FORM "har"]
 
 It is then very easy to modify the query for other structurally similar tenses:
 
-- `TREE_ (FEATS_ "VerbForm=Sup") [FORM "hade"]` (plusperfect)
-- `TREE_ (FEATS_ "VerbForm=Sup") [FORM "ha"]` (Márton, how is this called?)
+- `TREE_ (FEATS_ "VerbForm=Sup") [FORM "hade"]` (pluperfect)
+- `TREE_ (FEATS_ "VerbForm=Sup") [FORM "ha"]` (perfect infinitive)
 
 Queries can also be _parallel_ or _bilingual_. For instance, we can use the following pattern to serach for sentences where a Swedish present perfect corresponds to a passive present tense in English:
 
