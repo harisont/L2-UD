@@ -34,8 +34,8 @@ main = do
 
 setup :: Window -> UI ()
 setup window = do
-  let path1 = "tmp1.conllu"
-  let path2 = "tmp2.conllu"
+  let path1 = "tmp1"
+  let path2 = "tmp2"
   uri1 <- loadFile "text/plain" path1
   uri2 <- loadFile "text/plain" path2
 
@@ -67,8 +67,8 @@ setup window = do
   searchButton <- buildButton "search"
   downloadsSpan <- UI.span
   element downloadsSpan # set html (unlines [
-      "<a href=\"" ++ uri1 ++ "\" download>download L1</a>"
-    , "<a href=\"" ++ uri2 ++ "\" download>download L2</a>"])
+      "<a href=\"" ++ uri1 ++ "\" download>save L1</a>"
+    , "<a href=\"" ++ uri2 ++ "\" download>save L2</a>"])
   element downloadsSpan # set UI.style [("margin","1%")]
   element downloadsSpan # set UI.class_ "unselectable"
   hide downloadsSpan
@@ -156,8 +156,8 @@ setup window = do
               matches'
         destroyTables window
         table <- buildTable window l1Col l2Col mode
-        liftIO $ writeFile path1 "test 1" -- TODO: write actual content
-        liftIO $ writeFile path2 "test 2" -- TODO: write actual content
+        liftIO $ writeFile path1 (unlines l1Col)
+        liftIO $ writeFile path2 (unlines l2Col)
         unhide downloadsSpan
         getBody window #+ [element table]
       else do

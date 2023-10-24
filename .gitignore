@@ -7,6 +7,8 @@ data/
 # Project-specific stuff
 out/*
 *.tmp
+tmp1
+tmp2
 
 # Stuff that should stay in dev
 results/*
