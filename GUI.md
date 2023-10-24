@@ -102,7 +102,14 @@ Switching to CoNNL-U mode allows to inspect the CoNNL-U (sub)trees __correspondi
 ![CoNNL-U mode](img/conllu.png)
 
 ### Saving the search results
-With most browsers, selecting the entire page and copying the selection to a text file produces a valid CoNNL-U (or text, in text mode) file[^1] where L1 and L2 trees are interleaved, as in:
+After running a query, two dowload links will appear next to the search button:
+
+![saving](img/saving.png)
+
+This allows saving search results as two separate CoNNL-U files that can be used as a source treebank for more refined queries (or, if in text mode, as two separate HTML files).
+Upon saving the files, the correct extension (`.conllu` or `.html`) is to be added manually upon choosing the file name.
+
+Alternatively selecting the entire page and copying the selection to a text file produces a valid CoNNL-U (or text, in text mode) file[^1] where L1 and L2 trees are interleaved, as in:
 
 ```
 1	has	have	AUX	VBZ	Mood=Ind|Number=Sing|Person=3|Tense=Pres|VerbForm=Fin	3	aux	5:aux	ADJUSTED=True
@@ -127,11 +134,12 @@ With most browsers, selecting the entire page and copying the selection to a tex
 ...
 ```
 
-The trees representend in such files can be visualized, for instance with [CoNNL-U viewer](https://universaldependencies.org/conllu_viewer.html).
+This should work in most browsers.
+
+Trees stored in CoNNL-U files can be visualized, for instance, with [CoNNL-U viewer](https://universaldependencies.org/conllu_viewer.html).
 
 ## Planned features
 - render CoNNL-U as trees directly in the application
-- make it possible to download search results as two separate CoNNL-U files, to make it easy to use results as inputs for further querying
 - better file input, if I figure out how to use Electron
 - some kind of feedback when the query is valid but there are no results
 
