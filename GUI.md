@@ -141,7 +141,6 @@ Trees stored in CoNNL-U files can be visualized, for instance, with [CoNNL-U vie
 ## Planned features
 - render CoNNL-U as trees directly in the application
 - better file input, if I figure out how to use Electron
-- some kind of feedback when the query is valid but there are no results
 
 ## What's happening under the hood?
 This is a GUI for [L2-UD's `match` command](https://github.com/harisont/L2-UD#querying-parallel-l1-l2-treebanks), which allows running parallel queries on UD treebanks by combining [UD-based subtree alignment](https://github.com/harisont/concept-alignment) with [UD tree pattern matching](https://github.com/GrammaticalFramework/gf-ud/blob/master/doc/patterns.md).
