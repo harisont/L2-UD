@@ -34,6 +34,11 @@ main = do
 
 setup :: Window -> UI ()
 setup window = do
+  let path1 = "tmp1.conllu"
+  let path2 = "tmp2.conllu"
+  uri1 <- loadFile "text/plain" path1
+  uri2 <- loadFile "text/plain" path2
+
   return window # set UI.title "L2-UD"
   
   globalStyle <- mkElement "style"
@@ -60,8 +65,13 @@ setup window = do
   element queryInput # set UI.style [("width","99.2%")]
 
   searchButton <- buildButton "search"
-  exportButton <- buildButton "export"
-  hide exportButton
+  downloadsSpan <- UI.span
+  element downloadsSpan # set html (unlines [
+      "<a href=\"" ++ uri1 ++ "\" download>download L1</a>"
+    , "<a href=\"" ++ uri2 ++ "\" download>download L2</a>"])
+  element downloadsSpan # set UI.style [("margin","1%")]
+  element downloadsSpan # set UI.class_ "unselectable"
+  hide downloadsSpan
 
   replacementInput <- buildTextInput 
                         "additional replacement rule (optional)"
@@ -84,11 +94,11 @@ setup window = do
               , element textMode
               , element conlluMode
               , element searchButton
-              , element exportButton
+              , element downloadsSpan
                 ] 
   
   on UI.click searchButton $ const $ do
-    hide exportButton
+    hide downloadsSpan
     l1Path <- get value l1Input 
     l2Path <- get value l2Input
     queryTxt <- get value queryInput
@@ -146,7 +156,9 @@ setup window = do
               matches'
         destroyTables window
         table <- buildTable window l1Col l2Col mode
-        unhide exportButton
+        liftIO $ writeFile path1 "test 1" -- TODO: write actual content
+        liftIO $ writeFile path2 "test 2" -- TODO: write actual content
+        unhide downloadsSpan
         getBody window #+ [element table]
       else do
         if l1Exists then markRight l1Input else markWrong l1Input
