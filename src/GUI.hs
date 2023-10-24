@@ -6,10 +6,10 @@ Stability   : experimental
 
 module GUI where 
 
-import Prelude hiding (readFile)
-import Data.ByteString (readFile)
-import Data.Text (unpack)
-import Data.Text.Encoding (decodeUtf8)
+import Prelude hiding (readFile, writeFile)
+import Data.ByteString (readFile, writeFile)
+import Data.Text (pack, unpack)
+import Data.Text.Encoding (encodeUtf8, decodeUtf8)
 import Text.Read (readMaybe)
 import Data.Maybe
 import System.Directory
@@ -162,8 +162,8 @@ setup window = do
               matches'
         destroyTables window
         table <- buildTable window l1Col l2Col mode
-        liftIO $ writeFile path1 (unlines l1Col)
-        liftIO $ writeFile path2 (unlines l2Col)
+        liftIO $ writeFile path1 (encodeUtf8 $ pack $ unlines l1Col)
+        liftIO $ writeFile path2 (encodeUtf8 $ pack $ unlines l2Col)
         unhide downloadsSpan
         element nHitsSpan # set text ((show $ length l1Col) ++ " hits")
         unhide nHitsSpan
