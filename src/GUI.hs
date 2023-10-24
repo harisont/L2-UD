@@ -84,6 +84,10 @@ setup window = do
   textMode <- buildMode "text" True
   conlluMode <- buildMode "CoNNL-U" False
 
+  nHitsSpan <- string "0 hits"
+  element nHitsSpan # set UI.class_ "unselectable"
+  hide nHitsSpan
+
   getBody window #+ [
                 element globalStyle
               , element l1Input
@@ -94,11 +98,13 @@ setup window = do
               , element textMode
               , element conlluMode
               , element searchButton
+              , element nHitsSpan
               , element downloadsSpan
                 ] 
   
   on UI.click searchButton $ const $ do
     hide downloadsSpan
+    hide nHitsSpan
     l1Path <- get value l1Input 
     l2Path <- get value l2Input
     queryTxt <- get value queryInput
@@ -159,7 +165,9 @@ setup window = do
         liftIO $ writeFile path1 (unlines l1Col)
         liftIO $ writeFile path2 (unlines l2Col)
         unhide downloadsSpan
-        getBody window #+ [element table]
+        element nHitsSpan # set text ((show $ length l1Col) ++ " hits")
+        unhide nHitsSpan
+        getBody window #+ [element table, element nHitsSpan]
       else do
         if l1Exists then markRight l1Input else markWrong l1Input
         if l2Exists then markRight l2Input else markWrong l2Input
