@@ -1,0 +1,277 @@
+1	è	essere	AUX	VBC	Mood=Ind|Number=Sing|Person=3|Tense=Pres|Voice=Act	2	aux:pass	_	ADJUSTED=True
+2	registrata	registrare	VERB	VBN	Gender=Fem|Number=Sing|Tense=Past	0	root	_	ADJUSTED=True|ORIG_LABEL=root
+
+
+1	Abbiamo	avere	AUX	VBC	Mood=Ind|Number=Plur|Person=1|Tense=Pres|Voice=Act	2	aux	_	ADJUSTED=True
+2	chiesto	chiedere	VERB	VBN	Tense=Past	0	root	_	ADJUSTED=True|ORIG_LABEL=root
+
+
+1	insinuano	insinuare	VERB	VBC	Mood=Ind|Number=Plur|Person=3|Tense=Pres|Voice=Act	0	root	_	ADJUSTED=True|ORIG_LABEL=root
+
+
+1	abbiano	avere	AUX	VBC	Mood=Sub|Number=Plur|Person=3|Tense=Pres|Voice=Act	2	aux	_	ADJUSTED=True
+2	trovato	trovare	VERB	VBN	Tense=Past	0	root	_	ADJUSTED=True|ORIG_LABEL=csubj
+
+
+1	è	essere	AUX	VBC	Mood=Ind|Number=Sing|Person=3|Tense=Pres|Voice=Pass	3	aux:pass	_	ADJUSTED=True
+2	stato	essere	AUX	VBN	Gender=Masc|Number=Sing|Tense=Past	3	aux:pass	_	ADJUSTED=True
+3	certificato	certificato	VERB	VBN	Gender=Masc|Number=Sing|Tense=Past	0	root	_	ADJUSTED=True|ORIG_LABEL=root|SpaceAfter=No
+
+
+1	è	essere	AUX	VBC	Mood=Ind|Number=Sing|Person=3|Tense=Pres|Voice=Pass	3	aux:pass	_	ADJUSTED=True
+2	stata	essere	AUX	VBN	Gender=Fem|Number=Sing|Tense=Past	3	aux:pass	_	ADJUSTED=True
+3	caratterizzata	caratterizzare	VERB	VBN	Gender=Fem|Number=Sing|Tense=Past	0	root	_	ADJUSTED=True|ORIG_LABEL=root
+
+
+1	ha	avere	AUX	VBC	Mood=Ind|Number=Sing|Person=3|Tense=Pres|Voice=Act	2	aux	_	ADJUSTED=True
+2	optato	optare	VERB	VBN	Tense=Past	0	root	_	ADJUSTED=True|ORIG_LABEL=root
+
+
+1	è	essere	AUX	VBC	Mood=Ind|Number=Sing|Person=3|Tense=Pres|Voice=Act	3	aux	_	ADJUSTED=True
+2	stato	essere	AUX	VBN	Gender=Masc|Number=Sing|Tense=Past	3	aux	_	ADJUSTED=True
+3	focalizzato	focalizzare	VERB	VBN	Gender=Masc|Number=Sing|Tense=Past	0	root	_	ADJUSTED=True|ORIG_LABEL=root
+
+
+1	ha	avere	AUX	VBC	Mood=Ind|Number=Sing|Person=3|Tense=Pres|Voice=Act	2	aux	_	ADJUSTED=True
+2	fatto	fare	VERB	VBN	Tense=Past	0	root	_	ADJUSTED=True|ORIG_LABEL=root
+
+
+1	hanno	avere	AUX	VBC	Mood=Ind|Number=Plur|Person=3|Tense=Pres|Voice=Act	2	aux	_	ADJUSTED=True
+2	indagato	indagare	VERB	VBN	Tense=Past	0	root	_	ADJUSTED=True|ORIG_LABEL=root
+
+
+1	ha	avere	AUX	VBC	Mood=Ind|Number=Sing|Person=3|Tense=Pres|Voice=Act	2	aux	_	ADJUSTED=True
+2	ricevuto	ricevere	VERB	VBN	Tense=Past	0	root	_	ADJUSTED=True|ORIG_LABEL=root
+
+
+1	consolazione	consolazione	NOUN	NN	Gender=Fem|Number=Sing	0	root	_	ADJUSTED=True|ORIG_LABEL=ccomp
+2	è	essere	AUX	VBC	Mood=Ind|Number=Sing|Person=3|Tense=Pres|Voice=Act	1	aux	_	ADJUSTED=True
+3	stata	essere	AUX	VBN	Gender=Fem|Number=Sing|Tense=Past	1	cop	_	ADJUSTED=True
+
+
+1	hanno	avere	AUX	VBC	Mood=Ind|Number=Plur|Person=3|Tense=Pres|Voice=Act	2	aux	_	ADJUSTED=True
+2	incontrato	incontrare	VERB	VBN	Tense=Past	0	root	_	ADJUSTED=True|ORIG_LABEL=root
+
+
+1	bisogna	bisognare	VERB	VBC	Mood=Ind|Number=Sing|Person=3|Tense=Pres|Voice=Act	0	root	_	ADJUSTED=True|ORIG_LABEL=ccomp
+
+
+1	sono	essere	AUX	VBC	Mood=Ind|Number=Sing|Person=1|Tense=Pres|Voice=Act	3	aux	_	ADJUSTED=True
+2	stato	essere	AUX	VBN	Gender=Masc|Number=Sing|Tense=Past	3	cop	_	ADJUSTED=True
+3	sveglio	sveglio	ADJ	JJ	Gender=Masc|Number=Sing	0	root	_	ADJUSTED=True|ORIG_LABEL=root
+
+
+1	ha	avere	AUX	VBC	Mood=Ind|Number=Sing|Person=3|Tense=Pres|Voice=Act	2	aux	_	ADJUSTED=True
+2	scritto	scrivere	VERB	VBN	Tense=Past	0	root	_	ADJUSTED=True|ORIG_LABEL=acl:relcl
+
+
+1	ha	avere	AUX	VBC	Mood=Ind|Number=Sing|Person=3|Tense=Pres|Voice=Act	2	aux	_	ADJUSTED=True
+2	iniziato	iniziare	VERB	VBN	Tense=Past	0	root	_	ADJUSTED=True|ORIG_LABEL=root
+
+
+1	ho	avere	AUX	VBC	Mood=Ind|Number=Sing|Person=1|Tense=Pres|Voice=Act	2	aux	_	ADJUSTED=True
+2	conosciuto	conoscere	VERB	VBN	Tense=Past	0	root	_	ADJUSTED=True|ORIG_LABEL=parataxis
+
+
+1	è	essere	AUX	VBC	Mood=Ind|Number=Sing|Person=3|Tense=Pres|Voice=Act	2	aux	_	ADJUSTED=True
+2	proclamato	proclamare	VERB	VBN	Gender=Masc|Number=Sing|Tense=Past	0	root	_	ADJUSTED=True|ORIG_LABEL=root
+
+
+1	ha	avere	AUX	VBC	Mood=Ind|Number=Sing|Person=3|Tense=Pres|Voice=Act	2	aux	_	ADJUSTED=True
+2	fatto	fare	VERB	VBN	Tense=Past	0	root	_	ADJUSTED=True|ORIG_LABEL=root
+
+
+1	sono	essere	AUX	VBC	Mood=Ind|Number=Plur|Person=3|Tense=Pres|Voice=Pass	3	aux	_	ADJUSTED=True
+2	state	essere	AUX	VBN	Gender=Fem|Number=Plur|Tense=Past	3	aux:pass	_	ADJUSTED=True
+3	introdotte	introdurre	VERB	VBN	Gender=Fem|Number=Plur|Tense=Past	0	root	_	ADJUSTED=True|ORIG_LABEL=root
+
+
+1	ha	avere	AUX	VBC	Mood=Ind|Number=Sing|Person=3|Tense=Pres|Voice=Act	2	aux	_	ADJUSTED=True
+2	affermato	affermare	VERB	VBN	Tense=Past	0	root	_	ADJUSTED=True|ORIG_LABEL=root
+
+
+1	abbiamo	avere	AUX	VBC	Mood=Ind|Number=Plur|Person=1|Tense=Pres|Voice=Act	2	aux	_	ADJUSTED=True
+2	perso	perso	VERB	VBN	Tense=Past	0	root	_	ADJUSTED=True|ORIG_LABEL=advcl
+
+
+1	ha	avere	AUX	VBC	Mood=Ind|Number=Sing|Person=3|Tense=Pres|Voice=Act	2	aux	_	ADJUSTED=True
+2	prelevato	prelevare	VERB	VBN	Tense=Past	0	root	_	ADJUSTED=True|ORIG_LABEL=conj
+
+
+1	ha	avere	AUX	VBC	Mood=Ind|Number=Sing|Person=3|Tense=Pres|Voice=Act	2	aux	_	ADJUSTED=True
+2	esposto	esporre	VERB	VBN	Tense=Past	0	root	_	ADJUSTED=True|ORIG_LABEL=root
+
+
+1	ha	avere	AUX	VBC	Mood=Ind|Number=Sing|Person=3|Tense=Pres|Voice=Act	2	aux	_	ADJUSTED=True
+2	impedito	impedire	VERB	VBN	Tense=Past	0	root	_	ADJUSTED=True|ORIG_LABEL=root
+
+
+1	hanno	avere	AUX	VBC	Mood=Ind|Number=Plur|Person=3|Tense=Pres|Voice=Act	2	aux	_	ADJUSTED=True
+2	beneficiato	beneficiare	VERB	VBN	Tense=Past	0	root	_	ADJUSTED=True|ORIG_LABEL=ccomp
+
+
+1	sono	essere	AUX	VBC	Mood=Ind|Number=Plur|Person=3|Tense=Pres|Voice=Pass	3	aux	_	ADJUSTED=True
+2	stati	essere	AUX	VBN	Gender=Masc|Number=Plur|Tense=Past	3	aux:pass	_	ADJUSTED=True
+3	feriti	feriti	VERB	VBN	Gender=Masc|Number=Plur|Tense=Past	0	root	_	ADJUSTED=True|ORIG_LABEL=root
+
+
+1	ha	avere	AUX	VBC	Mood=Ind|Number=Sing|Person=3|Tense=Pres|Voice=Act	2	aux	_	ADJUSTED=True
+2	fatto	fare	VERB	VBN	Tense=Past	0	root	_	ADJUSTED=True|ORIG_LABEL=root
+
+
+1	è	essere	AUX	VBC	Mood=Ind|Number=Sing|Person=3|Tense=Pres|Voice=Act	2	aux	_	ADJUSTED=True
+2	diventato	diventare	VERB	VBN	Gender=Masc|Number=Sing|Tense=Past	0	root	_	ADJUSTED=True|ORIG_LABEL=root
+
+
+1	hanno	avere	AUX	VBC	Mood=Ind|Number=Plur|Person=3|Tense=Pres|Voice=Act	2	aux	_	ADJUSTED=True
+2	votato	votare	VERB	VBN	Tense=Past	0	root	_	ADJUSTED=True|ORIG_LABEL=root
+
+
+1	devono	dovere	AUX	VBC	Mood=Ind|Number=Plur|Person=3|Tense=Pres|Voice=Act	2	aux	_	ADJUSTED=True
+2	decidere	decidere	VERB	VB	Voice=Act	0	root	_	ADJUSTED=True|ORIG_LABEL=root
+
+
+1	hanno	avere	AUX	VBC	Mood=Ind|Number=Plur|Person=3|Tense=Pres|Voice=Act	2	aux	_	ADJUSTED=True
+2	assunto	assumere	VERB	VBN	Tense=Past	0	root	_	ADJUSTED=True|ORIG_LABEL=root
+
+
+1	è	essere	AUX	AUX	Mood=Ind|Number=Sing|Person=3|Tense=Pres|Voice=Act	2	aux	_	ADJUSTED=True
+2	stata	essere	VERB	VBN	Gender=Fem|Number=Sing|Tense=Past	0	root	_	ADJUSTED=True|ORIG_LABEL=conj|SpaceAfter=No
+
+
+1	è	essere	AUX	VBC	Mood=Ind|Number=Sing|Person=3|Tense=Pres|Voice=Act	3	aux	_	ADJUSTED=True
+2	stata	essere	AUX	VBN	Gender=Fem|Number=Sing|Tense=Past	3	cop	_	ADJUSTED=True
+3	poca	poco	ADJ	JJ	_	0	root	_	ADJUSTED=True|ORIG_LABEL=root|SpaceAfter=No
+
+
+1	evolute	evoluto	VERB	VBN	Gender=Fem|Number=Plur|Tense=Past|Voice=Act	0	root	_	ADJUSTED=True|ORIG_LABEL=acl
+
+
+1	è	essere	AUX	VBC	Mood=Ind|Number=Sing|Person=3|Tense=Pres|Voice=Act	2	aux	_	ADJUSTED=True
+2	rimasto	rimanere	VERB	VBN	Gender=Masc|Number=Sing|Tense=Past	0	root	_	ADJUSTED=True|ORIG_LABEL=root
+
+
+1	ha	avere	AUX	VBC	Mood=Ind|Number=Sing|Person=3|Tense=Pres|Voice=Act	2	aux	_	ADJUSTED=True
+2	provocato	provocare	VERB	VBN	Tense=Past	0	root	_	ADJUSTED=True|ORIG_LABEL=root
+
+
+1	è	essere	AUX	VBC	Mood=Ind|Number=Sing|Person=3|Tense=Pres|Voice=Act	2	aux	_	ADJUSTED=True
+2	prosciugata	prosciugare	VERB	VBN	Gender=Fem|Number=Sing|Tense=Past	0	root	_	ADJUSTED=True|ORIG_LABEL=acl:relcl|SpaceAfter=No
+
+
+1	ha	avere	AUX	VBC	Mood=Ind|Number=Sing|Person=3|Tense=Pres|Voice=Act	2	aux	_	ADJUSTED=True
+2	degradato	degradare	VERB	VBN	Tense=Past	0	root	_	ADJUSTED=True|ORIG_LABEL=root
+
+
+1	conta	contare	VERB	VBC	Mood=Ind|Number=Sing|Person=3|Tense=Pres|Voice=Act	0	root	_	ADJUSTED=True|ORIG_LABEL=root
+
+
+1	hanno	avere	AUX	VBC	Mood=Ind|Number=Plur|Person=3|Tense=Pres|Voice=Act	2	aux	_	ADJUSTED=True
+2	coperto	coprire	VERB	VBN	Tense=Past	0	root	_	ADJUSTED=True|ORIG_LABEL=root
+
+
+1	è	essere	AUX	VBC	Mood=Ind|Number=Sing|Person=3|Tense=Pres|Voice=Act	2	aux	_	ADJUSTED=True
+2	cresciuta	crescere	VERB	VBN	Gender=Fem|Number=Sing|Tense=Past	0	root	_	ADJUSTED=True|ORIG_LABEL=root
+
+
+1	è	essere	AUX	VBC	Mood=Ind|Number=Sing|Person=3|Tense=Pres|Voice=Pass	3	aux	_	ADJUSTED=True
+2	stato	essere	AUX	VBN	Gender=Masc|Number=Sing|Tense=Past	3	aux:pass	_	ADJUSTED=True
+3	considerato	considerare	VERB	VBN	Gender=Masc|Number=Sing|Tense=Past	0	root	_	ADJUSTED=True|ORIG_LABEL=root
+
+
+1	sono	essere	AUX	VBC	Mood=Ind|Number=Plur|Person=3|Tense=Pres|Voice=Pass	3	aux	_	ADJUSTED=True
+2	state	essere	AUX	VBN	Gender=Fem|Number=Plur|Tense=Past	3	aux:pass	_	ADJUSTED=True
+3	fatte	fare	VERB	VBN	Gender=Fem|Number=Plur|Tense=Past	0	root	_	ADJUSTED=True|ORIG_LABEL=root
+
+
+1	riferisce	riferire	VERB	VBC	Mood=Ind|Number=Sing|Person=3|Tense=Pres|Voice=Act	0	root	_	ADJUSTED=True|ORIG_LABEL=root
+
+
+1	ha	avere	AUX	VBC	Mood=Ind|Number=Sing|Person=3|Tense=Pres|Voice=Act	2	aux	_	ADJUSTED=True
+2	avuto	avere	VERB	VBN	Tense=Past	0	root	_	ADJUSTED=True|ORIG_LABEL=conj
+
+
+1	aveva	avere	AUX	VBC	Aspect=Imp|Mood=Ind|Number=Sing|Person=3|Tense=Past|Voice=Act	2	aux	_	ADJUSTED=True
+2	divulgato	divulgare	VERB	VBN	Tense=Past	0	root	_	ADJUSTED=True|ORIG_LABEL=root
+
+
+1	ha	avere	AUX	VBC	Mood=Ind|Number=Sing|Person=3|Tense=Pres|Voice=Act	2	aux	_	ADJUSTED=True
+2	segnato	segnare	VERB	VBN	Tense=Past	0	root	_	ADJUSTED=True|ORIG_LABEL=root
+
+
+1	ha	avere	AUX	VBC	Mood=Ind|Number=Sing|Person=3|Tense=Pres|Voice=Act	2	aux	_	ADJUSTED=True
+2	dimostrato	dimostrare	VERB	VBN	Tense=Past	0	root	_	ADJUSTED=True|ORIG_LABEL=root
+
+
+1	ho	avere	AUX	VBC	Mood=Ind|Number=Sing|Person=1|Tense=Pres|Voice=Act	2	aux	_	ADJUSTED=True
+2	deciso	decidere	VERB	VBN	Tense=Past	0	root	_	ADJUSTED=True|ORIG_LABEL=conj
+
+
+1	ha	avere	AUX	VBC	Mood=Ind|Number=Sing|Person=3|Tense=Pres|Voice=Act	2	aux	_	ADJUSTED=True
+2	fatto	fare	VERB	VBN	Tense=Past	0	root	_	ADJUSTED=True|ORIG_LABEL=root
+
+
+1	è	essere	AUX	VBC	Mood=Ind|Number=Sing|Person=3|Tense=Pres|Voice=Pass	3	aux	_	ADJUSTED=True
+2	stata	essere	AUX	VBN	Gender=Fem|Number=Sing|Tense=Past	3	aux:pass	_	ADJUSTED=True
+3	commentata	commentare	VERB	VBN	Gender=Fem|Number=Sing|Tense=Past	0	root	_	ADJUSTED=True|ORIG_LABEL=root|SpaceAfter=No
+
+
+1	hanno	avere	AUX	VBC	Mood=Ind|Number=Plur|Person=3|Tense=Pres|Voice=Act	2	aux	_	ADJUSTED=True
+2	preso	prendere	VERB	VBN	Tense=Past	0	root	_	ADJUSTED=True|ORIG_LABEL=root
+
+
+1	è	essere	AUX	VBC	Mood=Ind|Number=Sing|Person=3|Tense=Pres|Voice=Pass	3	aux	_	ADJUSTED=True
+2	stata	essere	AUX	VBN	Gender=Fem|Number=Sing|Tense=Past	3	aux:pass	_	ADJUSTED=True
+3	sviluppata	sviluppare	VERB	VBN	Gender=Fem|Number=Sing|Tense=Past	0	root	_	ADJUSTED=True|ORIG_LABEL=advcl
+
+
+1	possiamo	potere	AUX	VBC	Mood=Ind|Number=Plur|Person=1|Tense=Pres|Voice=Act	2	aux	_	ADJUSTED=True
+2	andare	andare	VERB	VB	Voice=Act	0	root	_	ADJUSTED=True|ORIG_LABEL=root
+
+
+1	afferma	affermare	VERB	VBC	Mood=Ind|Number=Sing|Person=3|Tense=Pres|Voice=Act	0	root	_	ADJUSTED=True|ORIG_LABEL=root
+
+
+1	ha	avere	AUX	VBC	Mood=Ind|Number=Sing|Person=3|Tense=Pres|Voice=Act	2	aux	_	ADJUSTED=True
+2	dimostrato	dimostrare	VERB	VBN	Tense=Past	0	root	_	ADJUSTED=True|ORIG_LABEL=acl:relcl
+
+
+1	hanno	avere	AUX	VBC	Mood=Ind|Number=Plur|Person=3|Tense=Pres|Voice=Act	2	aux	_	ADJUSTED=True
+2	sviluppato	sviluppare	VERB	VBN	Tense=Past	0	root	_	ADJUSTED=True|ORIG_LABEL=root
+
+
+1	ha	avere	AUX	VBC	Mood=Ind|Number=Sing|Person=3|Tense=Pres|Voice=Act	2	aux	_	ADJUSTED=True
+2	prodotto	produrre	VERB	VBN	Tense=Past	0	root	_	ADJUSTED=True|ORIG_LABEL=root
+
+
+1	è	essere	AUX	VBC	Mood=Ind|Number=Sing|Person=3|Tense=Pres|Voice=Act	2	aux	_	ADJUSTED=True
+2	diventata	diventare	VERB	VBN	Gender=Fem|Number=Sing|Tense=Past	0	root	_	ADJUSTED=True|ORIG_LABEL=root
+
+
+1	è	essere	AUX	VBC	Mood=Ind|Number=Sing|Person=3|Tense=Pres|Voice=Act	2	aux	_	ADJUSTED=True
+2	sceso	scendere	VERB	VBN	Gender=Masc|Number=Sing|Tense=Past	0	root	_	ADJUSTED=True|ORIG_LABEL=root
+
+
+1	hanno	avere	AUX	VBC	Mood=Ind|Number=Plur|Person=3|Tense=Pres|Voice=Act	2	aux	_	ADJUSTED=True
+2	richiesto	richiedere	VERB	VBN	Tense=Past	0	root	_	ADJUSTED=True|ORIG_LABEL=conj
+
+
+1	ha	avere	AUX	VBC	Mood=Ind|Number=Sing|Person=3|Tense=Pres|Voice=Act	2	aux	_	ADJUSTED=True
+2	permesso	permettere	VERB	VBN	Tense=Past	0	root	_	ADJUSTED=True|ORIG_LABEL=root
+
+
+1	hanno	avere	AUX	VBC	Mood=Ind|Number=Plur|Person=3|Tense=Pres|Voice=Act	2	aux	_	ADJUSTED=True
+2	detto	dire	VERB	VBN	Tense=Past	0	root	_	ADJUSTED=True|ORIG_LABEL=root
+
+
+1	ha	avere	AUX	VBC	Mood=Ind|Number=Sing|Person=3|Tense=Pres|Voice=Act	2	aux	_	ADJUSTED=True
+2	ricevuto	ricevere	VERB	VBN	Tense=Past	0	root	_	ADJUSTED=True|ORIG_LABEL=root
+
+
+1	sono	essere	AUX	VBC	Mood=Ind|Number=Plur|Person=3|Tense=Pres|Voice=Act	2	aux	_	ADJUSTED=True
+2	stabiliti	stabilire	VERB	VBN	Gender=Masc|Number=Plur|Tense=Past	0	root	_	ADJUSTED=True|ORIG_LABEL=acl:relcl
+
+
+1	incrina	incrinare	VERB	VBC	Mood=Ind|Number=Sing|Person=3|Tense=Pres|Voice=Act	0	root	_	ADJUSTED=True|ORIG_LABEL=root
+
+
