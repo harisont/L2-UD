@@ -4,13 +4,13 @@
 - 68 hits
 - översätts som:
   - passato prossimo attivo (46 + 3 med cop or similar)
-  - passato prossimo passivo/composto (`AND [POS "VERB",FEATS_ "Tense=Pres"]`) (9)
+  - passato prossimo passivo/composto (`AND [POS "VERB",FEATS_ "Tense=Pres"]`) (?!) (9)
   - trapassato prossimo (1)
   - presente (6)
   - casi particolari (3):
     - "De nederländska studenterna har ännu inte bestämt om de kommer att kommersialisera sin elektriska motorcykel ." - "Gli studenti olandesi devono ancora decidere se metteranno in commercio la loro motocicletta elettrica ."
     - "Det finns även språk härledda från finskan , som har utvecklats separat , kända som meänkieli i Sverige och kända kven i Norge ." - "Esistono anche lingue che derivano da il finlandese , evolute si separatamente , conosciute come Meänkeli in Svezia e Kven in Norvegia ." (particip + "si passivante")
-    - "Det har betonats att vi absolut inte kan fortsätta med de som är helt emot Italien ." - "Non possiamo andare avanti insieme a quelli che sono totalmente contro l' Italia , sottolinea ."
+    - "Det har betonats att vi absolut inte kan fortsätta med de som är helt emot Italien ." - "Non possiamo andare avanti insieme a quelli che sono totalmente contro l' Italia , sottolinea ." (egentligen presens)
 
 ## `TREE_ (FEATS_ "Tense=Past") [AND [OR [LEMMA "avere", LEMMA "essere"], FEATS_ "Tense=Pres", FEATS_ "Mood=Ind"]]` (passato prossimo)
 - 230 hits (ganska talande! används mycket mer än passato remoto. Utan `Mood=Ind` blir det till och med 243)
