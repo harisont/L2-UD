@@ -12,6 +12,7 @@ import Data.Text (pack, unpack)
 import Data.Text.Encoding (encodeUtf8, decodeUtf8)
 import Text.Read (readMaybe)
 import Data.Maybe
+import Data.List.Utils
 import System.Directory
 import Graphics.UI.Threepenny.Core
 import qualified Graphics.UI.Threepenny as UI
@@ -34,8 +35,10 @@ main = do
 
 setup :: Window -> UI ()
 setup window = do
+  let path = "tmp"
   let path1 = "tmp1"
   let path2 = "tmp2"
+  uri <- loadFile "text/plain" path
   uri1 <- loadFile "text/plain" path1
   uri2 <- loadFile "text/plain" path2
 
@@ -52,7 +55,7 @@ setup window = do
               , "  -khtml-user-select: none;"
               , "  -moz-user-select: none;"
               , "  -ms-user-select: none;"
-              , "  user-select: none;}"])
+              , "  user-select: interspersenone;}"])
 
   l1Input <- buildTextInput "path to L1 treebank" "path"
   element l1Input # set UI.style [("width","49.4%")]
@@ -65,13 +68,20 @@ setup window = do
   element queryInput # set UI.style [("width","99.2%")]
 
   searchButton <- buildButton "search"
-  downloadsSpan <- UI.span
-  element downloadsSpan # set html (unlines [
+
+  treebankDlSpan <- UI.span
+  element treebankDlSpan # set html (unlines [
       "<a href=\"" ++ uri1 ++ "\" download>save L1</a>"
     , "<a href=\"" ++ uri2 ++ "\" download>save L2</a>"])
-  element downloadsSpan # set UI.style [("margin","1%")]
-  element downloadsSpan # set UI.class_ "unselectable"
-  hide downloadsSpan
+  element treebankDlSpan # set UI.style [("margin","1%")]
+  element treebankDlSpan # set UI.class_ "unselectable"
+  hide treebankDlSpan
+
+  tsvDlSpan <- UI.span
+  element tsvDlSpan # set html ("<a href=\"" ++ uri ++ "\" download>save as TSV</a>")
+  element tsvDlSpan # set UI.style [("margin","1%")]
+  element tsvDlSpan # set UI.class_ "unselectable"
+  hide tsvDlSpan
 
   replacementInput <- buildTextInput 
                         "additional replacement rule (optional)"
@@ -99,11 +109,13 @@ setup window = do
               , element conlluMode
               , element searchButton
               , element nHitsSpan
-              , element downloadsSpan
+              , element treebankDlSpan
+              , element tsvDlSpan
                 ] 
   
   on UI.click searchButton $ const $ do
-    hide downloadsSpan
+    hide treebankDlSpan
+    hide tsvDlSpan
     hide nHitsSpan
     l1Path <- get value l1Input 
     l2Path <- get value l2Input
@@ -175,9 +187,12 @@ setup window = do
               matches'
         destroyTables window
         table <- buildTable window l1Col l2Col mode
+        liftIO $ writeFile path (encodeUtf8 $ pack $ unlines $ map 
+          (\(l1,l2) -> l1 ++ "\t" ++ l2)
+          ((map rmBold l1Col) `zip` (map rmBold l2Col)))
         liftIO $ writeFile path1 (encodeUtf8 $ pack $ unlines l1Col)
         liftIO $ writeFile path2 (encodeUtf8 $ pack $ unlines l2Col)
-        unhide downloadsSpan
+        if mode == Text then unhide tsvDlSpan else unhide treebankDlSpan
         element nHitsSpan # set text ((show $ length l1Col) ++ " hits")
         unhide nHitsSpan
         getBody window #+ [element table, element nHitsSpan]
@@ -188,9 +203,11 @@ setup window = do
         if validReplacement 
           then markRight replacementInput 
           else markWrong replacementInput
-  where applyReplacement r (e1,e2) = 
-          (fst $ replacementsWithUDPattern r e1,
-           fst $ replacementsWithUDPattern r e2)
+  where 
+    rmBold s = replace "</b>" "" (replace "<b>" "" s)
+    applyReplacement r (e1,e2) = 
+      (fst $ replacementsWithUDPattern r e1,
+       fst $ replacementsWithUDPattern r e2)
 
 type Placeholder = String
 type Class = String
