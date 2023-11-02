@@ -20,7 +20,7 @@ import UDPatterns
 import Utils.UDConcepts
 import Utils.Output
 import Align
-import Match
+import Match hiding (matchesUDPattern)
 import Errors
 
 data Mode = Text | CoNNLU deriving (Eq, Show)
@@ -137,19 +137,32 @@ setup window = do
 
         let treebank = l1Sents `zip` l2Sents 
         let alignments = map align treebank
-        let matches = filter 
-                        (not . null . snd) 
-                        (treebank `zip` map (match patterns) alignments)
+        -- true bilingual matches
+        let bimatches = treebank `zip` map (match patterns) alignments
+        -- all matches (add L2-only with dummy alignments)
+        let matches = 
+              map  (
+                (\bms@((s1,s2),ms) -> 
+                  let pattern = patterns !! 0 
+                  in if isL2only $ pattern 
+                    then ((s1,s2), ms ++ ((repeat $ dummyUDTree) `zip` filter 
+                      (\t -> not $ t `elem` (map snd ms)) 
+                      (matchesUDPattern (snd $ (pattern)) (udSentence2tree s2))))
+                    else bms) )
+                bimatches
         let matches' = 
               map 
                 (\(s,es) -> 
                   (s,map (applyReplacement (fromJust $ mreplacement)) es)) 
-                matches
+                (filter (\(_,ms) -> not $ null ms) matches)
         let (l1Col,l2Col) = unzip $ concatMap 
               (\((s1,s2),ms) -> 
                 map 
                   (\(m1,m2) -> 
-                    let m1' = udTree2sentence (adjustRootAndPositions m1)
+                    let m1' = 
+                          if m1 == dummyUDTree 
+                            then udTree2sentence m1 
+                            else udTree2sentence (adjustRootAndPositions m1)
                         m2' = udTree2sentence (adjustRootAndPositions m2)
                     in ((if mode == Text 
                         then highlin s1 (udTree2sentence m1) HTML

@@ -92,3 +92,6 @@ fieldVals = M.fromList [
   ("FEATS_Polite", ["Elev", "Form", "Humb", "Infm"]),
   ("FEATS_Clusivity", ["Ex", "In"])
   ]
+
+dummyUDTree :: UDTree
+dummyUDTree = RTree (initUDWord 0) []
