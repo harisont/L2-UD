@@ -140,12 +140,10 @@ Trees stored in CoNNL-U files can be visualized, for instance, with [CoNNL-U vie
 
 ## Planned features
 - render CoNNL-U as trees directly in the application
-- better file input, if I figure out how to use Electron
 - make it hostable or even integrate in SBX infrastructure in some way (talk to Markus)
 - more intuitive monolingual version (one-column)
 - saved simplification rules
 - auto parsing parallel texts (easy)
-- export text as CSV so that it can be opened in a spreadsheet program
 - very obvious optimization: align once query repeatedly
 
 ## What's happening under the hood?
