@@ -1,14 +1,13 @@
 # Haskell artifacts
 .stack-work/*
 stack.yaml.lock
-out/*data/
-data/
 
 # Project-specific stuff
 out/*
 *.tmp
 tmp1
 tmp2
+data/
 
 # Stuff that should stay in dev
 results/*
