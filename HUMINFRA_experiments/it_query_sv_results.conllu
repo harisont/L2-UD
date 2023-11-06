@@ -1,0 +1,789 @@
+1	skrev	skriva	VERB	VB|PRT|AKT	Mood=Ind|Tense=Past|VerbForm=Fin|Voice=Act	0	root	22:parataxis	ADJUSTED=True|ORIG_LABEL=parataxis
+
+
+1	tillkännagav	tillkännage	VERB	VB|PRT|AKT	Mood=Ind|Tense=Past|VerbForm=Fin|Voice=Act	0	root	0:root	ADJUSTED=True|ORIG_LABEL=root
+
+
+1	sade	säga	VERB	VB|PRT|AKT	Mood=Ind|Tense=Past|VerbForm=Fin|Voice=Act	0	root	4:parataxis	ADJUSTED=True|ORIG_LABEL=parataxis
+
+
+1	finansieras	finansiera	VERB	VB|PRS|SFO	Mood=Ind|Tense=Pres|VerbForm=Fin|Voice=Pass	0	root	0:root	ADJUSTED=True|ORIG_LABEL=root
+
+
+1	sade	säga	VERB	VB|PRT|AKT	Mood=Ind|Tense=Past|VerbForm=Fin|Voice=Act	0	root	3:parataxis	ADJUSTED=True|ORIG_LABEL=parataxis
+
+
+1	berättade	berätta	VERB	VB|PRT|AKT	Mood=Ind|Tense=Past|VerbForm=Fin|Voice=Act	0	root	0:root	ADJUSTED=True|ORIG_LABEL=root
+
+
+1	lades	lägga	VERB	VB|PRT|SFO	Mood=Ind|Tense=Past|VerbForm=Fin|Voice=Pass	0	root	4:parataxis	ADJUSTED=True|ORIG_LABEL=parataxis
+
+
+1	har	ha	AUX	VB|PRS|AKT	Mood=Ind|Tense=Pres|VerbForm=Fin|Voice=Act	2	aux	4:aux	ADJUSTED=True
+2	ökat	öka	VERB	VB|SUP|AKT	VerbForm=Sup|Voice=Act	0	root	0:root	ADJUSTED=True|ORIG_LABEL=root
+
+
+1	sade	säga	VERB	VB|PRT|AKT	Mood=Ind|Tense=Past|VerbForm=Fin|Voice=Act	0	root	4:parataxis	ADJUSTED=True|ORIG_LABEL=parataxis
+
+
+1	har	ha	AUX	VB|PRS|AKT	Mood=Ind|Tense=Pres|VerbForm=Fin|Voice=Act	2	aux	4:aux	ADJUSTED=True
+2	bett	be	VERB	VB|SUP|AKT	VerbForm=Sup|Voice=Act	0	root	0:root	ADJUSTED=True|ORIG_LABEL=root
+
+
+1	sade	säga	VERB	VB|PRT|AKT	Mood=Ind|Tense=Past|VerbForm=Fin|Voice=Act	0	root	2:parataxis	ADJUSTED=True|ORIG_LABEL=parataxis
+
+
+1	åtalas	åtala	VERB	VB|PRS|SFO	Mood=Ind|Tense=Pres|VerbForm=Fin|Voice=Pass	0	root	0:root	ADJUSTED=True|ORIG_LABEL=root
+
+
+1	sade	säga	VERB	VB|PRT|AKT	Mood=Ind|Tense=Past|VerbForm=Fin|Voice=Act	0	root	2:parataxis	ADJUSTED=True|ORIG_LABEL=parataxis
+
+
+1	mördade	mörda	VERB	VB|PRT|AKT	Mood=Ind|Tense=Past|VerbForm=Fin|Voice=Act	0	root	0:root	ADJUSTED=True|ORIG_LABEL=root
+
+
+1	började	börja	VERB	VB|PRT|AKT	Mood=Ind|Tense=Past|VerbForm=Fin|Voice=Act	0	root	0:root	ADJUSTED=True|ORIG_LABEL=root
+
+
+1	gick	gå	VERB	VB|PRT|AKT	Mood=Ind|Tense=Past|VerbForm=Fin|Voice=Act	0	root	0:root	ADJUSTED=True|ORIG_LABEL=root
+
+
+1	sade	säga	VERB	VB|PRT|AKT	Mood=Ind|Tense=Past|VerbForm=Fin|Voice=Act	0	root	0:root	ADJUSTED=True|ORIG_LABEL=root
+
+
+1	berättade	berätta	VERB	VB|PRT|AKT	Mood=Ind|Tense=Past|VerbForm=Fin|Voice=Act	0	root	0:root	ADJUSTED=True|ORIG_LABEL=root
+
+
+1	har	ha	AUX	VB|PRS|AKT	Mood=Ind|Tense=Pres|VerbForm=Fin|Voice=Act	2	aux	4:aux	ADJUSTED=True
+2	certifierats	certifiera	VERB	VB|SUP|SFO	VerbForm=Sup|Voice=Pass	0	root	0:root	ADJUSTED=True|ORIG_LABEL=root|SpaceAfter=No
+
+
+1	väckte	väcka	VERB	VB|PRT|AKT	Mood=Ind|Tense=Past|VerbForm=Fin|Voice=Act	0	root	0:root	ADJUSTED=True|ORIG_LABEL=root
+
+
+1	skrev	skriva	VERB	VB|PRT|AKT	Mood=Ind|Tense=Past|VerbForm=Fin|Voice=Act	0	root	5:parataxis	ADJUSTED=True|ORIG_LABEL=parataxis
+
+
+1	hade	ha	AUX	VB|PRT|AKT	Mood=Ind|Tense=Past|VerbForm=Fin|Voice=Act	2	aux	8:aux	ADJUSTED=True
+2	använts	använda	VERB	VB|SUP|SFO	VerbForm=Sup|Voice=Pass	0	root	2:ccomp	ADJUSTED=True|ORIG_LABEL=ccomp
+
+
+1	påvisade	påvisa	VERB	VB|PRT|AKT	Mood=Ind|Tense=Past|VerbForm=Fin|Voice=Act	0	root	0:root	ADJUSTED=True|ORIG_LABEL=root
+
+
+1	sade	säga	VERB	VB|PRT|AKT	Mood=Ind|Tense=Past|VerbForm=Fin|Voice=Act	0	root	2:parataxis	ADJUSTED=True|ORIG_LABEL=parataxis
+
+
+1	ökade	öka	VERB	VB|PRT|AKT	Mood=Ind|Tense=Past|VerbForm=Fin|Voice=Act	0	root	0:root	ADJUSTED=True|ORIG_LABEL=root
+
+
+1	genomfördes	genomföra	VERB	VB|PRT|SFO	Mood=Ind|Tense=Past|VerbForm=Fin|Voice=Pass	0	root	0:root	ADJUSTED=True|ORIG_LABEL=root
+
+
+1	samlade	samla	VERB	VB|PRT|AKT	Mood=Ind|Tense=Past|VerbForm=Fin|Voice=Act	0	root	0:root	ADJUSTED=True|ORIG_LABEL=root
+
+
+1	har	ha	AUX	VB|PRS|AKT	Mood=Ind|Tense=Pres|VerbForm=Fin|Voice=Act	2	aux	8:aux	ADJUSTED=True
+2	haft	ha	VERB	VB|SUP|AKT	VerbForm=Sup|Voice=Act	0	root	0:root	ADJUSTED=True|ORIG_LABEL=root
+
+
+1	har	ha	AUX	VB|PRS|AKT	Mood=Ind|Tense=Pres|VerbForm=Fin|Voice=Act	2	aux	4:aux	ADJUSTED=True
+2	valt	välja	VERB	VB|SUP|AKT	VerbForm=Sup|Voice=Act	0	root	0:root	ADJUSTED=True|ORIG_LABEL=root
+
+
+1	har	ha	AUX	VB|PRS|AKT	Mood=Ind|Tense=Pres|VerbForm=Fin|Voice=Act	2	aux	12:aux	ADJUSTED=True
+2	handlat	handla	VERB	VB|SUP|AKT	VerbForm=Sup|Voice=Act	0	root	0:root	ADJUSTED=True|ORIG_LABEL=root
+
+
+1	frågade	fråga	VERB	VB|PRT|AKT	Mood=Ind|Tense=Past|VerbForm=Fin|Voice=Act	0	root	0:root	ADJUSTED=True|ORIG_LABEL=root
+
+
+1	märkte	märka	VERB	VB|PRT|AKT	Mood=Ind|Tense=Past|VerbForm=Fin|Voice=Act	0	root	4:parataxis	ADJUSTED=True|ORIG_LABEL=parataxis
+
+
+1	var	vara	AUX	VB|PRT|AKT	Mood=Ind|Tense=Past|VerbForm=Fin|Voice=Act	0	root	0:root	ADJUSTED=True|ORIG_LABEL=root
+
+
+1	beskrev	beskriva	VERB	VB|PRT|AKT	Mood=Ind|Tense=Past|VerbForm=Fin|Voice=Act	0	root	2:advcl:när	ADJUSTED=True|ORIG_LABEL=advcl
+
+
+1	skapade	skapa	VERB	VB|PRT|AKT	Mood=Ind|Tense=Past|VerbForm=Fin|Voice=Act	0	root	0:root	ADJUSTED=True|ORIG_LABEL=root
+
+
+1	spelade	spela	VERB	VB|PRT|AKT	Mood=Ind|Tense=Past|VerbForm=Fin|Voice=Act	0	root	0:root	ADJUSTED=True|ORIG_LABEL=root
+
+
+1	besökte	besöka	VERB	VB|PRT|AKT	Mood=Ind|Tense=Past|VerbForm=Fin|Voice=Act	0	root	13:conj:och	ADJUSTED=True|ORIG_LABEL=conj
+
+
+1	har	ha	AUX	VB|PRS|AKT	Mood=Ind|Tense=Pres|VerbForm=Fin|Voice=Act	2	aux	13:aux	ADJUSTED=True
+2	gjort	göra	VERB	VB|SUP|AKT	VerbForm=Sup|Voice=Act	0	root	0:root	ADJUSTED=True|ORIG_LABEL=root
+
+
+1	gavs	ge	VERB	VB|PRT|SFO	Mood=Ind|Tense=Past|VerbForm=Fin|Voice=Pass	0	root	0:root	ADJUSTED=True|ORIG_LABEL=root
+
+
+1	hade	ha	AUX	VB|PRT|AKT	Mood=Ind|Tense=Past|VerbForm=Fin|Voice=Act	2	aux	27:aux	ADJUSTED=True
+2	rapporterats	rapportera	VERB	VB|SUP|SFO	VerbForm=Sup|Voice=Pass	0	root	5:ccomp|10:conj:men	ADJUSTED=True|ORIG_LABEL=conj|SpaceAfter=No
+
+
+1	var	vara	AUX	VB|PRT|AKT	Mood=Ind|Tense=Past|VerbForm=Fin|Voice=Act	2	cop	16:cop	ADJUSTED=True
+2	plats	plats	NOUN	NN|UTR|SIN|IND|NOM	Case=Nom|Definite=Ind|Gender=Com|Number=Sing	0	root	0:root	ADJUSTED=True|ORIG_LABEL=root
+
+
+1	utbröt	utbryta	VERB	VB|PRT|AKT	Mood=Ind|Tense=Past|VerbForm=Fin|Voice=Act	0	root	0:root	ADJUSTED=True|ORIG_LABEL=root
+
+
+1	har	ha	AUX	VB|PRS|AKT	Mood=Ind|Tense=Pres|VerbForm=Fin|Voice=Act	2	aux	3:aux	ADJUSTED=True
+2	undersökt	undersöka	VERB	VB|SUP|AKT	VerbForm=Sup|Voice=Act	0	root	0:root	ADJUSTED=True|ORIG_LABEL=root
+
+
+1	tillade	tillägga	VERB	VB|PRT|AKT	Mood=Ind|Tense=Past|VerbForm=Fin|Voice=Act	0	root	0:root	ADJUSTED=True|ORIG_LABEL=root|SpaceAfter=No
+
+
+1	är	vara	AUX	VB|PRS|AKT	Mood=Ind|Tense=Pres|VerbForm=Fin|Voice=Act	2	cop	17:cop	ADJUSTED=True
+2	exponerad	exponerad	ADJ	PC|PRF|UTR|SIN|IND|NOM	Case=Nom|Definite=Ind|Gender=Com|Number=Sing|Tense=Past|VerbForm=Part	0	root	11:acl:relcl	ADJUSTED=True|ORIG_LABEL=acl:relcl|SpaceAfter=No
+
+
+1	har	ha	AUX	VB|PRS|AKT	Mood=Ind|Tense=Pres|VerbForm=Fin|Voice=Act	2	aux	4:aux	ADJUSTED=True
+2	fått	få	VERB	VB|SUP|AKT	VerbForm=Sup|Voice=Act	0	root	0:root	ADJUSTED=True|ORIG_LABEL=root
+
+
+1	visade	visa	VERB	VB|PRT|AKT	Mood=Ind|Tense=Past|VerbForm=Fin|Voice=Act	0	root	0:root	ADJUSTED=True|ORIG_LABEL=root
+
+
+1	säger	säga	VERB	VB|PRS|AKT	Mood=Ind|Tense=Pres|VerbForm=Fin|Voice=Act	0	root	0:root	ADJUSTED=True|ORIG_LABEL=root
+
+
+1	släppte	släppa	VERB	VB|PRT|AKT	Mood=Ind|Tense=Past|VerbForm=Fin|Voice=Act	0	root	4:conj:och	ADJUSTED=True|ORIG_LABEL=conj
+
+
+1	sade	säga	VERB	VB|PRT|AKT	Mood=Ind|Tense=Past|VerbForm=Fin|Voice=Act	0	root	0:root	ADJUSTED=True|ORIG_LABEL=root
+
+
+1	sade	säga	VERB	VB|PRT|AKT	Mood=Ind|Tense=Past|VerbForm=Fin|Voice=Act	0	root	2:parataxis	ADJUSTED=True|ORIG_LABEL=parataxis
+
+
+1	sade	säga	VERB	VB|PRT|AKT	Mood=Ind|Tense=Past|VerbForm=Fin|Voice=Act	0	root	0:root	ADJUSTED=True|ORIG_LABEL=root
+
+
+1	gjorde	göra	VERB	VB|PRT|AKT	Mood=Ind|Tense=Past|VerbForm=Fin|Voice=Act	0	root	0:root	ADJUSTED=True|ORIG_LABEL=root
+
+
+1	säger	säga	VERB	VB|PRS|AKT	Mood=Ind|Tense=Pres|VerbForm=Fin|Voice=Act	0	root	5:conj:men	ADJUSTED=True|ORIG_LABEL=conj
+
+
+1	har	ha	AUX	VB|PRS|AKT	Mood=Ind|Tense=Pres|VerbForm=Fin|Voice=Act	2	aux	5:aux	ADJUSTED=True
+2	träffat	träffa	VERB	VB|SUP|AKT	VerbForm=Sup|Voice=Act	0	root	0:root	ADJUSTED=True|ORIG_LABEL=root
+
+
+1	sade	säga	VERB	VB|PRT|AKT	Mood=Ind|Tense=Past|VerbForm=Fin|Voice=Act	0	root	4:parataxis	ADJUSTED=True|ORIG_LABEL=parataxis
+
+
+1	sade	säga	VERB	VB|PRT|AKT	Mood=Ind|Tense=Past|VerbForm=Fin|Voice=Act	0	root	2:parataxis	ADJUSTED=True|ORIG_LABEL=parataxis
+
+
+1	satte	sätta	VERB	VB|PRT|AKT	Mood=Ind|Tense=Past|VerbForm=Fin|Voice=Act	0	root	0:root	ADJUSTED=True|ORIG_LABEL=root
+
+
+1	erhåller	erhålla	VERB	VB|PRS|AKT	Mood=Ind|Tense=Pres|VerbForm=Fin|Voice=Act	0	root	0:root	ADJUSTED=True|ORIG_LABEL=root
+
+
+1	sade	säga	VERB	VB|PRT|AKT	Mood=Ind|Tense=Past|VerbForm=Fin|Voice=Act	0	root	0:root	ADJUSTED=True|ORIG_LABEL=root
+
+
+1	ledde	leda	VERB	VB|PRT|AKT	Mood=Ind|Tense=Past|VerbForm=Fin|Voice=Act	0	root	0:root	ADJUSTED=True|ORIG_LABEL=root
+
+
+1	dömde	döma	VERB	VB|PRT|AKT	Mood=Ind|Tense=Past|VerbForm=Fin|Voice=Act	0	root	0:root	ADJUSTED=True|ORIG_LABEL=root
+
+
+1	rapporterade	rapportera	VERB	VB|PRT|AKT	Mood=Ind|Tense=Past|VerbForm=Fin|Voice=Act	0	root	3:parataxis	ADJUSTED=True|ORIG_LABEL=parataxis
+
+
+1	påpekade	påpeka	VERB	VB|PRT|AKT	Mood=Ind|Tense=Past|VerbForm=Fin|Voice=Act	0	root	0:root	ADJUSTED=True|ORIG_LABEL=root
+
+
+1	beskrev	beskriva	VERB	VB|PRT|AKT	Mood=Ind|Tense=Past|VerbForm=Fin|Voice=Act	0	root	0:root	ADJUSTED=True|ORIG_LABEL=root
+
+
+1	sade	säga	VERB	VB|PRT|AKT	Mood=Ind|Tense=Past|VerbForm=Fin|Voice=Act	0	root	3:parataxis	ADJUSTED=True|ORIG_LABEL=parataxis
+
+
+1	sade	säga	VERB	VB|PRT|AKT	Mood=Ind|Tense=Past|VerbForm=Fin|Voice=Act	0	root	3:parataxis	ADJUSTED=True|ORIG_LABEL=parataxis
+
+
+1	gick	gå	VERB	VB|PRT|AKT	Mood=Ind|Tense=Past|VerbForm=Fin|Voice=Act	0	root	0:root	ADJUSTED=True|ORIG_LABEL=root
+
+
+1	publicerades	publicera	VERB	VB|PRT|SFO	Mood=Ind|Tense=Past|VerbForm=Fin|Voice=Pass	0	root	8:advcl:som	ADJUSTED=True|ORIG_LABEL=advcl
+
+
+1	fylldes	fylla	VERB	VB|PRT|SFO	Mood=Ind|Tense=Past|VerbForm=Fin|Voice=Pass	0	root	0:root	ADJUSTED=True|ORIG_LABEL=root
+
+
+1	brandbombade	brandbomba	VERB	VB|PRT|AKT	Mood=Ind|Tense=Past|VerbForm=Fin|Voice=Act	0	root	0:root	ADJUSTED=True|ORIG_LABEL=root
+
+
+1	antog	anta	VERB	VB|PRT|AKT	Mood=Ind|Tense=Past|VerbForm=Fin|Voice=Act	0	root	10:advcl:att	ADJUSTED=True|ORIG_LABEL=advcl
+
+
+1	reste	resa	VERB	VB|PRT|AKT	Mood=Ind|Tense=Past|VerbForm=Fin|Voice=Act	0	root	0:root	ADJUSTED=True|ORIG_LABEL=root
+
+
+1	hade	ha	VERB	VB|PRT|AKT	Mood=Ind|Tense=Past|VerbForm=Fin|Voice=Act	0	root	3:conj:men	ADJUSTED=True|ORIG_LABEL=conj
+
+
+1	måste	måste	AUX	VB|PRS|AKT	Mood=Ind|Tense=Pres|VerbForm=Fin|Voice=Act	2	aux	9:aux	ADJUSTED=True
+2	se	se	VERB	VB|INF|AKT	VerbForm=Inf|Voice=Act	0	root	0:root	ADJUSTED=True|ORIG_LABEL=root
+
+
+1	känner	känna	VERB	VB|PRS|AKT	Mood=Ind|Tense=Pres|VerbForm=Fin|Voice=Act	0	root	0:root	ADJUSTED=True|ORIG_LABEL=root
+
+
+1	var	vara	AUX	VB|PRT|AKT	Mood=Ind|Tense=Past|VerbForm=Fin|Voice=Act	2	cop	5:cop	ADJUSTED=True
+2	kliniska	klinisk	ADJ	JJ|POS|UTR/NEU|PLU|IND/DEF|NOM	Case=Nom|Degree=Pos|Number=Plur	0	root	0:root	ADJUSTED=True|ORIG_LABEL=root
+
+
+1	beskrev	beskriva	VERB	VB|PRT|AKT	Mood=Ind|Tense=Past|VerbForm=Fin|Voice=Act	0	root	0:root	ADJUSTED=True|ORIG_LABEL=root
+
+
+1	understryker	understryka	VERB	VB|PRS|AKT	Mood=Ind|Tense=Pres|VerbForm=Fin|Voice=Act	0	root	0:root	ADJUSTED=True|ORIG_LABEL=root
+
+
+1	publicerade	publicera	VERB	VB|PRT|AKT	Mood=Ind|Tense=Past|VerbForm=Fin|Voice=Act	0	root	0:root	ADJUSTED=True|ORIG_LABEL=root
+
+
+1	rapporterade	rapportera	VERB	VB|PRT|AKT	Mood=Ind|Tense=Past|VerbForm=Fin|Voice=Act	0	root	3:parataxis	ADJUSTED=True|ORIG_LABEL=parataxis
+
+
+1	har	ha	AUX	VB|PRS|AKT	Mood=Ind|Tense=Pres|VerbForm=Fin|Voice=Act	2	aux	5:aux	ADJUSTED=True
+2	skrivit	skriva	VERB	VB|SUP|AKT	VerbForm=Sup|Voice=Act	0	root	1:acl:relcl	ADJUSTED=True|ORIG_LABEL=acl:relcl
+
+
+1	representerade	representera	VERB	VB|PRT|AKT	Mood=Ind|Tense=Past|VerbForm=Fin|Voice=Act	0	root	1:acl:relcl	ADJUSTED=True|ORIG_LABEL=acl:relcl
+
+
+1	har	ha	AUX	VB|PRS|AKT	Mood=Ind|Tense=Pres|VerbForm=Fin|Voice=Act	2	aux	11:aux	ADJUSTED=True
+2	lanserat	lansera	VERB	VB|SUP|AKT	VerbForm=Sup|Voice=Act	0	root	0:root	ADJUSTED=True|ORIG_LABEL=root
+
+
+1	tog	ta	VERB	VB|PRT|AKT	Mood=Ind|Tense=Past|VerbForm=Fin|Voice=Act	0	root	4:conj:och	ADJUSTED=True|ORIG_LABEL=conj
+
+
+1	föreslog	föreslå	VERB	VB|PRT|AKT	Mood=Ind|Tense=Past|VerbForm=Fin|Voice=Act	0	root	0:root	ADJUSTED=True|ORIG_LABEL=root
+
+
+1	tillbringade	tillbringa	VERB	VB|PRT|AKT	Mood=Ind|Tense=Past|VerbForm=Fin|Voice=Act	0	root	0:root	ADJUSTED=True|ORIG_LABEL=root
+
+
+1	arbetade	arbeta	VERB	VB|PRT|AKT	Mood=Ind|Tense=Past|VerbForm=Fin|Voice=Act	0	root	0:root	ADJUSTED=True|ORIG_LABEL=root
+
+
+1	har	ha	AUX	VB|PRS|AKT	Mood=Ind|Tense=Pres|VerbForm=Fin|Voice=Act	2	aux	26:aux	ADJUSTED=True
+2	känt	känna	VERB	VB|SUP|AKT	VerbForm=Sup|Voice=Act	0	root	7:parataxis	ADJUSTED=True|ORIG_LABEL=parataxis|SpaceAfter=No
+
+
+1	är	vara	AUX	VB|PRS|AKT	Mood=Ind|Tense=Pres|VerbForm=Fin|Voice=Act	2	cop	5:cop	ADJUSTED=True
+2	återvändo	återvändo	NOUN	NN|-|-|-|-	_	0	root	0:root	ADJUSTED=True|ORIG_LABEL=root
+
+
+1	var	vara	AUX	VB|PRT|AKT	Mood=Ind|Tense=Past|VerbForm=Fin|Voice=Act	0	root	0:root	ADJUSTED=True|ORIG_LABEL=root
+
+
+1	har	ha	AUX	VB|PRS|AKT	Mood=Ind|Tense=Pres|VerbForm=Fin|Voice=Act	2	aux	3:aux	ADJUSTED=True
+2	uttalat	uttala	VERB	VB|SUP|AKT	VerbForm=Sup|Voice=Act	0	root	0:root	ADJUSTED=True|ORIG_LABEL=root
+
+
+1	bestämde	bestämma	VERB	VB|PRT|AKT	Mood=Ind|Tense=Past|VerbForm=Fin|Voice=Act	0	root	3:conj:men	ADJUSTED=True|ORIG_LABEL=conj
+
+
+1	,	,	PUNCT	MID	_	4	punct	9:punct	ADJUSTED=True
+2	och	och	CCONJ	KN	_	4	cc	9:cc	ADJUSTED=True
+3	blir	bli	AUX	VB|PRS|AKT	Mood=Ind|Tense=Pres|VerbForm=Fin|Voice=Act	4	aux:pass	3:conj:och	ADJUSTED=True
+4	filmad	filmad	ADJ	PC|PRF|UTR|SIN|IND|NOM	Case=Nom|Definite=Ind|Gender=Com|Number=Sing|Tense=Past|VerbForm=Part	0	root	3:conj	ADJUSTED=True|ORIG_LABEL=conj
+5	tar	ta	VERB	VB|PRS|AKT	Mood=Ind|Tense=Pres|VerbForm=Fin|Voice=Act	4	advcl	8:advcl:när	ADJUSTED=True
+
+
+1	konstaterade	konstatera	VERB	VB|PRT|AKT	Mood=Ind|Tense=Past|VerbForm=Fin|Voice=Act	0	root	0:root	ADJUSTED=True|ORIG_LABEL=root|SpaceAfter=No
+
+
+1	har	ha	AUX	VB|PRS|AKT	Mood=Ind|Tense=Pres|VerbForm=Fin|Voice=Act	2	aux	5:aux	ADJUSTED=True
+2	gjort	göra	VERB	VB|SUP|AKT	VerbForm=Sup|Voice=Act	0	root	0:root	ADJUSTED=True|ORIG_LABEL=root
+
+
+1	sade	säga	VERB	VB|PRT|AKT	Mood=Ind|Tense=Past|VerbForm=Fin|Voice=Act	0	root	6:parataxis	ADJUSTED=True|ORIG_LABEL=parataxis
+
+
+1	har	ha	AUX	VB|PRS|AKT	Mood=Ind|Tense=Pres|VerbForm=Fin|Voice=Act	2	aux	6:aux	ADJUSTED=True
+2	skissats	skissa	VERB	VB|SUP|SFO	VerbForm=Sup|Voice=Pass	0	root	0:root	ADJUSTED=True|ORIG_LABEL=root
+
+
+1	välkomnar	välkomna	VERB	VB|PRS|AKT	Mood=Ind|Tense=Pres|VerbForm=Fin|Voice=Act	0	root	0:root	ADJUSTED=True|ORIG_LABEL=root
+
+
+1	lade	lägga	VERB	VB|PRT|AKT	Mood=Ind|Tense=Past|VerbForm=Fin|Voice=Act	0	root	0:root	ADJUSTED=True|ORIG_LABEL=root
+
+
+1	har	ha	AUX	VB|PRS|AKT	Mood=Ind|Tense=Pres|VerbForm=Fin|Voice=Act	2	aux	12:aux	ADJUSTED=True
+2	ansett	anse	VERB	VB|SUP|AKT	VerbForm=Sup|Voice=Act	0	root	0:root	ADJUSTED=True|ORIG_LABEL=root
+
+
+1	sade	säga	VERB	VB|PRT|AKT	Mood=Ind|Tense=Past|VerbForm=Fin|Voice=Act	0	root	3:parataxis	ADJUSTED=True|ORIG_LABEL=parataxis
+
+
+1	berättade	berätta	VERB	VB|PRT|AKT	Mood=Ind|Tense=Past|VerbForm=Fin|Voice=Act	0	root	0:root	ADJUSTED=True|ORIG_LABEL=root
+
+
+1	har	ha	AUX	VB|PRS|AKT	Mood=Ind|Tense=Pres|VerbForm=Fin|Voice=Act	2	aux	8:aux	ADJUSTED=True
+2	tappat	tappa	VERB	VB|SUP|AKT	VerbForm=Sup|Voice=Act	0	root	4:advcl:eftersom	ADJUSTED=True|ORIG_LABEL=advcl
+
+
+1	lade	lägga	VERB	VB|PRT|AKT	Mood=Ind|Tense=Past|VerbForm=Fin|Voice=Act	0	root	0:root	ADJUSTED=True|ORIG_LABEL=root
+
+
+1	kostade	kosta	VERB	VB|PRT|AKT	Mood=Ind|Tense=Past|VerbForm=Fin|Voice=Act	0	root	13:conj:och	ADJUSTED=True|ORIG_LABEL=conj
+
+
+1	sänkte	sänka	VERB	VB|PRT|AKT	Mood=Ind|Tense=Past|VerbForm=Fin|Voice=Act	0	root	0:root	ADJUSTED=True|ORIG_LABEL=root
+
+
+1	har	ha	AUX	VB|PRS|AKT	Mood=Ind|Tense=Pres|VerbForm=Fin|Voice=Act	2	aux	15:aux	ADJUSTED=True
+2	sett	se	VERB	VB|SUP|AKT	VerbForm=Sup|Voice=Act	0	root	4:conj:och	ADJUSTED=True|ORIG_LABEL=conj
+
+
+1	har	ha	AUX	VB|PRS|AKT	Mood=Ind|Tense=Pres|VerbForm=Fin|Voice=Act	2	aux	4:aux	ADJUSTED=True
+2	öppnat	öppna	VERB	VB|SUP|AKT	VerbForm=Sup|Voice=Act	0	root	0:root	ADJUSTED=True|ORIG_LABEL=root
+
+
+1	började	börja	VERB	VB|PRT|AKT	Mood=Ind|Tense=Past|VerbForm=Fin|Voice=Act	0	root	0:root	ADJUSTED=True|ORIG_LABEL=root
+
+
+1	befordrades	befordra	VERB	VB|PRT|SFO	Mood=Ind|Tense=Past|VerbForm=Fin|Voice=Pass	0	root	0:root	ADJUSTED=True|ORIG_LABEL=root
+
+
+1	har	ha	AUX	VB|PRS|AKT	Mood=Ind|Tense=Pres|VerbForm=Fin|Voice=Act	3	aux	18:aux	ADJUSTED=True
+2	kunnat	kunna	AUX	VB|SUP|AKT	VerbForm=Sup|Voice=Act	3	aux	18:aux	ADJUSTED=True
+3	fortsätta	fortsätta	VERB	VB|INF|AKT	VerbForm=Inf|Voice=Act	0	root	3:conj:men	ADJUSTED=True|ORIG_LABEL=conj
+
+
+1	växte	växa	VERB	VB|PRT|AKT	Mood=Ind|Tense=Past|VerbForm=Fin|Voice=Act	0	root	4:conj:och	ADJUSTED=True|ORIG_LABEL=conj
+
+
+1	expanderade	expandera	VERB	VB|PRT|AKT	Mood=Ind|Tense=Past|VerbForm=Fin|Voice=Act	0	root	0:root	ADJUSTED=True|ORIG_LABEL=root
+
+
+1	används	använda	VERB	VB|PRS|SFO	Mood=Ind|Tense=Pres|VerbForm=Fin|Voice=Pass	0	root	0:root	ADJUSTED=True|ORIG_LABEL=root
+
+
+1	har	ha	AUX	VB|PRS|AKT	Mood=Ind|Tense=Pres|VerbForm=Fin|Voice=Act	2	aux	4:aux	ADJUSTED=True
+2	hindrat	hindra	VERB	VB|SUP|AKT	VerbForm=Sup|Voice=Act	0	root	0:root	ADJUSTED=True|ORIG_LABEL=root
+
+
+1	följdes	följa	VERB	VB|PRT|SFO	Mood=Ind|Tense=Past|VerbForm=Fin|Voice=Pass	0	root	0:root	ADJUSTED=True|ORIG_LABEL=root
+
+
+1	har	ha	AUX	VB|PRS|AKT	Mood=Ind|Tense=Pres|VerbForm=Fin|Voice=Act	2	aux	7:aux	ADJUSTED=True
+2	tjänat	tjäna	VERB	VB|SUP|AKT	VerbForm=Sup|Voice=Act	0	root	2:ccomp	ADJUSTED=True|ORIG_LABEL=ccomp
+
+
+1	är	vara	AUX	VB|PRS|AKT	Mood=Ind|Tense=Pres|VerbForm=Fin|Voice=Act	2	cop	14:cop	ADJUSTED=True
+2	återställd	återställd	ADJ	PC|PRF|UTR|SIN|IND|NOM	Case=Nom|Definite=Ind|Gender=Com|Number=Sing|Tense=Past|VerbForm=Part	0	root	0:root	ADJUSTED=True|ORIG_LABEL=root|SpaceAfter=No
+
+
+1	bad	be	VERB	VB|PRT|AKT	Mood=Ind|Tense=Past|VerbForm=Fin|Voice=Act	0	root	0:root	ADJUSTED=True|ORIG_LABEL=root
+
+
+1	har	ha	AUX	VB|PRS|AKT	Mood=Ind|Tense=Pres|VerbForm=Fin|Voice=Act	2	aux	6:aux	ADJUSTED=True
+2	skadats	skada	VERB	VB|SUP|SFO	VerbForm=Sup|Voice=Pass	0	root	0:root	ADJUSTED=True|ORIG_LABEL=root
+
+
+1	började	börja	VERB	VB|PRT|AKT	Mood=Ind|Tense=Past|VerbForm=Fin|Voice=Act	0	root	0:root	ADJUSTED=True|ORIG_LABEL=root
+
+
+1	har	ha	AUX	VB|PRS|AKT	Mood=Ind|Tense=Pres|VerbForm=Fin|Voice=Act	2	aux	10:aux	ADJUSTED=True
+2	gjort	göra	VERB	VB|SUP|AKT	VerbForm=Sup|Voice=Act	0	root	0:root	ADJUSTED=True|ORIG_LABEL=root
+
+
+1	har	ha	VERB	VB|PRS|AKT	Mood=Ind|Tense=Pres|VerbForm=Fin|Voice=Act	0	root	4:acl:relcl	ADJUSTED=True|ORIG_LABEL=acl:relcl
+
+
+1	Fungerar	fungera	VERB	VB|PRS|AKT	Mood=Ind|Tense=Pres|VerbForm=Fin|Voice=Act	0	root	0:root	ORIG_LABEL=root
+
+
+1	behandlade	behandla	VERB	VB|PRT|AKT	Mood=Ind|Tense=Past|VerbForm=Fin|Voice=Act	0	root	7:conj:så	ADJUSTED=True|ORIG_LABEL=conj
+
+
+1	uppstod	uppstå	VERB	VB|PRT|AKT	Mood=Ind|Tense=Past|VerbForm=Fin|Voice=Act	0	root	0:root	ADJUSTED=True|ORIG_LABEL=root
+
+
+1	anlitade	anlita	VERB	VB|PRT|AKT	Mood=Ind|Tense=Past|VerbForm=Fin|Voice=Act	0	root	0:root	ADJUSTED=True|ORIG_LABEL=root
+
+
+1	valde	välja	VERB	VB|PRT|AKT	Mood=Ind|Tense=Past|VerbForm=Fin|Voice=Act	0	root	2:ccomp	ADJUSTED=True|ORIG_LABEL=ccomp
+
+
+1	verkade	verka	VERB	VB|PRT|AKT	Mood=Ind|Tense=Past|VerbForm=Fin|Voice=Act	0	root	0:root	ADJUSTED=True|ORIG_LABEL=root
+
+
+1	är	vara	AUX	VB|PRS|AKT	Mood=Ind|Tense=Pres|VerbForm=Fin|Voice=Act	2	cop	5:cop	ADJUSTED=True
+2	så	så	ADV	AB	_	0	root	0:root	ADJUSTED=True|ORIG_LABEL=root
+
+
+1	har	ha	AUX	VB|PRS|AKT	Mood=Ind|Tense=Pres|VerbForm=Fin|Voice=Act	2	aux	8:aux	ADJUSTED=True|SpaceAfter=No
+2	blivit	bli	VERB	VB|SUP|AKT	VerbForm=Sup|Voice=Act	0	root	0:root	ADJUSTED=True|ORIG_LABEL=root
+
+
+1	har	ha	AUX	VB|PRS|AKT	Mood=Ind|Tense=Pres|VerbForm=Fin|Voice=Act	2	aux	8:aux	ADJUSTED=True
+2	gått	gå	VERB	VB|SUP|AKT	VerbForm=Sup|Voice=Act	0	root	0:root	ADJUSTED=True|ORIG_LABEL=root
+
+
+1	skapades	skapa	VERB	VB|PRT|SFO	Mood=Ind|Tense=Past|VerbForm=Fin|Voice=Pass	0	root	0:root	ADJUSTED=True|ORIG_LABEL=root
+
+
+1	sade	säga	VERB	VB|PRT|AKT	Mood=Ind|Tense=Past|VerbForm=Fin|Voice=Act	0	root	0:root	ADJUSTED=True|ORIG_LABEL=root
+
+
+1	gjorde	göra	VERB	VB|PRT|AKT	Mood=Ind|Tense=Past|VerbForm=Fin|Voice=Act	0	root	3:advcl:att	ADJUSTED=True|ORIG_LABEL=advcl
+
+
+1	kom	komma	VERB	VB|PRT|AKT	Mood=Ind|Tense=Past|VerbForm=Fin|Voice=Act	0	root	0:root	ADJUSTED=True|ORIG_LABEL=root
+
+
+1	fördes	föra	VERB	VB|PRT|SFO	Mood=Ind|Tense=Past|VerbForm=Fin|Voice=Pass	0	root	15:acl:relcl	ADJUSTED=True|ORIG_LABEL=acl:relcl
+
+
+1	utmanade	utmana	VERB	VB|PRT|AKT	Mood=Ind|Tense=Past|VerbForm=Fin|Voice=Act	0	root	0:root	ADJUSTED=True|ORIG_LABEL=root
+
+
+1	följs	följa	VERB	VB|PRS|SFO	Mood=Ind|Tense=Pres|VerbForm=Fin|Voice=Pass	0	root	0:root	ADJUSTED=True|ORIG_LABEL=root
+
+
+1	lanserat	lansera	VERB	VB|SUP|AKT	VerbForm=Sup|Voice=Act	0	root	2:acl:relcl	ADJUSTED=True|ORIG_LABEL=acl:relcl
+
+
+1	sades	säga	VERB	VB|PRT|SFO	Mood=Ind|Tense=Past|VerbForm=Fin|Voice=Pass	0	root	0:root	ADJUSTED=True|ORIG_LABEL=root
+
+
+1	har	ha	AUX	VB|PRS|AKT	Mood=Ind|Tense=Pres|VerbForm=Fin|Voice=Act	2	aux	5:aux	ADJUSTED=True
+2	tagit	ta	VERB	VB|SUP|AKT	VerbForm=Sup|Voice=Act	0	root	0:root	ADJUSTED=True|ORIG_LABEL=root
+
+
+1	tillkännagav	tillkännage	VERB	VB|PRT|AKT	Mood=Ind|Tense=Past|VerbForm=Fin|Voice=Act	0	root	0:root	ADJUSTED=True|ORIG_LABEL=root
+
+
+1	presterade	prestera	VERB	VB|PRT|AKT	Mood=Ind|Tense=Past|VerbForm=Fin|Voice=Act	0	root	1:acl:relcl	ADJUSTED=True|ORIG_LABEL=acl:relcl
+
+
+1	gav	giva	VERB	VB|PRT|AKT	Mood=Ind|Tense=Past|VerbForm=Fin|Voice=Act	0	root	0:root	ADJUSTED=True|ORIG_LABEL=root
+
+
+1	sade	säga	VERB	VB|PRT|AKT	Mood=Ind|Tense=Past|VerbForm=Fin|Voice=Act	0	root	3:parataxis	ADJUSTED=True|ORIG_LABEL=parataxis
+
+
+1	bluffar	bluffa	VERB	VB|PRS|AKT	Mood=Ind|Tense=Pres|VerbForm=Fin|Voice=Act	0	root	0:root	ADJUSTED=True|ORIG_LABEL=root
+
+
+1	bluffade	bluffa	VERB	VB|PRT|AKT	Mood=Ind|Tense=Past|VerbForm=Fin|Voice=Act	0	root	0:root	ADJUSTED=True|ORIG_LABEL=root
+
+
+1	har	ha	AUX	VB|PRS|AKT	Mood=Ind|Tense=Pres|VerbForm=Fin|Voice=Act	2	aux	9:aux	ADJUSTED=True
+2	funnits	finnas	VERB	VB|SUP|SFO	VerbForm=Sup|Voice=Pass	0	root	2:conj:och	ADJUSTED=True|ORIG_LABEL=conj
+
+
+1	förklarade	förklara	VERB	VB|PRT|AKT	Mood=Ind|Tense=Past|VerbForm=Fin|Voice=Act	0	root	0:root	ADJUSTED=True|ORIG_LABEL=root
+
+
+1	drivs	driva	VERB	VB|PRS|SFO	Mood=Ind|Tense=Pres|VerbForm=Fin|Voice=Pass	0	root	0:root	ADJUSTED=True|ORIG_LABEL=root
+
+
+1	har	ha	AUX	VB|PRS|AKT	Mood=Ind|Tense=Pres|VerbForm=Fin|Voice=Act	3	aux	8:aux	ADJUSTED=True
+2	varit	vara	AUX	VB|SUP|AKT	VerbForm=Sup|Voice=Act	3	cop	8:cop	ADJUSTED=True
+3	framgångsrika	framgångsrik	ADJ	JJ|POS|UTR/NEU|PLU|IND/DEF|NOM	Case=Nom|Degree=Pos|Number=Plur	0	root	0:root	ADJUSTED=True|ORIG_LABEL=root|SpaceAfter=No
+
+
+1	och	och	CCONJ	KN	_	4	cc	13.1:cc	ADJUSTED=True
+2	den	den	DET	DT|UTR|SIN|DEF	Definite=Def|Gender=Com|Number=Sing	4	det	13:det	ADJUSTED=True
+3	södra	söder	ADJ	JJ|POS|UTR/NEU|SIN|DEF|NOM	Case=Nom|Definite=Def|Degree=Pos|Number=Sing	4	amod	13:amod	ADJUSTED=True
+4	delen	del	NOUN	NN|UTR|SIN|DEF|NOM	Case=Nom|Definite=Def|Gender=Com|Number=Sing	0	root	13.1:nsubj	ADJUSTED=True|ORIG_LABEL=conj
+5	som	som	ADP	KN	_	6	mark	15:mark	ADJUSTED=True
+6	Transkaukasus	Transkaukasus	PROPN	PM|NOM	Case=Nom	4	orphan	13.1:obl	ADJUSTED=True|SpaceAfter=No
+
+
+1	är	vara	AUX	VB|PRS|AKT	Mood=Ind|Tense=Pres|VerbForm=Fin|Voice=Act	2	cop	7:cop	ADJUSTED=True
+2	känd	känd	ADJ	PC|PRF|UTR|SIN|IND|NOM	Case=Nom|Definite=Ind|Gender=Com|Number=Sing|Tense=Past|VerbForm=Part	0	root	0:root	ADJUSTED=True|ORIG_LABEL=root
+
+
+1	förblev	förbli	VERB	VB|PRT|AKT	Mood=Ind|Tense=Past|VerbForm=Fin|Voice=Act	0	root	13:conj:och	ADJUSTED=True|ORIG_LABEL=conj
+
+
+1	hade	ha	VERB	VB|PRT|AKT	Mood=Ind|Tense=Past|VerbForm=Fin|Voice=Act	0	root	3:conj:men	ADJUSTED=True|ORIG_LABEL=conj
+
+
+1	spred	sprida	VERB	VB|PRT|AKT	Mood=Ind|Tense=Past|VerbForm=Fin|Voice=Act	0	root	0:root	ADJUSTED=True|ORIG_LABEL=root
+
+
+1	rapporterade	rapportera	VERB	VB|PRT|AKT	Mood=Ind|Tense=Past|VerbForm=Fin|Voice=Act	0	root	0:root	ADJUSTED=True|ORIG_LABEL=root
+
+
+1	har	ha	AUX	VB|PRS|AKT	Mood=Ind|Tense=Pres|VerbForm=Fin|Voice=Act	2	aux	3:aux	ADJUSTED=True
+2	förblivit	förbli	VERB	VB|SUP|AKT	VerbForm=Sup|Voice=Act	0	root	0:root	ADJUSTED=True|ORIG_LABEL=root
+
+
+1	har	ha	AUX	VB|PRS|AKT	Mood=Ind|Tense=Pres|VerbForm=Fin|Voice=Act	2	aux	4:aux	ADJUSTED=True
+2	orsakat	orsaka	VERB	VB|SUP|AKT	VerbForm=Sup|Voice=Act	0	root	0:root	ADJUSTED=True|ORIG_LABEL=root
+
+
+1	har	ha	AUX	VB|PRS|AKT	Mood=Ind|Tense=Pres|VerbForm=Fin|Voice=Act	2	aux	9:aux	ADJUSTED=True
+2	torkat	torka	VERB	VB|SUP|AKT	VerbForm=Sup|Voice=Act	0	root	5:acl:relcl	ADJUSTED=True|ORIG_LABEL=acl:relcl
+
+
+1	har	ha	AUX	VB|PRS|AKT	Mood=Ind|Tense=Pres|VerbForm=Fin|Voice=Act	2	aux	11:aux	ADJUSTED=True
+2	försämrat	försämra	VERB	VB|SUP|AKT	VerbForm=Sup|Voice=Act	0	root	0:root	ADJUSTED=True|ORIG_LABEL=root
+
+
+1	bebodde	bebo	VERB	VB|PRT|AKT	Mood=Ind|Tense=Past|VerbForm=Fin|Voice=Act	0	root	0:root	ADJUSTED=True|ORIG_LABEL=root
+
+
+1	skyddas	skydda	VERB	VB|INF|SFO	VerbForm=Inf|Voice=Pass	0	root	11:acl:relcl	ADJUSTED=True|ORIG_LABEL=acl:relcl
+
+
+1	har	ha	AUX	VB|PRS|AKT	Mood=Ind|Tense=Pres|VerbForm=Fin|Voice=Act	2	aux	8:aux	ADJUSTED=True
+2	täckt	täcka	VERB	VB|SUP|AKT	VerbForm=Sup|Voice=Act	0	root	0:root	ADJUSTED=True|ORIG_LABEL=root
+
+
+1	transformerades	transformera	VERB	VB|PRT|SFO	Mood=Ind|Tense=Past|VerbForm=Fin|Voice=Pass	0	root	7:conj:och	ADJUSTED=True|ORIG_LABEL=conj
+
+
+1	har	ha	AUX	VB|PRS|AKT	Mood=Ind|Tense=Pres|VerbForm=Fin|Voice=Act	2	aux	7:aux	ADJUSTED=True
+2	vuxit	växa	VERB	VB|SUP|AKT	VerbForm=Sup|Voice=Act	0	root	0:root	ADJUSTED=True|ORIG_LABEL=root
+
+
+1	och	och	CCONJ	KN	_	10	cc	16:cc	ADJUSTED=True
+2	året	år	NOUN	NN|NEU|SIN|DEF|NOM	Case=Nom|Definite=Def|Gender=Neut|Number=Sing	10	nsubj	16:nsubj	ADJUSTED=True
+3	för	för	ADP	PP	_	8	case	14:case	ADJUSTED=True
+4	hennes	hennes	PRON	PS|UTR/NEU|SIN/PLU|DEF	Definite=Def|Poss=Yes	8	nmod:poss	14:nmod:poss	ADJUSTED=True
+5	traditionellt	traditionellt	ADV	AB|POS	Degree=Pos	6	advmod	12:advmod	ADJUSTED=True
+6	viktiga	viktig	ADJ	JJ|POS|UTR/NEU|SIN|DEF|NOM	Case=Nom|Definite=Def|Degree=Pos|Number=Sing	8	amod	14:amod	ADJUSTED=True
+7	sextonde	sextonde	ADJ	RO|NOM	Case=Nom	8	amod	14:amod	ADJUSTED=True
+8	födelsedag	födelsedag	NOUN	NN|UTR|SIN|IND|NOM	Case=Nom|Definite=Ind|Gender=Com|Number=Sing	2	nmod	8:nmod:för	ADJUSTED=True
+9	var	vara	AUX	VB|PRT|AKT	Mood=Ind|Tense=Past|VerbForm=Fin|Voice=Act	10	cop	16:cop	ADJUSTED=True
+10	1992	1992	NUM	RG|NOM	Case=Nom	0	root	6:conj:och	ADJUSTED=True|ORIG_LABEL=conj|SpaceAfter=No
+
+
+1	ges	ge	VERB	VB|PRS|SFO	Mood=Ind|Tense=Pres|VerbForm=Fin|Voice=Pass	0	root	0:root	ADJUSTED=True|ORIG_LABEL=root
+
+
+1	har	ha	AUX	VB|PRS|AKT	Mood=Ind|Tense=Pres|VerbForm=Fin|Voice=Act	2	aux	6:aux	ADJUSTED=True
+2	föreslagits	föreslå	VERB	VB|SUP|SFO	VerbForm=Sup|Voice=Pass	0	root	0:root	ADJUSTED=True|ORIG_LABEL=root
+
+
+1	har	ha	AUX	VB|PRS|AKT	Mood=Ind|Tense=Pres|VerbForm=Fin|Voice=Act	2	aux	4:aux	ADJUSTED=True
+2	gjorts	göra	VERB	VB|SUP|SFO	VerbForm=Sup|Voice=Pass	0	root	0:root	ADJUSTED=True|ORIG_LABEL=root
+
+
+1	är	vara	AUX	VB|PRS|AKT	Mood=Ind|Tense=Pres|VerbForm=Fin|Voice=Act	2	cop	6:cop	ADJUSTED=True
+2	avslappnad	avslappnad	ADJ	PC|PRF|UTR|SIN|IND|NOM	Case=Nom|Definite=Ind|Gender=Com|Number=Sing|Tense=Past|VerbForm=Part	0	root	0:root	ADJUSTED=True|ORIG_LABEL=root
+
+
+1	har	ha	AUX	VB|PRS|AKT	Mood=Ind|Tense=Pres|VerbForm=Fin|Voice=Act	3	aux	7:aux	ADJUSTED=True
+2	varit	vara	AUX	VB|SUP|AKT	VerbForm=Sup|Voice=Act	3	cop	7:cop	ADJUSTED=True
+3	sedvänja	sedvänja	NOUN	NN|UTR|SIN|IND|NOM	Case=Nom|Definite=Ind|Gender=Com|Number=Sing	0	root	0:root	ADJUSTED=True|ORIG_LABEL=root
+
+
+1	har	ha	AUX	VB|PRS|AKT	Mood=Ind|Tense=Pres|VerbForm=Fin|Voice=Act	2	aux	11:aux	ADJUSTED=True
+2	spelat	spela	VERB	VB|SUP|AKT	VerbForm=Sup|Voice=Act	0	root	1:acl:relcl|6:conj:och	ADJUSTED=True|ORIG_LABEL=conj
+
+
+1	komponerade	komponera	VERB	VB|PRT|AKT	Mood=Ind|Tense=Past|VerbForm=Fin|Voice=Act	0	root	4:ccomp	ADJUSTED=True|ORIG_LABEL=ccomp
+
+
+1	fann	finna	VERB	VB|PRT|AKT	Mood=Ind|Tense=Past|VerbForm=Fin|Voice=Act	0	root	0:root	ADJUSTED=True|ORIG_LABEL=root
+
+
+1	nådde	nå	VERB	VB|PRT|AKT	Mood=Ind|Tense=Past|VerbForm=Fin|Voice=Act	0	root	5:conj:och	ADJUSTED=True|ORIG_LABEL=conj
+
+
+1	dök	dyka	VERB	VB|PRT|AKT	Mood=Ind|Tense=Past|VerbForm=Fin|Voice=Act	0	root	5:parataxis	ADJUSTED=True|ORIG_LABEL=parataxis
+
+
+1	släpptes	släppa	VERB	VB|PRT|SFO	Mood=Ind|Tense=Past|VerbForm=Fin|Voice=Pass	0	root	0:root	ADJUSTED=True|ORIG_LABEL=root
+
+
+1	kallade	kalla	VERB	VB|PRT|AKT	Mood=Ind|Tense=Past|VerbForm=Fin|Voice=Act	0	root	0:root	ADJUSTED=True|ORIG_LABEL=root
+
+
+1	finns	finnas	VERB	VB|PRS|SFO	Mood=Ind|Tense=Pres|VerbForm=Fin|Voice=Pass	0	root	0:root	ADJUSTED=True|ORIG_LABEL=root
+
+
+1	har	ha	AUX	VB|PRS|AKT	Mood=Ind|Tense=Pres|VerbForm=Fin|Voice=Act	2	aux	10:aux	ADJUSTED=True
+2	slagit	slå	VERB	VB|SUP|AKT	VerbForm=Sup|Voice=Act	0	root	0:root	ADJUSTED=True|ORIG_LABEL=root
+
+
+1	har	ha	AUX	VB|PRS|AKT	Mood=Ind|Tense=Pres|VerbForm=Fin|Voice=Act	2	aux	5:aux	ADJUSTED=True
+2	visat	visa	VERB	VB|SUP|AKT	VerbForm=Sup|Voice=Act	0	root	0:root	ADJUSTED=True|ORIG_LABEL=root
+
+
+1	tillkännagav	tillkännage	VERB	VB|PRT|AKT	Mood=Ind|Tense=Past|VerbForm=Fin|Voice=Act	0	root	0:root	ADJUSTED=True|ORIG_LABEL=root
+
+
+1	har	ha	AUX	VB|PRS|AKT	Mood=Ind|Tense=Pres|VerbForm=Fin|Voice=Act	2	aux	9:aux	ADJUSTED=True
+2	beslutat	besluta	VERB	VB|SUP|AKT	VerbForm=Sup|Voice=Act	0	root	5:conj:och	ADJUSTED=True|ORIG_LABEL=conj
+
+
+1	förhörde	förhöra	VERB	VB|PRT|AKT	Mood=Ind|Tense=Past|VerbForm=Fin|Voice=Act	0	root	0:root	ADJUSTED=True|ORIG_LABEL=root
+
+
+1	fick	få	VERB	VB|PRT|AKT	Mood=Ind|Tense=Past|VerbForm=Fin|Voice=Act	0	root	6:acl:relcl	ADJUSTED=True|ORIG_LABEL=acl:relcl
+
+
+1	fick	få	VERB	VB|PRT|AKT	Mood=Ind|Tense=Past|VerbForm=Fin|Voice=Act	0	root	0:root	ADJUSTED=True|ORIG_LABEL=root
+
+
+1	förlorade	förlora	VERB	VB|PRT|AKT	Mood=Ind|Tense=Past|VerbForm=Fin|Voice=Act	0	root	0:root	ADJUSTED=True|ORIG_LABEL=root
+
+
+1	berättade	berätta	VERB	VB|PRT|AKT	Mood=Ind|Tense=Past|VerbForm=Fin|Voice=Act	0	root	0:root	ADJUSTED=True|ORIG_LABEL=root
+
+
+1	drog	dra	VERB	VB|PRT|AKT	Mood=Ind|Tense=Past|VerbForm=Fin|Voice=Act	0	root	0:root	ADJUSTED=True|ORIG_LABEL=root
+
+
+1	orsakade	orsaka	VERB	VB|PRT|AKT	Mood=Ind|Tense=Past|VerbForm=Fin|Voice=Act	0	root	0:root	ADJUSTED=True|ORIG_LABEL=root
+
+
+1	sade	säga	VERB	VB|PRT|AKT	Mood=Ind|Tense=Past|VerbForm=Fin|Voice=Act	0	root	7:parataxis	ADJUSTED=True|ORIG_LABEL=parataxis
+
+
+1	har	ha	AUX	VB|PRS|AKT	Mood=Ind|Tense=Pres|VerbForm=Fin|Voice=Act	2	aux	9:aux	ADJUSTED=True
+2	fört	föra	VERB	VB|SUP|AKT	VerbForm=Sup|Voice=Act	0	root	0:root	ADJUSTED=True|ORIG_LABEL=root
+
+
+1	benådade	benåda	VERB	VB|PRT|AKT	Mood=Ind|Tense=Past|VerbForm=Fin|Voice=Act	0	root	0:root	ADJUSTED=True|ORIG_LABEL=root
+
+
+1	drev	driva	VERB	VB|PRT|AKT	Mood=Ind|Tense=Past|VerbForm=Fin|Voice=Act	0	root	0:root	ADJUSTED=True|ORIG_LABEL=root
+
+
+1	har	ha	AUX	VB|PRS|AKT	Mood=Ind|Tense=Pres|VerbForm=Fin|Voice=Act	2	aux	13:aux	ADJUSTED=True
+2	kommenterats	kommentera	VERB	VB|SUP|SFO	VerbForm=Sup|Voice=Pass	0	root	0:root	ADJUSTED=True|ORIG_LABEL=root|SpaceAfter=No
+
+
+1	försäkrade	försäkra	VERB	VB|PRT|AKT	Mood=Ind|Tense=Past|VerbForm=Fin|Voice=Act	0	root	0:root	ADJUSTED=True|ORIG_LABEL=root
+
+
+1	hånade	håna	VERB	VB|PRT|AKT	Mood=Ind|Tense=Past|VerbForm=Fin|Voice=Act	0	root	12:parataxis	ADJUSTED=True|ORIG_LABEL=parataxis
+
+
+1	har	ha	AUX	VB|PRS|AKT	Mood=Ind|Tense=Pres|VerbForm=Fin|Voice=Act	2	aux	5:aux	ADJUSTED=True
+2	tagit	ta	VERB	VB|SUP|AKT	VerbForm=Sup|Voice=Act	0	root	0:root	ADJUSTED=True|ORIG_LABEL=root
+
+
+1	beslöt	besluta	VERB	VB|PRT|AKT	Mood=Ind|Tense=Past|VerbForm=Fin|Voice=Act	0	root	0:root	ADJUSTED=True|ORIG_LABEL=root
+
+
+1	sade	säga	VERB	VB|PRT|AKT	Mood=Ind|Tense=Past|VerbForm=Fin|Voice=Act	0	root	20:parataxis	ADJUSTED=True|ORIG_LABEL=parataxis
+
+
+1	”	”	PUNCT	PAD	_	7	punct	20:punct	ADJUSTED=True|SpaceAfter=No
+2	Det	det	PRON	PN|NEU|SIN|DEF|SUB/OBJ	Definite=Def|Gender=Neut|Number=Sing	7	nsubj	20:nsubj	ADJUSTED=True
+3	var	vara	AUX	VB|PRT|AKT	Mood=Ind|Tense=Past|VerbForm=Fin|Voice=Act	7	cop	20:cop	ADJUSTED=True
+4	egentligen	egentligen	ADV	AB	_	7	advmod	20:advmod	ADJUSTED=True
+5	inte	inte	PART	AB	Polarity=Neg	7	advmod	20:advmod	ADJUSTED=True
+6	någon	någon	DET	DT|UTR|SIN|IND	Definite=Ind|Gender=Com|Number=Sing	7	det	20:det	ADJUSTED=True
+7	överläggning	överläggning	NOUN	NN|UTR|SIN|IND|NOM	Case=Nom|Definite=Ind|Gender=Com|Number=Sing	0	root	4:parataxis	ADJUSTED=True|ORIG_LABEL=parataxis|SpaceAfter=No
+8	,	,	PUNCT	MID	_	7	punct	20:punct	ADJUSTED=True|SpaceAfter=No
+9	”	”	PUNCT	PAD	_	7	punct	20:punct	ADJUSTED=True
+10	sade	säga	VERB	VB|PRT|AKT	Mood=Ind|Tense=Past|VerbForm=Fin|Voice=Act	7	parataxis	20:parataxis	ADJUSTED=True
+
+
+1	har	ha	AUX	VB|PRS|AKT	Mood=Ind|Tense=Pres|VerbForm=Fin|Voice=Act	2	aux	11:aux	ADJUSTED=True
+2	tagits	ta	VERB	VB|SUP|SFO	VerbForm=Sup|Voice=Pass	0	root	3:advcl:eftersom	ADJUSTED=True|ORIG_LABEL=advcl
+
+
+1	förkastades	förkasta	VERB	VB|PRT|SFO	Mood=Ind|Tense=Past|VerbForm=Fin|Voice=Pass	0	root	7:acl:relcl	ADJUSTED=True|ORIG_LABEL=acl:relcl
+
+
+1	skickade	skicka	VERB	VB|PRT|AKT	Mood=Ind|Tense=Past|VerbForm=Fin|Voice=Act	0	root	0:root	ADJUSTED=True|ORIG_LABEL=root
+
+
+1	avslöjade	avslöja	VERB	VB|PRT|AKT	Mood=Ind|Tense=Past|VerbForm=Fin|Voice=Act	0	root	4:parataxis	ADJUSTED=True|ORIG_LABEL=parataxis
+
+
+1	anmärkte	anmärka	VERB	VB|PRT|AKT	Mood=Ind|Tense=Past|VerbForm=Fin|Voice=Act	0	root	0:root	ADJUSTED=True|ORIG_LABEL=root
+
+
+1	föddes	föda	VERB	VB|PRT|SFO	Mood=Ind|Tense=Past|VerbForm=Fin|Voice=Pass	0	root	0:root	ADJUSTED=True|ORIG_LABEL=root
+
+
+1	ägnade	ägna	VERB	VB|PRT|AKT	Mood=Ind|Tense=Past|VerbForm=Fin|Voice=Act	0	root	0:root	ADJUSTED=True|ORIG_LABEL=root
+
+
+1	har	ha	AUX	VB|PRS|AKT	Mood=Ind|Tense=Pres|VerbForm=Fin|Voice=Act	2	aux	20:aux	ADJUSTED=True
+2	visat	visa	VERB	VB|SUP|AKT	VerbForm=Sup|Voice=Act	0	root	13:acl:relcl	ADJUSTED=True|ORIG_LABEL=acl:relcl
+
+
+1	meddelades	meddela	VERB	VB|PRT|SFO	Mood=Ind|Tense=Past|VerbForm=Fin|Voice=Pass	0	root	0:root	ADJUSTED=True|ORIG_LABEL=root
+
+
+1	mötte	möta	VERB	VB|PRT|AKT	Mood=Ind|Tense=Past|VerbForm=Fin|Voice=Act	0	root	0:root	ADJUSTED=True|ORIG_LABEL=root
+
+
+1	har	ha	AUX	VB|PRS|AKT	Mood=Ind|Tense=Pres|VerbForm=Fin|Voice=Act	2	aux	8:aux	ADJUSTED=True
+2	utvecklat	utveckla	VERB	VB|SUP|AKT	VerbForm=Sup|Voice=Act	0	root	0:root	ADJUSTED=True|ORIG_LABEL=root
+
+
+1	har	ha	AUX	VB|PRS|AKT	Mood=Ind|Tense=Pres|VerbForm=Fin|Voice=Act	2	aux	12:aux	ADJUSTED=True
+2	producerat	producera	VERB	VB|SUP|AKT	VerbForm=Sup|Voice=Act	0	root	0:root	ADJUSTED=True|ORIG_LABEL=root
+
+
+1	har	ha	AUX	VB|PRS|AKT	Mood=Ind|Tense=Pres|VerbForm=Fin|Voice=Act	2	aux	3:aux	ADJUSTED=True
+2	blivit	bli	VERB	VB|SUP|AKT	VerbForm=Sup|Voice=Act	0	root	0:root	ADJUSTED=True|ORIG_LABEL=root
+
+
+1	har	ha	AUX	VB|PRS|AKT	Mood=Ind|Tense=Pres|VerbForm=Fin|Voice=Act	2	aux	11:aux	ADJUSTED=True
+2	sjunkit	sjunka	VERB	VB|SUP|AKT	VerbForm=Sup|Voice=Act	0	root	0:root	ADJUSTED=True|ORIG_LABEL=root
+
+
+1	har	ha	AUX	VB|PRS|AKT	Mood=Ind|Tense=Pres|VerbForm=Fin|Voice=Act	2	aux	12:aux	ADJUSTED=True
+2	krävt	kräva	VERB	VB|SUP|AKT	VerbForm=Sup|Voice=Act	0	root	5:conj:och	ADJUSTED=True|ORIG_LABEL=conj
+
+
+1	har	ha	AUX	VB|PRS|AKT	Mood=Ind|Tense=Pres|VerbForm=Fin|Voice=Act	2	aux	3:aux	ADJUSTED=True
+2	tillåtit	tillåta	VERB	VB|SUP|AKT	VerbForm=Sup|Voice=Act	0	root	0:root	ADJUSTED=True|ORIG_LABEL=root
+
+
+1	har	ha	AUX	VB|PRS|AKT	Mood=Ind|Tense=Pres|VerbForm=Fin|Voice=Act	2	aux	5:aux	ADJUSTED=True
+2	sagt	säga	VERB	VB|SUP|AKT	VerbForm=Sup|Voice=Act	0	root	0:root	ADJUSTED=True|ORIG_LABEL=root
+
+
+1	sade	säga	VERB	VB|PRT|AKT	Mood=Ind|Tense=Past|VerbForm=Fin|Voice=Act	0	root	0:root	ADJUSTED=True|ORIG_LABEL=root
+
+
+1	sade	säga	VERB	VB|PRT|AKT	Mood=Ind|Tense=Past|VerbForm=Fin|Voice=Act	0	root	0:root	ADJUSTED=True|ORIG_LABEL=root
+
+
+1	är	vara	AUX	VB|PRS|AKT	Mood=Ind|Tense=Pres|VerbForm=Fin|Voice=Act	2	cop	13:cop	ADJUSTED=True
+2	planerat	planera	VERB	VB|SUP|AKT	VerbForm=Sup|Voice=Act	0	root	4:parataxis	ADJUSTED=True|ORIG_LABEL=parataxis
+
+
+1	berättade	berätta	VERB	VB|PRT|AKT	Mood=Ind|Tense=Past|VerbForm=Fin|Voice=Act	0	root	4:parataxis	ADJUSTED=True|ORIG_LABEL=parataxis
+
+
+1	har	ha	AUX	VB|PRS|AKT	Mood=Ind|Tense=Pres|VerbForm=Fin|Voice=Act	2	aux	3:aux	ADJUSTED=True
+2	fått	få	VERB	VB|SUP|AKT	VerbForm=Sup|Voice=Act	0	root	0:root	ADJUSTED=True|ORIG_LABEL=root
+
+
+1	har	ha	AUX	VB|PRS|AKT	Mood=Ind|Tense=Pres|VerbForm=Fin|Voice=Act	0	root	0:root	ADJUSTED=True|ORIG_LABEL=root
+
+
+1	har	ha	AUX	VB|PRS|AKT	Mood=Ind|Tense=Pres|VerbForm=Fin|Voice=Act	2	aux	6:aux	ADJUSTED=True
+2	bosatt	bosätta	VERB	VB|SUP|AKT	VerbForm=Sup|Voice=Act	0	root	3:acl:relcl	ADJUSTED=True|ORIG_LABEL=acl:relcl
+
+
+1	karaktäriserade	karaktärisera	VERB	VB|PRT|AKT	Mood=Ind|Tense=Past|VerbForm=Fin|Voice=Act	0	root	18:acl:relcl	ADJUSTED=True|ORIG_LABEL=acl:relcl
+
+
+1	diskuterade	diskutera	VERB	VB|PRT|AKT	Mood=Ind|Tense=Past|VerbForm=Fin|Voice=Act	0	root	0:root	ADJUSTED=True|ORIG_LABEL=root
+
+

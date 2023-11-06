@@ -158,3 +158,8 @@ simplifyErrorPattern =  bimap simplifyUDPattern simplifyUDPattern
 simplifieduMorphosynErrorPattern :: ErrorPattern -> ErrorPattern
 simplifieduMorphosynErrorPattern = 
   simplifyErrorPattern . uMorphosynErrorPattern
+
+-- | Check whether a pattern is L2-only
+isL2only :: ErrorPattern -> Bool
+isL2only (TRUE,_) = True
+isL2only _ = False

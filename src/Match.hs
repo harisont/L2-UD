@@ -7,6 +7,7 @@ Stability   : experimental
 
 module Match where 
 
+import Text.Read
 import Data.Maybe
 import qualified Data.Map as M
 import Data.List
@@ -75,13 +76,19 @@ matchesUDPattern p tree@(RTree node subtrees) = case p of
 -- and splitting any {X->Y} shorthand. 
 parseQuery :: M.Map Field [Value] -> String -> [ErrorPattern]
 parseQuery vals q = 
-  map (bimap read read) (expandVars (q1,q2) exps)
+  catMaybes $ map 
+    ((\me -> case (fst me,snd me) of
+              (Just p1, Just p2) -> Just (p1,p2)
+              (_,_) -> Nothing) . (bimap readMaybe readMaybe)) 
+    (expandVars (q1,q2) exps)
   where 
     -- there's a lot of read and show so both should be at hand :(
-    (p1,p2) = if "->" `isInfixOf` q
-                then (read (desugar q head),read (desugar q last))
-                else (TRUE, read q) -- L2-only queries 
-    (q1,q2) = (show p1,show p2)
+    (mp1,mp2) = if "->" `isInfixOf` q
+                then (readMaybe (desugar q head),readMaybe (desugar q last))
+                else (Just TRUE, readMaybe q) -- L2-only queries 
+    (q1,q2) = case (mp1,mp2) of
+      (Just p1,Just p2) -> (show p1,show p2)
+      (_,_) -> ("","")
 
     -- would be incomprehensible even with a type annotation
     -- but basically, if f == head it returns the L1 component of s, 
@@ -103,9 +110,17 @@ parseQuery vals q =
         vars = map 
                 (second rmDuplicates) 
                 (M.toList $ M.unionWith 
-                              (++) 
-                              (variables M.empty p1) (variables M.empty p2)
+                  (++) 
+                  (variables M.empty p1) 
+                  (variables M.empty p2)
                 )
+          where 
+            (p1,p2) = case (mp1,mp2) of
+              (Just p1,Just p2) -> (p1,p2)
+              -- NOTE: these "NOT TRUE" are probably introducing a bug 
+              -- relative to variables 
+              (_,_) -> (NOT TRUE,NOT TRUE)
+
 
     -- | Expand variables in a sugar-free L1-L2 query (this is VERY
     -- inefficient. Variables should only be used for things that have very

@@ -1,1 +1,1 @@
-TREE_ (FEATS_ "VerbForm=Sup") [LEMMA "ha", FEATS_ "Tense=Pres"]
+TREE_ (FEATS_ "VerbForm=Sup") [AND [LEMMA "ha", FEATS_ "Tense=Pres"]]
