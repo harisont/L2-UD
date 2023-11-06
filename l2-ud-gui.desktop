@@ -1,9 +1,0 @@
-[Desktop Entry]
-Version=1.0
-Name=L2-UD      
-Comment=The terrible L2-UD GUI
-Exec=bash -c 'l2-ud-gui & sleep 1 && xdg-open http://127.0.0.1:8023;$SHELL'
-Icon=utilities-terminal
-Terminal=false 
-Type=Application
-Categories=Application;

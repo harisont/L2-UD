@@ -9,15 +9,9 @@ Tools for working with [L1-L2 parallel UD treebanks](https://aclanthology.org/W1
    ```
    stack install
    ```
-   This will compile and install two executables: the complete CLI program, `l2-ud`, and a GUI for the match command, `l2-ud-gui`
-3. (optional) create a shortcut to start the GUI in one click:
-   - on Linux, copy [the desktop file](l2-ud-gui.desktop) wherever you have your desktop files (`~/.local/share/applications/` maybe?)
-   - on Windows, create a Desktop shortcut to [l2-ud-gui.ps1](l2-ud-gui.ps1), right click on it and make it executable on click by setting `Properties > Target` to `powershell.exe -ExecutionPolicy Bypass -File "WHATEVER-PATH-WAS-ALREADY-THERE"` (mind the quotes)
-
-If you are trying to install L2-UD on Windows and the latter does not work, try following [these instructions](win.md).
+   This will compile and install a CLI executable, `l2-ud`.
 
 ## Usage
-(these instructions are mostly for the L2-UD CLI tool. If you are looking into using the GUI for `l2-ud match`, a step-by-step tutorial is available [here](GUI.md))
 
 ### Querying parallel L1-L2 treebanks
 To return the set of parallel L1-L2 sentences matching an error pattern, run
