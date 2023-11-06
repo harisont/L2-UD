@@ -42,29 +42,3 @@ executable l2-ud
         aeson,
         utf8-string
     default-language: Haskell2010
-
-executable l2-ud-gui
-    hs-source-dirs: src
-    main-is: GUI.hs
-    other-modules:
-        Align,
-        Match,
-        Errors,
-        Utils.Output,
-        Utils.UDConcepts,
-        Utils.UDPatterns,
-        Utils.Misc
-    build-depends:
-        base, 
-        extra,
-        containers,
-        split,
-        directory,
-        regex-posix,
-        MissingH,
-        threepenny-gui,
-        gf-ud,
-        concept-alignment,
-        hs-md
-    default-language: Haskell2010
-    ghc-options: -main-is GUI
