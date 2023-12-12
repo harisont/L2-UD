@@ -21,11 +21,12 @@ type Alignment = (UDTree,UDTree)
   
 -- | List of criteria used by align, sorted by priority
 criteria :: [Criterion]
-criteria = [udpos, ud, pos]
+criteria = [form, udposlemma, lemma, udpos, ud, pos]
 
 {- Functions used in criteria -}
   
-ud, pos, lemma, udpos, udposlemma :: Criterion
+form, ud, pos, lemma, udpos, udposlemma :: Criterion
+form = C sameForm (singleton LEMMA) False False
 ud = C sameDeprel (singleton UD) False False
 pos = C posEquiv (singleton POS) False False 
 lemma = C lemmaEquiv (singleton LEMMA) False False
