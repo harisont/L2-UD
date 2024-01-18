@@ -93,5 +93,7 @@ fieldVals = M.fromList [
   ("FEATS_Clusivity", ["Ex", "In"])
   ]
 
+-- | Just an empty root
 dummyUDTree :: UDTree
-dummyUDTree = RTree (initUDWord 0) []
+dummyUDTree = 
+  RTree (UDWord (UDIdInt 1) "_" "_" "_" "_" [] (UDIdInt 0) "root" "_" []) []
