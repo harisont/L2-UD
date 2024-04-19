@@ -10,7 +10,8 @@ module Utils.UDConcepts where
 import Data.List
 import qualified Data.Map as M
 import RTree
-import UDConcepts
+import UDStandard
+import UDTrees
 
 -- | Return the words a UD sentence is composed of, ignoring unsplit tokens.
 -- For instance such as "dello", usually tokenized as di + lo
@@ -24,11 +25,7 @@ udWords s = filter ((not . isRange) . udID) (udWordLines s)
 
 -- | Create root token, convert to sentence and adjust the IDs
 udTree2adjustedSentence :: UDTree -> UDSentence
-udTree2adjustedSentence = adjustUDIds . udTree2sentence . createRoot
-
--- | Return the ID of the root of a UD (sub)tree
-rootID :: UDTree -> UDId
-rootID (RTree n _) = udID n
+udTree2adjustedSentence = tree2sentence . subtree2tree
 
 -- | Merge a list of UDTrees with the same structure
 -- TODO: I dunno if this is really needed?
@@ -48,13 +45,13 @@ mergeUDTrees (t1:t2:ts) = mergeUDTrees ((t1 `merge` t2):ts)
 
 -- | Names of CoNNL-U "columns" or morphological feature 
 -- (morpho features are called e.g. FEATS_Gender)
-type Field = String 
+type Col = String 
 
 -- | Values of the various "fields" of a CoNLL-U file
 type Value = String 
 
 --  | Morphosyntax-relevant columns
-morphosynFields :: [Field]
+morphosynFields :: [Col]
 morphosynFields = ["POS", "XPOS", "FEATS", "FEATS_", "DEPREL"]
 
 -- | Check whether a UD subtree is a core argument, as defined in
@@ -63,7 +60,7 @@ isCoreArg :: UDTree -> Bool
 isCoreArg (RTree n _) = udDEPREL n `elem` coreArgs
   where coreArgs = ["nsubj", "obj", "iobj", "csubj", "ccomp", "xcomp"]
 
-fieldVals :: M.Map Field [Value]
+fieldVals :: M.Map Col [Value]
 fieldVals = M.fromList [
   ("POS", ["ADJ", "ADP", "PUNCT", "ADV", "AUX", "SYM", "INTJ", "CCONJ", "X", "NOUN", "DET", "PROPN", "NUM", "VERB", "PART", "PRON", "SCONJ"]),
   ("DEPREL_", ["nsubj", "obj", "iobj", "csubj", "ccomp", "xcomp", "obl", "vocative", "expl", "dislocated", "advcl", "advmod", "discourse", "aux", "cop", "mark", "nmod", "appos", "nummod", "acl", "amod", "det", "clf", "case", "conj", "cc", "fixed", "flat", "compound", "list", "parataxis", "orphan", "goeswith", "reparandum", "punct", "root", "dep"]),

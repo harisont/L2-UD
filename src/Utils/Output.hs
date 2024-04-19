@@ -7,7 +7,9 @@ Stability   : experimental
 module Utils.Output where
 
 import Data.List
-import UDConcepts
+import Data.Maybe
+import UDStandard
+import UDTrees
 import Align
 import Errors
 import Markdown
@@ -19,7 +21,7 @@ data Markup = MD | HTML
 -- | Show the ID(s) of two parallel sentences
 showIds :: (UDSentence,UDSentence) -> String
 showIds (s1,s2) = if i1 == i2 then i1 else i1 ++ "-" ++ i2
-  where (i1,i2) = (sentId s1,sentId s2)
+  where (i1,i2) = (fromMaybe "" (sentId s1), fromMaybe "" (sentId s2))
     
 -- | Render extracted errors/patterns as markdown
 extract2md :: ((UDSentence,UDSentence),[(Error,[ErrorPattern])]) -> String
@@ -29,8 +31,8 @@ extract2md (s12@(s1,s2),eps) = unlines [
     ["L1 sentence", "L2 sentence", "Error patterns"]
     (map 
       (\(e@(t1,t2),ps) -> [
-        highlin s1 (udTree2sentence t1) MD, 
-        highlin s2 (udTree2sentence t2) MD, 
+        highlin s1 (tree2sentence t1) MD, 
+        highlin s2 (tree2sentence t2) MD, 
         intercalate ", " (map (code . showErrorPattern) ps)])
       eps)
   ] 
@@ -43,8 +45,8 @@ match2md (s12@(s1,s2),as) = unlines [
     ["L1 sentence", "L2 sentence"]
     (map 
       (\(t1,t2) -> [
-        highlin s1 (udTree2sentence t1) MD, 
-        highlin s2 (udTree2sentence t2) MD]) 
+        highlin s1 (tree2sentence t1) MD, 
+        highlin s2 (tree2sentence t2) MD]) 
       as)
   ]
 

@@ -10,7 +10,8 @@ import Data.Maybe
 import Data.List
 import Data.List.Split
 import RTree
-import UDConcepts
+import UDStandard
+import UDTrees
 import UDPatterns
 import Utils.UDConcepts
 import Utils.Misc
@@ -20,7 +21,7 @@ udTree2treePattern :: UDTree -> UDPattern
 udTree2treePattern (RTree n []) = AND [
   FORM (udFORM n), 
   LEMMA (udLEMMA n), 
-  POS (udUPOS n), 
+  UPOS (udUPOS n), 
   XPOS (udXPOS n),
   FEATS (prt $ udFEATS n), 
   DEPREL (udDEPREL n)
@@ -33,7 +34,10 @@ udTree2treePattern (RTree n ts) =
 -- | Convert UD tree into a sequence pattern
 udTree2sequencePattern :: UDTree -> UDPattern
 udTree2sequencePattern (RTree n ts) = SEQUENCE $ map udTree2treePattern ns
-  where ns = sortBy (\n m -> compare (rootID n) (rootID m)) (RTree n []:ts)
+  where 
+    ns = sortBy 
+          (\n m -> compare (udID $ root n) (udID $ root m)) 
+          (RTree n []:ts)
 
 simplifyUDPattern :: UDPattern -> UDPattern
 simplifyUDPattern u = case u of
@@ -63,7 +67,7 @@ filterUDPattern fs p = case p of
   -- repetition could be avoided using head $ words $ show p
   (FORM _) -> if "FORM" `elem` fs then p else TRUE
   (LEMMA _) -> if "LEMMA" `elem` fs then p else TRUE
-  (POS _) -> if "POS" `elem` fs then p else TRUE
+  (UPOS _) -> if "POS" `elem` fs then p else TRUE
   (XPOS _) -> if "XPOS" `elem` fs then p else TRUE
   (MISC _ _) -> if "MISC" `elem` fs then p else TRUE
   (FEATS s) -> if null s' then TRUE else FEATS_ s' -- _ crucial here too!
@@ -122,7 +126,7 @@ pruneUDTree :: UDPattern -> UDTree -> UDTree
 pruneUDTree p t = case p of
   (FORM _) -> pruneSingleTokenPattern t p
   (LEMMA _) -> pruneSingleTokenPattern t p 
-  (POS _) -> pruneSingleTokenPattern t p
+  (UPOS _) -> pruneSingleTokenPattern t p
   (DEPREL _) -> pruneSingleTokenPattern t p
   (DEPREL_ _) -> pruneSingleTokenPattern t p 
   (FEATS _) -> pruneSingleTokenPattern t p
@@ -154,7 +158,7 @@ pruneUDTree p t = case p of
 
 -- | Desugar ARG patterns
 arg2and :: UDPattern -> UDPattern
-arg2and (ARG p d) = AND [POS p, DEPREL d]
+arg2and (ARG p d) = AND [UPOS p, DEPREL d]
 arg2and _ = error "Attempt to desugar non-ARG pattern!"
 
 -- | CoNNL-U fields that appear in UD patterns
@@ -200,7 +204,7 @@ isFieldOf :: Field -> UDPattern -> Bool
 isFieldOf f p = case p of 
   (FORM _) -> f == "FORM"
   (LEMMA _) -> f == "LEMMA"
-  (POS _) -> f == "POS" 
+  (UPOS _) -> f == "POS" 
   (XPOS _) -> f == "XPOS"
   (DEPREL _) -> f == "DEPREL"
   (DEPREL_ _) -> f == "DEPREL"
@@ -219,6 +223,6 @@ isFieldOf f p = case p of
 
 parseL1L2treebank :: (FilePath,FilePath) -> IO [(UDSentence,UDSentence)]
 parseL1L2treebank (p1,p2) = do
-  t1 <- parseUDFile p1
-  t2 <- parseUDFile p2
+  t1 <- prsUDFile p1
+  t2 <- prsUDFile p2
   return $ zip t1 t2  

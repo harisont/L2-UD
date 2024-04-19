@@ -30,7 +30,7 @@ executable l2-ud
         extra,
         containers,
         data-ordlist,
-        gf-ud,
+        deptreehs,
         concept-alignment,
         regex-posix,
         split,
@@ -67,7 +67,7 @@ library
     utf8-string,
     aeson,
     curl,
-    gf-ud,
+    deptreehs,
     concept-alignment,
     hs-md
   default-language: Haskell2010
