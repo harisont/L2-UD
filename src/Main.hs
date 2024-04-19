@@ -12,7 +12,7 @@ import System.Console.GetOpt
 import System.Directory
 import Control.Monad (when)
 import Markdown
-import UDConcepts
+import UDStandard
 import UDPatterns
 import Align
 import Extract
@@ -33,8 +33,8 @@ main = do
     else do
       t1 <- readFile (args !! 1)
       t2 <- readFile (args !! 2)
-      let s1s = (parseUDText . unpack . decodeUtf8) t1
-      let s2s = (parseUDText . unpack . decodeUtf8) t2
+      let s1s = (prsUDText . unpack . decodeUtf8) t1
+      let s2s = (prsUDText . unpack . decodeUtf8) t2
       let ids = map sentId s1s `zip` map sentId s2s
       let s12s = s1s `zip` s2s
       -- align sentences

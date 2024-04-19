@@ -6,7 +6,7 @@ Stability   : experimental
 
 module Extract where
 
-import UDConcepts
+import UDTrees
 import Align
 import Errors
 import Utils.Misc
@@ -21,7 +21,7 @@ extract = filter (not . morphosynCorrect)
 -- | Check if an alignment contains any discrepancy, i.e. an error of any kind
 -- (aka check if an alignment is in fact an Error)
 correct :: Alignment -> Bool 
-correct (s1,s2) = prUDTreeString s1 == prUDTreeString s2
+correct (s1,s2) = prtUDTreeLin s1 == prtUDTreeLin s2
 
 -- | Check if an alignment is morphosyntactically correct, defined as a 
 -- discrepancy found upon comparing the sentences ignoring the FORM and LEMMA

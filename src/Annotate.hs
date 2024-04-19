@@ -12,7 +12,7 @@ import GHC.Generics
 import Data.ByteString.Lazy.UTF8 (fromString)
 import Network.Curl
 import Data.Aeson
-import UDConcepts
+import UDStandard
 
 type Sentence = String
 type Model = String
@@ -39,7 +39,7 @@ annotate s m = do
         Nothing -> 
           error $ "Got a malformed response string from UDPipe 2: " ++ str
         Just json -> do
-          let ss = parseUDText (result json)
+          let ss = prsUDText (result json)
           case length ss of
             0 -> error "Empty input sentence(s)!"
             1 -> return $ head ss

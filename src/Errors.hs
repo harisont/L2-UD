@@ -11,7 +11,8 @@ import Data.List
 import Data.Maybe
 import Data.Bifunctor
 import RTree
-import UDConcepts
+import UDStandard
+import UDTrees
 import UDPatterns
 import Utils.Misc
 import Align
@@ -23,7 +24,7 @@ type Error = (UDTree,UDTree)
 
 -- | Linearize the two trees errors are composed of
 linearizeError :: Error -> String
-linearizeError (t1,t2) = prUDTreeString t1 ++ "\t" ++ prUDTreeString t2
+linearizeError (t1,t2) = prtUDTreeLin t1 ++ "\t" ++ prtUDTreeLin t2
 
 -- | An error pattern is a pair of UD patterns
 type ErrorPattern = (UDPattern,UDPattern)

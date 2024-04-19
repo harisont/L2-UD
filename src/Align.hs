@@ -12,7 +12,8 @@ import Data.List
 import Data.Map (toList, empty)
 import Data.Set (singleton, fromList)
 import RTree
-import UDConcepts
+import UDStandard
+import UDTrees
 import ConceptAlignment hiding (Alignment)
 
 type Alignment = (UDTree,UDTree)
@@ -72,6 +73,6 @@ minimal :: [Alignment] -> [Alignment]
 minimal as = 
   filter 
     (\a@(t1,t2) -> let as' = as \\ [a] in
-      not $ any (\(t1',t2') -> t1' `isSubRTree` t1 && t2' `isSubRTree` t2) as' 
+      not $ any (\(t1',t2') -> t1' `isSubtree` t1 && t2' `isSubtree` t2) as' 
     )
     as

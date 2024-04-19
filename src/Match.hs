@@ -17,8 +17,9 @@ import Data.String.Utils (strip)
 import Data.Bifunctor
 import qualified Text.Regex.Posix as R
 import RTree
-import UDConcepts hiding (strip)
-import UDPatterns hiding (matchesUDPattern)
+import UDTrees
+import UDStandard
+import UDPatterns hiding (matchingSubtrees)
 import Align
 import Errors
 import Utils.Misc
@@ -33,11 +34,11 @@ match ps as = concatMap (\a -> concatMap (matches a as) ps) as
 -- patten, return any matches found for that subtree pair
 matches :: Alignment -> [Alignment] -> ErrorPattern -> [Error]
 matches (t1,t2) as e@(e1,e2) = filter -- still have to match after pruning!
-  (\(m1,m2) -> (not $ null $ matchesUDPattern e1 m1) && 
-               (not $ null $ matchesUDPattern e2 m2))
+  (\(m1,m2) -> (not $ null $ matchingSubtrees e1 m1) && 
+               (not $ null $ matchingSubtrees e2 m2))
   [(m1, m2) | m1 <- m1s, m2 <- m2s, m1 `aligns` m2]
   where 
-    (m1s,m2s) = (matchesUDPattern e1 t1,matchesUDPattern e2 t2)
+    (m1s,m2s) = (matchingSubtrees e1 t1,matchingSubtrees e2 t2)
 
     -- | Check, based on the previously found alignments, whether two subtrees
     -- that have been found to match a certain error pattern actually align
@@ -57,20 +58,20 @@ matches (t1,t2) as e@(e1,e2) = filter -- still have to match after pruning!
       where 
         listAligns p1s p2s t1s t2s = all 
             (\p -> any (`elem` as) [(m1,m2) | m1 <- t1s, 
-                                              p `ifMatchUDPattern` m1, 
+                                              p `matchesPattern` m1, 
                                               m2 <- t2s, 
-                                              p `ifMatchUDPattern` m2
+                                              p `matchesPattern` m2
                                    ]
             ) 
             (p1s `intersect` p2s)
 
--- | Custom (nonrecursive) version of GF-UD's matchesUDPattern
+-- | Custom (nonrecursive) version of GF-UD's matchesPattern
 -- (cf. https://github.com/GrammaticalFramework/gf-ud/blob/1a4a8c1ac08c02895fa886ca20e5e7a706f484e2/UDPatterns.hs#L23-L27)
-matchesUDPattern :: UDPattern -> UDTree -> [UDTree]
-matchesUDPattern p tree@(RTree node subtrees) = case p of
+matchingSubtrees :: UDPattern -> UDTree -> [UDTree]
+matchingSubtrees p tree@(RTree node subtrees) = case p of
   SEQUENCE ps -> maybe [] return $ findMatchingUDSequence True ps tree
   SEQUENCE_ ps -> maybe [] return $ findMatchingUDSequence False ps tree
-  _ -> [tree | ifMatchUDPattern p tree]
+  _ -> [tree | matchesPattern p tree]
 
 -- | Parses a query string into a list of error patterns, expanding variables
 -- and splitting any {X->Y} shorthand. 
@@ -136,7 +137,7 @@ parseQuery vals q =
 
 -- | Find categorical variables ("$X") in the depths of a UD pattern
 variables :: M.Map Field [Value] -> UDPattern -> M.Map Field [Value]
-variables m (POS s) =
+variables m (UPOS s) =
   if head (strip s) == '$' then M.insertWith (++) "POS" [s] m else m
 variables m (DEPREL_ s) =
   if head (strip s) == '$' then M.insertWith (++) "DEPREL_" [s] m else m
@@ -150,7 +151,7 @@ variables m (FEATS_ s) = M.unionsWith (++) (m:fms)
                 (splitOn "|" s)
 variables m (AND ps) = M.unionsWith (++) (map (variables m) ps)
 variables m (OR ps) = M.unionsWith (++) (map (variables m) ps)
-variables m (ARG pos deprel) = variables m (AND [POS pos, DEPREL deprel])
+variables m (ARG pos deprel) = variables m (AND [UPOS pos, DEPREL deprel])
 variables m (SEQUENCE ps) = M.unionsWith (++) (map (variables m) ps)
 variables m (SEQUENCE_ ps) = M.unionsWith (++) (map (variables m) ps)
 variables m (NOT p) = variables m p
