@@ -7,7 +7,7 @@ extra-deps:
 - multiset-0.3.4.3
 - MissingH-1.6.0.1
 - github: harisont/concept-alignment
-  commit: 840246d63376475d772887d1bedf09f54b245e59 # l2-ud branch
+  commit: 21b27c727ed69b8212a4fc017a68ea3305525e15 # l2-ud branch
 - github: harisont/hs-md
   commit: 62e5e955709c332bcc8043678a116fbb38ab455b
 - github: harisont/deptreehs
