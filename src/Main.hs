@@ -18,7 +18,7 @@ import Align
 import Extract
 import Match
 import Errors
-import Annotate
+import UDPipe2
 import Utils.Misc
 import Utils.Output
 import Utils.UDConcepts
@@ -108,10 +108,10 @@ main = do
         "example" -> do
           -- annotate
           let lang = args !! 5 
-          s1 <- annotate (args !! 3) lang
-          s2 <- annotate (args !! 4) lang
+          s1 <- annotatePlainText (args !! 3) lang
+          s2 <- annotatePlainText (args !! 4) lang
           when (Verbose `elem` flags)
-            $ do let (ss1,ss2) = (showUDSentence (1,s1),showUDSentence (2,s2))
+            $ do let (ss1,ss2) = (showUDSentence (1,head s1),showUDSentence (2,head s2))
                  if Markdown `elem` flags
                  then do putStrLn $ h2 "UD parses"
                          putStrLn $ codeblock "" ss1
@@ -120,7 +120,7 @@ main = do
                          putStrLn ss2
                          putStrLn ""
           -- extract error patterns
-          let es = extract (align (s1,s2))
+          let es = extract (align (head s1, head s2))
           let ps = rmDuplicates $ filter 
                 (\(p1,p2) -> p1 /= p2) 
                 (patterns es ++ simple es ++ simpler es ++ simplest es)

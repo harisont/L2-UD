@@ -11,4 +11,4 @@ extra-deps:
 - github: harisont/hs-md
   commit: 62e5e955709c332bcc8043678a116fbb38ab455b
 - github: harisont/deptreehs
-  commit: 7ba859321f03e7c7ed1e287809396982532bf833
+  commit: 33db8d3f08c0c09979901b12232eab95b4dfc38d
