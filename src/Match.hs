@@ -86,7 +86,7 @@ parseQuery vals q =
     -- there's a lot of read and show so both should be at hand :(
     (mp1,mp2) = if "->" `isInfixOf` q
                 then (readMaybe (desugar q head),readMaybe (desugar q last))
-                else (Just TRUE, readMaybe q) -- L2-only queries 
+                else (readMaybe q,Just TRUE) -- L1-only queries 
     (q1,q2) = case (mp1,mp2) of
       (Just p1,Just p2) -> (show p1,show p2)
       (_,_) -> ("","")
