@@ -160,7 +160,8 @@ simplifieduMorphosynErrorPattern :: ErrorPattern -> ErrorPattern
 simplifieduMorphosynErrorPattern = 
   simplifyErrorPattern . uMorphosynErrorPattern
 
--- | Check whether a pattern is L2-only
-isL2only :: ErrorPattern -> Bool
-isL2only (TRUE,_) = True
-isL2only _ = False
+-- | Check whether a pattern is monolingual
+isMonolingual :: ErrorPattern -> Bool
+isMonolingual (TRUE,_) = True
+isMonolingual (_,TRUE) = True
+isMonolingual _ = False
