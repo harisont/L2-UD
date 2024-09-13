@@ -7,6 +7,7 @@ Stability   : experimental
 module Utils.UDPatterns where
 
 import Data.Maybe
+import Data.Either
 import Data.List
 import Data.List.Split
 import RTree
@@ -219,10 +220,12 @@ isFieldOf f p = case p of
   (SEQUENCE ps) -> any (isFieldOf f) ps
   (SEQUENCE_ ps) -> any (isFieldOf f) ps
   _ -> False
-  where keys fs = map (udArg . prs) (splitOn "|" fs)
+  where 
+    keys fs = map (udArg . fromLeft nullUDData . prs) (splitOn "|" fs)
+    nullUDData = UDData { udArg = "", udVals = []}
 
 parseL1L2treebank :: (FilePath,FilePath) -> IO [(UDSentence,UDSentence)]
 parseL1L2treebank (p1,p2) = do
   t1 <- prsUDFile p1
   t2 <- prsUDFile p2
-  return $ zip t1 t2  
+  return $ zip (fromLeft [] t1) (fromLeft [] t2)  

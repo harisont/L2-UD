@@ -5,6 +5,7 @@ import Data.ByteString (readFile)
 import Data.Text (unpack)
 import Data.Text.Encoding (decodeUtf8)
 import Data.Maybe
+import Data.Either
 import Data.Bifunctor
 import System.FilePath
 import System.Environment (getArgs)
@@ -33,8 +34,8 @@ main = do
     else do
       t1 <- readFile (args !! 1)
       t2 <- readFile (args !! 2)
-      let s1s = (prsUDText . unpack . decodeUtf8) t1
-      let s2s = (prsUDText . unpack . decodeUtf8) t2
+      let s1s = fromLeft [] ((prsUDText . unpack . decodeUtf8) t1)
+      let s2s = fromLeft [] ((prsUDText . unpack . decodeUtf8) t2)
       let ids = map sentId s1s `zip` map sentId s2s
       let s12s = s1s `zip` s2s
       -- align sentences
