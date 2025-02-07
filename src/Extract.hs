@@ -18,10 +18,9 @@ import Utils.UDPatterns
 extractErrors :: [Alignment] -> [Error]
 extractErrors = filter (not . morphosynCorrect)
 
--- | Similar to extractErrors, but it extracts all divergences rather than 
--- just the morphosyntactical ones
+-- | Similar to extractErrors, but it extracts all divergences
 extractDivergences :: [Alignment] -> [Alignment]
-extractDivergences = filter (not . correct)
+extractDivergences = filter (uncurry (/=))
 
 -- | Check if an alignment contains any discrepancy, i.e. an error of any kind
 -- (aka check if an alignment is in fact an Error)
