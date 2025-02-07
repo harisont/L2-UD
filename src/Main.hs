@@ -79,7 +79,7 @@ main = do
             _ -> return ()
 
         "extract" -> do
-          let ess = map extract as
+          let ess = map extractErrors as
           if Markdown `elem` flags
             then do
               let ses = s12s `zip` ess
@@ -121,7 +121,7 @@ main = do
                          putStrLn ss2
                          putStrLn ""
           -- extract error patterns
-          let es = extract (align (head s1, head s2))
+          let es = extractErrors (align (head s1, head s2))
           let ps = rmDuplicates $ filter 
                 (\(p1,p2) -> p1 /= p2) 
                 (patterns es ++ simple es ++ simpler es ++ simplest es)

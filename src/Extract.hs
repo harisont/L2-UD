@@ -15,8 +15,13 @@ import Utils.UDPatterns
 -- | Top-level pattern extraction function used in the main.
 -- The input is the list of alignments obtained for a single L1-L2 sentence,
 -- the output is a list of errors
-extract :: [Alignment] -> [Error]
-extract = filter (not . morphosynCorrect)
+extractErrors :: [Alignment] -> [Error]
+extractErrors = filter (not . morphosynCorrect)
+
+-- | Similar to extractErrors, but it extracts all divergences rather than 
+-- just the morphosyntactical ones
+extractDivergences :: [Alignment] -> [Alignment]
+extractDivergences = filter (not . correct)
 
 -- | Check if an alignment contains any discrepancy, i.e. an error of any kind
 -- (aka check if an alignment is in fact an Error)
