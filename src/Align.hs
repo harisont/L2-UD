@@ -22,7 +22,7 @@ type Alignment = (UDTree,UDTree)
   
 -- | List of criteria used by align, sorted by priority
 criteria :: [Criterion]
-criteria = [lemma]
+criteria = [udpos,ud,pos]
 
 {- Functions used in criteria -}
   
