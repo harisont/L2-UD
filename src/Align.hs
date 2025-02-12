@@ -70,4 +70,4 @@ align ss = map (\a -> (sl a,tl a)) as
 
 -- | Only keep minimal alignments
 minimal :: [Alignment] -> [Alignment]
-minimal = filter (\(t1,t2) -> root t1 != root t2)
+minimal = filter (\(t1,t2) -> root t1 /= root t2)
