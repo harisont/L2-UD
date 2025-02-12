@@ -22,7 +22,7 @@ type Alignment = (UDTree,UDTree)
   
 -- | List of criteria used by align, sorted by priority
 criteria :: [Criterion]
-criteria = [udpos, ud, pos]
+criteria = [lemma]
 
 {- Functions used in criteria -}
   
@@ -73,6 +73,8 @@ minimal :: [Alignment] -> [Alignment]
 minimal as = 
   filter 
     (\a@(t1,t2) -> let as' = as \\ [a] in
-      not $ any (\(t1',t2') -> t1' `isSubtree` t1 && t2' `isSubtree` t2) as' 
+      not $ any (\(t1',t2') -> 
+        (t1' `isSubtree` t1 && t2' `isSubtree` t2) 
+        && (allNodes t1 \\ allNodes t1' == allNodes t2 \\ allNodes t2')) as' 
     )
     as
