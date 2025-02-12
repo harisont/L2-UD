@@ -70,11 +70,4 @@ align ss = map (\a -> (sl a,tl a)) as
 
 -- | Only keep minimal alignments
 minimal :: [Alignment] -> [Alignment]
-minimal as = 
-  filter 
-    (\a@(t1,t2) -> let as' = as \\ [a] in
-      not $ any (\(t1',t2') -> 
-        (t1' `isSubtree` t1 && t2' `isSubtree` t2) 
-        && (allNodes t1 \\ allNodes t1' == allNodes t2 \\ allNodes t2')) as' 
-    )
-    as
+minimal = filter (\(t1,t2) -> root t1 != root t2)
