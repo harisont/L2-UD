@@ -67,9 +67,7 @@ t1 `posEquiv` t2 = (not . null) ct1 && (ct1 == ct2)
 -- reason decided to use in concept-alignment
 align :: (UDTree,UDTree) -> [Alignment]
 align ts = map (\a -> (sl a,tl a)) as
-  where 
-    as = toList $ alignSent empty criteria Nothing False False False ss
-    ss = bimap tree2sentence tree2sentence ts
+  where as = toList $ alignSent empty criteria Nothing False False False ts
 
 -- | Only keep minimal alignments
 minimal :: [Alignment] -> [Alignment]
