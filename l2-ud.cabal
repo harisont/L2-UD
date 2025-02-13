@@ -12,35 +12,6 @@ extra-source-files: README.md
 -- copied from concept-alignment, probably arbitrary
 cabal-version: >= 1.10 
 
-executable l2-ud
-    hs-source-dirs: src
-    main-is: Main.hs
-    other-modules: 
-        Errors, 
-        Align, 
-        Extract, 
-        Match, 
-        Utils.Misc, 
-        Utils.Output,
-        Utils.UDPatterns,
-        Utils.UDConcepts
-    build-depends:
-        base,
-        extra,
-        containers,
-        data-ordlist,
-        deptreehs,
-        concept-alignment,
-        regex-posix,
-        split,
-        directory,
-        filepath,
-        MissingH,
-        hs-md,
-        bytestring,
-        text
-    default-language: Haskell2010
-
 library
   hs-source-dirs: src
   exposed-modules: 

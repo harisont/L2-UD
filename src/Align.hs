@@ -11,6 +11,7 @@ module Align where
 import Data.List
 import Data.Map (toList, empty)
 import Data.Set (singleton, fromList)
+import Data.Bifunctor
 import RTree
 import UDStandard
 import UDTrees
@@ -64,9 +65,11 @@ t1 `posEquiv` t2 = (not . null) ct1 && (ct1 == ct2)
 -- | alignSent wrapper to align with default "optional arguments" and return
 -- pairs of alignment rather than the idiotic Alignment data type I for some
 -- reason decided to use in concept-alignment
-align :: (UDSentence,UDSentence) -> [Alignment]
-align ss = map (\a -> (sl a,tl a)) as
-  where as = toList $ alignSent empty criteria Nothing False False False ss
+align :: (UDTree,UDTree) -> [Alignment]
+align ts = map (\a -> (sl a,tl a)) as
+  where 
+    as = toList $ alignSent empty criteria Nothing False False False ss
+    ss = bimap tree2sentence tree2sentence ts
 
 -- | Only keep minimal alignments
 minimal :: [Alignment] -> [Alignment]

@@ -15,6 +15,7 @@ import Control.Monad (when)
 import Markdown
 import UDStandard
 import UDPatterns
+import UDTrees
 import Align
 import Extract
 import Match
@@ -39,7 +40,7 @@ main = do
       let ids = map sentId s1s `zip` map sentId s2s
       let s12s = s1s `zip` s2s
       -- align sentences
-      let as = map align s12s 
+      let as = map align (bimap tree2sentence tree2sentence s12s) 
       case head args of
 
         "match" -> do
