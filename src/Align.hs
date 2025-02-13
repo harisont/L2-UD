@@ -69,7 +69,7 @@ align :: (UDTree,UDTree) -> [Alignment]
 align ts = map (\a -> (sl a,tl a)) as
   where 
     as = toList $ alignSent empty criteria Nothing False False False ss
-    ss = bimap tree2sentence tree2sentence ts
+    ss = bimap (tree2sentence . subtree2tree) (tree2sentence . subtree2tree) ts
 
 -- | Only keep minimal alignments
 minimal :: [Alignment] -> [Alignment]
