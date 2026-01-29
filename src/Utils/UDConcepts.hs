@@ -25,6 +25,7 @@ udWords s = filter ((not . isRange) . udID) (udWordLines s)
 -- | Create root token, convert to sentence and adjust the IDs
 udTree2adjustedSentence :: UDTree -> UDSentence
 udTree2adjustedSentence = adjustUDIds . udTree2sentence . createRoot
+  where createRoot tree = tree {root = (root tree) {udHEAD = UDIdInt 0}}
 
 -- | Return the ID of the root of a UD (sub)tree
 rootID :: UDTree -> UDId
